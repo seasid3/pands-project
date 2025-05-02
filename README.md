@@ -36,12 +36,15 @@ A better project will be well organised and contain detailed explanations. The a
 
 Summary of research about the Iris dataset
 
-The Iris dataset is....
-Fisher’s Iris data set [3]
+# *1. The Iris dataset:* 
+....Fisher’s Iris data set [3]
 
-Downloading and importing the Iris dataset:
-From source (see https://archive.ics.uci.edu/dataset/53/iris) download the file from the "download button", this reveals a comma separated variables (CSV) output. I created an iris.csv file in the respository and pasted the Iris CSV database there.
+# *2. Downloading and importing the Iris dataset:*
+From source (see https://archive.ics.uci.edu/dataset/53/iris) download the file from the "download button", this reveals a comma separated variables (CSV) output (which I open in a notebook file). I created an iris.csv file in the respository and pasted the Iris CSV database there.
+Researching which code to use to import a CSV in VS studio (and knowing we did it in lectures), I found this source (see: https://stackoverflow.com/questions/65511586/vs-code-is-there-a-way-to-read-a-csv-file-without-needing-specification-of-the) which showed I need to use the pandas function "pd.read_csv()". Therefore, I went back to the start of the analysis.py file and imported pandas as pd. Researching this function (see official documentation: https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html), I can see I need to use this function to import the csv database file for use, naming the column names as they aren't present in the source iris.data file from https://archive.ics.uci.edu/dataset/53/iris, but they are listed in the associated iris.names file. Run a sanity check to make sure the dataset imported correctly.
+I know (from the iris.names file) there should be 150 instances (50 for each Iris class for 3 classes) and 4 attributes (sepal length, sepal width, petal length and petal width) in the database. The output in my terminal when I do the sanity check shows the first 5 and last 5 rows so I check this against the original iris database source (i.e. the iris.data file downloaded from https://archive.ics.uci.edu/dataset/53/iris).
 
+# *Look at the imported dataset*
 
 
 What I would like to determine about the Iris dataset: 
