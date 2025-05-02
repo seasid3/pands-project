@@ -39,6 +39,11 @@ Summary of research about the Iris dataset
 The Iris dataset is....
 Fisher’s Iris data set [3]
 
+Downloading and importing the Iris dataset:
+From source (see https://archive.ics.uci.edu/dataset/53/iris) download the file from the "download button", this reveals a comma separated variables (CSV) output. I created an iris.csv file in the respository and pasted the Iris CSV database there.
+
+
+
 What I would like to determine about the Iris dataset: 
 - What information the database contains: The names of the rows and columns
 - I would like to know are there any blank data cells.
