@@ -32,3 +32,20 @@ Minimum Viable Project:
 - and images,
 - The README (and/or notebook) should contain a summary of the data set and your investigations into it. It should also clearly document how to run the Python code and what that code does. Furthermore, it should list all references used in completing the project. 
 A better project will be well organised and contain detailed explanations. The analysis will be well conceived, and examples of interesting analyses that others have pursued based on the data set will be discussed. *Note that the point of this project is to use Python.* You may use any Python libraries that you wish, whether they have been discussed in class or not.
+
+
+Summary of research about the Iris dataset
+
+The Iris dataset is....
+Fisher’s Iris data set [3]
+
+What I would like to determine about the Iris dataset: 
+- What information the database contains: The names of the rows and columns
+- I would like to know are there any blank data cells.
+- Summary statistics of the measures e.g. I would like to find the mean of each measure. 
+- I would also like to know the standard deviation 
+- I would like to test whether each measure is distributed normally so that I can decide what statistical tests can be used 
+- I would then like to do some comparisons. I would like to know if there are statistical differences between *hte variability" of each measure for the classes of Iris e.g. petal width setosa versus petal width other two (if varying normally, I could do one check at a time doing t-tests or altogehter using ANOVA). 
+- I would like to plot relationships between the measures as a whole, and then boken down per class and determine the R^2 value for each relationship. 
+- Have a look at additional analyses others have done. 
+- Look at any interesting python coding using the Iris dataset
