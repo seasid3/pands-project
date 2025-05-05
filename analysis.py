@@ -10,6 +10,7 @@ from median import column_median # Import the function from median.py
 from std_dev import column_std_dev # Import the function from std_dev.py
 from min import column_min # Import the function from min.py
 from max import column_max # Import the function from max.py
+from normality import column_shapiro # Import the function from normality.py
 
 # Task 1: Import the dataset as a pandas dataframe
 # I know from the downloaded zip file "iris.names" from https://archive.ics.uci.edu/dataset/53/iris that the 
@@ -33,7 +34,7 @@ iris = pd.read_csv('iris.csv', delimiter =',', names = ['sepal_length', 'sepal_w
 features = ['sepal_length', 'sepal_width', 'petal_length', 'petal_width']
 # print(features) # sanity check
 
-# Analysis 1: 
+# Task 2, Analysis 1: Summary statistics of the dataset.
 
 # I first created the following code, which was great to get my head around the coding for simple analysis of 
 # a pandas df. See README.md Task 1 "Review of summary statistics code" for further dicussion. Using ChatGPT 
@@ -107,5 +108,14 @@ stats_df = pd.DataFrame({
 
 print(stats_df)
 
-# Can I do this now but split out per class of iris 
+# Task 2, Analysis 2: Test for normality of the data using the Shapiro-Wilk test.
 
+# Using the above loop and the function I wrote in normality.py, I will test each feature for normality using the
+# Shapiro-Wilk test. The p-value will be stored in a pandas dataframe for viewing.
+
+shapiro_df = pd.DataFrame({
+    'Feature': features,
+    'Normality p-value': [column_shapiro(iris, feature) for feature in features]
+})
+
+print(shapiro_df)

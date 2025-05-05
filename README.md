@@ -63,16 +63,17 @@ Happy with the csv import, creating .py files (modules) for each statistical cal
 
 - Analysis 1: Summary statistics
 As I do in most of my work, for the first step into analysis of the database, I will determine summary statistics for each attribule (measure) within the database. I will also, look at the Iris class types. Summary statistics include the mean, median, standard deviation, minimum and maximum etc. I will check these against the summary statistics in the database source (https://archive.ics.uci.edu/dataset/53/iris) as a further sanity check.
-- Prior to conducting further analysis, I would like to test whether each measure/attribute is distributed normally so that I can decide what statistical tests of comparison can be used on the dataset,
-- I would then like to do some comparisons. I would like to know if there are statistical differences between *the variability" of each measure for the classes of Iris e.g. petal width setosa versus petal width other two (if varying normally, I could do one check at a time doing t-tests or altogehter using ANOVA). 
-- I would like to plot relationships between the measures as a whole, and then boken down per class and determine the R^2 value for each relationship. 
-- Looking at additional analyses others have done and following review, I will carry out similar analysis 
-- Researching if there are any other additional interesting python coding others have carried out using the Iris dataset, I will attempt this
+- Analysis 2: Prior to conducting further analysis, I would like to test whether each measure/attribute is distributed normally so that I can decide what statistical tests of comparison can be used on the dataset,
+- Analysis 3: I would then like to do some comparisons. I would like to know if there are statistical differences between *the variability" of each measure for the classes of Iris e.g. petal width setosa versus petal width other two (if varying normally, I could do one check at a time doing t-tests or altogehter using ANOVA). 
+- Analysis 4: I would like to plot relationships between the measures as a whole, and then boken down per class and determine the R^2 value for each relationship. 
+- Analysis 5: Looking at additional analyses others have done and following review, I will carry out similar analysis 
+- Analysis 6: Researching if there are any other additional interesting python coding others have carried out using the Iris dataset, I will attempt this
 
 The coding of each of the above statistical methods, along with any associated references, is discussed in detail in the specific sections below.    
 
-## *Analysis 1: Summary Statistics*
-### *1.1 Mean*
+## *Task 2, Analysis 1: Summary Statistics*  
+
+### *Mean*
  The first aim of this analysis is to write code to create a function (mean.py) that can be used to calculate the mean for each of the columns/features/attributes (from now on only referred to features) regardless of their iris class. Attempting code using "features" (from Ian's lectures) and investigating the errors, I got an error message 'DataFrame' object has no attribute 'feature_names', I realised that I was working with a numpy array with Ian's work and not a pandas dataframe (df). Researching the error message ((https://stackoverflow.com/questions/49966639/attributeerror-dataframe-object-has-no-attribute-target-names-scikit/49971214)), I know that I need to use the columns of the dataframe to get the mean of the features. I try to use "header" to get into the columns, I realise (again, due to the errors I am receiveing) that using header to get into the columns in a pandas dataframe isn't the right approach, I will try to use the ".columns" approach (https://www.geeksforgeeks.org/python-basics-of-pandas-using-iris-dataset/). 
  Finding the mean_iris = data[].mean() code (https://www.geeksforgeeks.org/python-basics-of-pandas-using-iris-dataset/, see official documentation: https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.mean.html), I use this to find the mean of the sepal length as an example but I acutally want to get a function that is not tied to a viariable and can be imported into analysis.py and used for any variable I want. So I need to keep looking. Google was returning answers that were not specifically addressing the question so I asked ChatGPT (see conversation: https://chatgpt.com/share/6818a76b-8cb0-800d-b88c-9883f38ffd8e). I dont copy the suggested code directly but use the response to write my own code for the iris dataframe I imported (hoping this works!).  
 
@@ -80,15 +81,42 @@ I try to use the code I wrote in mean.py to calculate the feature means in the a
 
 Going to the analysis.py document and trying to run the mean function, I get the error "No module named 'mean.py'; 'mean' is not a package", asking ChatGPT (see conversation: https://chatgpt.com/share/6818b114-6f04-800d-96ca-977ab4f4f269) I see I need to delete .py in the import. It really is the small things! Fixing this returns the means of each of the columns (phew!).
 
-1.2 Median  
+### *1.2 Median*  
 Copying the working code from mean.py into a new file called median.py and changing the function to "median_data = data["SepalLengthCm"].median()" (reference: https://www.geeksforgeeks.org/python-basics-of-pandas-using-iris-dataset/, see official documentation: https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.median.html) 
 
-1.3 Standard Deviation  
+### *Standard Deviation*  
 Copy the working code from mean.py into a new file called std_dev.py and changing the function to "std_dev = data["SepalLengthCm"].std()" (see official documentation: https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.std.html). 
 
-1.4 Minium and Maximum Values  
+### *Minium and Maximum Values*  
 Copy the working code from mean.py into new files called min.py and max.py changing the function to "min = data["SepalLengthCm"].min()" and "min = data["SepalLengthCm"].max()", respectively (see official documentation: https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.min.html#pandas.DataFrame.min and https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.max.html#pandas.DataFrame.max). I tried to write the min and max functions in the one min_and_max.py file but it didnt like having the two functions together (red error marks) so I split them out.
 
-Review of summary statistics code:  
+#### *Review of summary statistics code:*  
 Although I wrote code that adequately finds the mean, median, standard deviation, minimum and maximum value of each coummn/iris database feature (which was great to get my head around the coding for simple analysis of 
-a pandas df), I knew from lectures this is long and unnecessary so I asked ChatGPT can I generalise the use of these functions (see conversation: https://chatgpt.com/share/6818c100-8c88-800d-a0ca-4b69f0cda31c) for improved efficiency. Taking the advice, I imporoved the code and commented out the first itteration of the code I wrote. 
+a pandas df), I knew from lectures this is long and unnecessary so I asked ChatGPT can I generalise the use of these functions (see conversation: https://chatgpt.com/share/6818c100-8c88-800d-a0ca-4b69f0cda31c) for improved efficiency. Taking the advice, I used a loop to imporove the code and commented out the first itteration of the code I wrote. This code/output was highly prefereable and much easier to read than doing it separately and manually, as I had been. 
+
+The final output is an easily readable DataFrame: 
+
+        Feature  Mean (cm)  Median (cm)  Standard Deviation (cm)  Minimum (cm)  Maximum (cm)
+0  sepal_length   5.843333         5.80                 0.828066           4.3           7.9
+1   sepal_width   3.057333         3.00                 0.435866           2.0           4.4
+2  petal_length   3.758000         4.35                 1.765298           1.0           6.9
+3   petal_width   1.199333         1.30                 0.762238           0.1           2.5
+
+I was going to next calculate the mean etc. for each of the features for each class of iris but statistics experience to date has led me to believe that this calculation will possibly be done as part of the comparison statistics I will carry out late so I will leave this for now. If the descriptive statistics for each feature of of each iris class is not a by product of subsequent analysis, I will return to do this later. 
+
+## *Task 2, Analysis 2: Test for Normality*  
+Researching a statistical test for normality (the Shapiro-Wilk Test), I see that I can do this useing SciPy. Therefore, the first thing I will do is create a normality.py file in th erepository and from SciPy, I will import stats (https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.shapiro.html). Attempting to write the code myself, using the mean.py file as a basis, I encounter the following error "AttributeError: 'DataFrame' object has no attribute 'column_shapiro'". Therefore, I asked ChatGPT why this is (see conversation: https://chatgpt.com/share/6818cd9a-efc0-800d-a587-0c778458271d). I follow the suggestions and run a sanity check. The Shapiro-Wilk test tests the null hypotheses that the data varies normally. A low value (converted from decimal to percentage) implies that threre is that for that percentage, there is that chance if observing the data under examination if it was truely normally distributed, leading to a rejection of the null hypothesis that the data is distributed normally (see: https://en.wikipedia.org/wiki/Shapiro%E2%80%93Wilk_test). Importing the function into the analysis.py file, I can check each feature for normal distribution. The output, as before, is a DataFrame which is great for readability/use:
+
+        Feature  Normality p-value
+0  sepal_length       1.018116e-02
+1   sepal_width       1.011543e-01
+2  petal_length       7.412263e-10
+3   petal_width       1.680465e-08
+
+Interperetation: 
+Sepal length: the p-value is 0.018116 (i.e. <2%)
+Sepal width: the p-value is 0.1011543 (i.e. ~10%)
+Petal length: the p-value is 0.0000000007412263 (i.e. <0.001%)
+Petal width: the p-value is 0.00000001680465 (i.e. < 0.001%)
+As each of these values is very low (all <11%, it implies that there is a very low chance the observed data came from a normal distribution and the null hypotheses of normal distribution is rejected. This will impact the decsions on what analysis should be done on these data.
+However, when I compare my results to others' work [(](https://www.kaggle.com/code/aniketg11/iris-dataset-with-statistical-tests)) they find that sepal width does vary normally, while the others do not. Also, I realise, looking at this source that I can code to give a statement depending on p-value so I don't have to do this interperetation step myself. I return to the code to try to do this. 
