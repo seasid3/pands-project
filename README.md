@@ -113,10 +113,10 @@ Researching a statistical test for normality (the Shapiro-Wilk Test), I see that
 2  petal_length       7.412263e-10
 3   petal_width       1.680465e-08
 
-Interperetation: 
+Interperetation (using significance level 0.05, i.e. 5%): 
 Sepal length: the p-value is 0.018116 (i.e. <2%)
 Sepal width: the p-value is 0.1011543 (i.e. ~10%)
 Petal length: the p-value is 0.0000000007412263 (i.e. <0.001%)
 Petal width: the p-value is 0.00000001680465 (i.e. < 0.001%)
-As each of these values is very low (all <11%, it implies that there is a very low chance the observed data came from a normal distribution and the null hypotheses of normal distribution is rejected. This will impact the decsions on what analysis should be done on these data.
-However, when I compare my results to others' work [(](https://www.kaggle.com/code/aniketg11/iris-dataset-with-statistical-tests)) they find that sepal width does vary normally, while the others do not. Also, I realise, looking at this source that I can code to give a statement depending on p-value so I don't have to do this interperetation step myself. I return to the code to try to do this. 
+Three of these values (sepal length, petal length and petal width) are below the significance level of 0.05, i.e. p < 0.05, meaning that that there is a very low chance the observed data came from a normal distribution and the null hypotheses of normal distribution is rejected. The p-value of sepal width (p = 0.1011543) is p>0.05, meaning that there is a significant amount of confidence that the null hypothesis (the data varies normally) cannot be rejected and so the data varys normally. These results will impact the decsions on what analysis should be done on these data.
+However, when I compare my results to others' work to check my findings, (https://www.kaggle.com/code/aniketg11/iris-dataset-with-statistical-tests), I realise that I can code to give a statement depending on p-value so I don't have to do this interperetation step myself. I return to the code to try to do this. 
