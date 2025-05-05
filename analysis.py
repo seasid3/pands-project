@@ -107,5 +107,5 @@ stats_df = pd.DataFrame({
 
 print(stats_df)
 
-
+# Can I do this now but split out per class of iris 
 
