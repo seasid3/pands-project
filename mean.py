@@ -5,7 +5,7 @@
 import pandas as pd
 
 # Import the dataset as a pandas dataframe (while writing the function but commenting out when function is complete)
-iris = pd.read_csv('iris.csv', delimiter =',', names = ['sepal_length', 'sepal_width', 'petal_length', 'petal_width', 'species'])	
+# iris = pd.read_csv('iris.csv', delimiter =',', names = ['sepal_length', 'sepal_width', 'petal_length', 'petal_width', 'species'])	
 
 # View database (sanity check)
 # print(iris)  

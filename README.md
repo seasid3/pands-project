@@ -62,7 +62,7 @@ The documentation at the soure says there are no blank cells but if this wasn't 
 Happy with the csv import, creating module .py files for each of the following and incorporating them into the analysis.py project file, I will carry out the following analysis on the Iris database, the coding of each, along with any associated references, is discussed in detail the specific sections below.   
 
 - Analysis 1: Summary statistics
-As I do in most of my work, for the first step into analysis of the database, I will determine summary statistics for each attribule (measure) within the database. I will also, look at the Iris class types. Summary statistics include the mean, mode, median, standard deviation, etc. I will check these against the summary statistics in the database source (https://archive.ics.uci.edu/dataset/53/iris) as a further sanity check.
+As I do in most of my work, for the first step into analysis of the database, I will determine summary statistics for each attribule (measure) within the database. I will also, look at the Iris class types. Summary statistics include the mean, median, standard deviation, minimum and maximum etc. I will check these against the summary statistics in the database source (https://archive.ics.uci.edu/dataset/53/iris) as a further sanity check.
 - Prior to conducting further analysis, I would like to test whether each measure/attribute is distributed normally so that I can decide what statistical tests of comparison can be used on the dataset,
 - I would then like to do some comparisons. I would like to know if there are statistical differences between *the variability" of each measure for the classes of Iris e.g. petal width setosa versus petal width other two (if varying normally, I could do one check at a time doing t-tests or altogehter using ANOVA). 
 - I would like to plot relationships between the measures as a whole, and then boken down per class and determine the R^2 value for each relationship. 
@@ -80,5 +80,12 @@ Going to the analysis.py document and trying to run the mean function, I get the
 1.2 Median 
 Copying the working code from mean.py into a new file called median.py and changing the function to "median_data = data["SepalLengthCm"].median()" (reference: https://www.geeksforgeeks.org/python-basics-of-pandas-using-iris-dataset/, see official documentation: https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.median.html) 
 
+1.3 Standard Deviation
+Copy the working code from mean.py into a new file called std_dev.py and changing the function to "std_dev = data["SepalLengthCm"].std()" (see official documentation: https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.std.html). 
 
+1.4 Minium and Maximum Values
+Copy the working code from mean.py into new files called min.py and max.py changing the function to "min = data["SepalLengthCm"].min()" and "min = data["SepalLengthCm"].max()", respectively (see official documentation: https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.min.html#pandas.DataFrame.min and https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.max.html#pandas.DataFrame.max). I tried to write the min and max functions in the one min_and_max.py file but it didnt like having the two functions together (red error marks) so I split them out.
 
+Review of summary statistics code:
+Although I wrote code that adequately finds the mean, median, standard deviation, minimum and maximum value of each coummn/iris database feature (which was great to get my head around the coding for simple analysis of 
+a pandas df), I knew from lectures this is long and unnecessary so I asked ChatGPT can I generalise the use of these functions (see conversation: https://chatgpt.com/share/6818c100-8c88-800d-a0ca-4b69f0cda31c) for improved efficiency. Taking the advice, I imporoved the code and commented out the first itteration of the code I wrote. 
