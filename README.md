@@ -55,7 +55,7 @@ c) I have the opportunity to think about what analysis I would like to do.
 
 I know (from the iris.names file) there should be 150 instances/rows (50 for each of the three Iris classes) and 4 attributes/columns (sepal length, sepal width, petal length and petal width) in the database. The output in my terminal when I do the sanity check using the "print()" function shows the first 5 and last 5 rows. I commented out the sanity check when I was happy with the import (thankfully, it worked first time). Additionally, I ran the sanity check "print(iris[34:38]) " to check the corrected rows (https://archive.ics.uci.edu/dataset/53/iris) have been imported correctly.  
 
-The documentation at the soure says there are no blank cells but if this wasn't the case, I would look at this (using the "isnull()" pandas function, see official documentation https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.isnull.html#pandas.DataFrame.isnull).   
+The documentation at the soure says there are no blank cells but if this wasn't the case, I would look at this (using the "isnull()" pandas function, see official documentation https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.isnull.html#pandas.DataFrame.isnull). I do decide to run the .info() to check the dataset for consistency (see reference: https://www.kaggle.com/code/aniketg11/iris-dataset-with-statistical-tests and official documentation: https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.info.html).
 
 # *Task 2: Analysis of the Iris database: Overview*
 
@@ -119,4 +119,17 @@ Sepal width: the p-value is 0.1011543 (i.e. ~10%)
 Petal length: the p-value is 0.0000000007412263 (i.e. <0.001%)
 Petal width: the p-value is 0.00000001680465 (i.e. < 0.001%)
 Three of these values (sepal length, petal length and petal width) are below the significance level of 0.05, i.e. p < 0.05, meaning that that there is a very low chance the observed data came from a normal distribution and the null hypotheses of normal distribution is rejected. The p-value of sepal width (p = 0.1011543) is p>0.05, meaning that there is a significant amount of confidence that the null hypothesis (the data varies normally) cannot be rejected and so the data varys normally. These results will impact the decsions on what analysis should be done on these data.
-However, when I compare my results to others' work to check my findings, (https://www.kaggle.com/code/aniketg11/iris-dataset-with-statistical-tests), I realise that I can code to give a statement depending on p-value so I don't have to do this interperetation step myself. I return to the code to try to do this. 
+However, when I compare my results to others' work to check my findings, (https://www.kaggle.com/code/aniketg11/iris-dataset-with-statistical-tests), I realise that I can code to give a statement depending on p-value so I don't have to do this interperetation step myself. I return to the code to do this. Attempting code, I ask ChatGPT for help (see conversation: https://chatgpt.com/share/681a57b5-47cc-800d-b9ec-04dbb71ce441). 
+
+The output of the Shapiro-Wilk test for normality is:
+
+Shapiro-Wilk test for normality:
+The p-value for sepal_length is 0.0102 (p<0.05). The data deviates from normal distribution (reject null hypothesis).
+The p-value for sepal_width is 0.1012 (p>0.05). The data are likely normally distributed.
+The p-value for petal_length is 0.0000 (p<0.05). The data deviates from normal distribution (reject null hypothesis).
+The p-value for petal_width is 0.0000 (p<0.05). The data deviates from normal distribution (reject null hypothesis).
+
+I went back and added print() througout the analysis.py file to insert blank lines to aid readability (https://www.reddit.com/r/learnpython/comments/uqajbh/how_to_print_space_between_output_lines/).
+
+
+

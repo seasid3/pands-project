@@ -30,18 +30,19 @@ iris = pd.read_csv('iris.csv', delimiter =',', names = ['sepal_length', 'sepal_w
 # sanity check to check the corrected rows (https://archive.ics.uci.edu/dataset/53/iris) have been imported correctly.
 # print(iris[34:38])  
 
-# So I can use the column in the analysis, I will list the feature names
+# So I can use the column in the analysis, I will define the feature names
 features = ['sepal_length', 'sepal_width', 'petal_length', 'petal_width']
 # print(features) # sanity check
 
-# Task 2, Analysis 1: Summary statistics of the dataset.
-
+# Running data.info() shows that the data types are correct, and that there are no missing values.
+print() # insert a blank line for readability
+iris.info() # summary information about the dataset
+print() # insert a blank line for readability 
 # I first created the following code, which was great to get my head around the coding for simple analysis of 
 # a pandas df. See README.md Task 1 "Review of summary statistics code" for further dicussion. Using ChatGPT 
 # feedback on improving efficiency (see conversation: 
 # https://chatgpt.com/share/6818c100-8c88-800d-a0ca-4b69f0cda31c), the code has been imporoved (original code 
 # commented out). 
-
 '''
 # Calculate means of the columns/features in the dataset, using the function I wrote in mean.py
 mean_sepal_length = column_mean(iris, 'sepal_length')
@@ -93,10 +94,11 @@ print(f"Minimum sepal width: {min_sepal_width}cm, maximum sepal width: {max_sepa
 print(f"Minumum petal length: {min_petal_length}cm, maximum petal length: {max_petal_length}cm") 
 print(f"Minumum petal width: {min_petal_width}cm, maximum petal width: {max_petal_width}cm")
 '''
-# Instead of the above code, based on the feedback from the above referenced conversation with ChatGPT, use
+# Instead of the code I have commented out, based on the feedback from the above referenced conversation with ChatGPT, use
 # a loop to iterate through the features and calculate each value (mean, median, etc.) for each feature, using 
 # code written in mean.py, median.py, std_dev.py, min.py and max.py. This  will be stored in a pandas dataframe 
 # for viewing. 
+print("\n\nSummary statistics of the dataset:")
 stats_df = pd.DataFrame({
     'Feature': features,
     'Mean (cm)': [column_mean(iris, feature) for feature in features],
@@ -105,17 +107,33 @@ stats_df = pd.DataFrame({
     'Minimum (cm)': [column_min(iris, feature) for feature in features],
     'Maximum (cm)': [column_max(iris, feature) for feature in features]
 })
-
 print(stats_df)
+print() # insert a blank line for readability
 
 # Task 2, Analysis 2: Test for normality of the data using the Shapiro-Wilk test.
 
 # Using the above loop and the function I wrote in normality.py, I will test each feature for normality using the
 # Shapiro-Wilk test. The p-value will be stored in a pandas dataframe for viewing.
 
+print("\n\nShapiro-Wilk test for normality:")
 shapiro_df = pd.DataFrame({
     'Feature': features,
     'Normality p-value': [column_shapiro(iris, feature) for feature in features]
 })
 
-print(shapiro_df)
+# Set the significance level for the Shapiro-Wilk test
+alpha = 0.05 
+
+# Interpret the results of the Shapiro-Wilk test for each feature
+for index, row in shapiro_df.iterrows():
+    feature = row['Feature']
+    normality_p_value = row['Normality p-value']
+    
+    if normality_p_value > alpha:
+        print(f"The p-value for {feature} is {normality_p_value:.4f} (p>{alpha}). The data are likely normally distributed.")
+    else:
+        print(f"The p-value for {feature} is {normality_p_value:.4f} (p<{alpha}). The data deviates from normal distribution (reject null hypothesis).")
+print() # insert a blank line for readability
+
+# Task 3, Analysis 3: Visualise the data using histograms and boxplots.
+
