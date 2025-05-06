@@ -22,22 +22,23 @@ from normality import column_shapiro # Import the function from normality.py
 iris = pd.read_csv('iris.csv', delimiter =',', names = ['sepal_length', 'sepal_width', 'petal_length', 'petal_width', 'species'])	
 
 # Before any analysis, run sanity checks and look at the database:
-
-# Check the iris dataset is correctly imported and the column names are correct. Output shows the first
-# 5 rows of the dataset.
+# write code below to check the iris dataset is correctly imported and the column names are correct. 
+# Output shows the first # 5 rows of the dataset.
 # print(iris) # sanity check 
 
 # sanity check to check the corrected rows (https://archive.ics.uci.edu/dataset/53/iris) have been imported correctly.
 # print(iris[34:38])  
 
-# So I can use the column in the analysis, I will define the feature names
+# So I can use the columns in the analysis, I will define the feature names
 features = ['sepal_length', 'sepal_width', 'petal_length', 'petal_width']
 # print(features) # sanity check
 
 # Running data.info() shows that the data types are correct, and that there are no missing values.
 print() # insert a blank line for readability
 iris.info() # summary information about the dataset
-print() # insert a blank line for readability 
+
+print("\n\nSummary statistics of the dataset:")
+
 # I first created the following code, which was great to get my head around the coding for simple analysis of 
 # a pandas df. See README.md Task 1 "Review of summary statistics code" for further dicussion. Using ChatGPT 
 # feedback on improving efficiency (see conversation: 
@@ -98,7 +99,7 @@ print(f"Minumum petal width: {min_petal_width}cm, maximum petal width: {max_peta
 # a loop to iterate through the features and calculate each value (mean, median, etc.) for each feature, using 
 # code written in mean.py, median.py, std_dev.py, min.py and max.py. This  will be stored in a pandas dataframe 
 # for viewing. 
-print("\n\nSummary statistics of the dataset:")
+
 stats_df = pd.DataFrame({
     'Feature': features,
     'Mean (cm)': [column_mean(iris, feature) for feature in features],
@@ -115,14 +116,14 @@ print() # insert a blank line for readability
 # Using the above loop and the function I wrote in normality.py, I will test each feature for normality using the
 # Shapiro-Wilk test. The p-value will be stored in a pandas dataframe for viewing.
 
+# Set the significance level for the Shapiro-Wilk test
+alpha = 0.05 
+
 print("\n\nShapiro-Wilk test for normality:")
 shapiro_df = pd.DataFrame({
     'Feature': features,
     'Normality p-value': [column_shapiro(iris, feature) for feature in features]
 })
-
-# Set the significance level for the Shapiro-Wilk test
-alpha = 0.05 
 
 # Interpret the results of the Shapiro-Wilk test for each feature
 for index, row in shapiro_df.iterrows():
@@ -133,6 +134,39 @@ for index, row in shapiro_df.iterrows():
         print(f"The p-value for {feature} is {normality_p_value:.4f} (p>{alpha}). The data are likely normally distributed.")
     else:
         print(f"The p-value for {feature} is {normality_p_value:.4f} (p<{alpha}). The data deviates from normal distribution (reject null hypothesis).")
+print() # insert a blank line for readability
+
+# Analyse the features of each of the iris species for normality using the Shapiro-Wilk test.
+# The species are setosa, versicolor and virginica. I will use the same loop as above to iterate through the
+# features and calculate the p-value for each species.
+print("\n\nShapiro-Wilk test for normality by species:")
+
+unique_species = iris['species'].unique() # Get the unique species in the dataset suggested here by co-pilot.
+features = iris.select_dtypes(include='number').columns.drop('target', errors = 'ignore')
+
+# Store results
+results = [] 
+for sp in unique_species:
+    subset = iris[iris['species'] == sp]
+    for feature in features:
+        try:
+            p = column_shapiro(subset, feature)
+            results.append({'Species': sp, 'Feature': feature, 'Normality p-value': p})
+        except (KeyError, TypeError) as e:
+            print(f"Skipping ({sp}, {feature}): {e}")
+
+shapiro_species_df = pd.DataFrame(results)
+
+# As above, interpret the results of the Shapiro-Wilk test for each species and feature
+for index, row in shapiro_species_df.iterrows():
+     sp = row['Species']
+     feature = row['Feature']
+     p_val = row['Normality p-value']
+
+     if p_val > alpha:
+        print(f"The p-value for {sp}, {feature} is {p_val:.4f} (p>{alpha}). The data are likely normally distributed.")
+     else:
+        print(f"The p-value for {sp}, {feature} is {p_val:.4f} (p<{alpha}). The data deviates from normal distribution (reject null hypothesis).")
 print() # insert a blank line for readability
 
 # Task 3, Analysis 3: Visualise the data using histograms and boxplots.

@@ -63,7 +63,7 @@ Happy with the csv import, creating .py files (modules) for each statistical cal
 
 - Analysis 1: Summary statistics
 As I do in most of my work, for the first step into analysis of the database, I will determine summary statistics for each attribule (measure) within the database. I will also, look at the Iris class types. Summary statistics include the mean, median, standard deviation, minimum and maximum etc. I will check these against the summary statistics in the database source (https://archive.ics.uci.edu/dataset/53/iris) as a further sanity check.
-- Analysis 2: Prior to conducting further analysis, I would like to test whether each measure/attribute is distributed normally so that I can decide what statistical tests of comparison can be used on the dataset,
+- Analysis 2: Prior to conducting further analysis, I would like to test whether each measure/attribute is distributed normally so that I can decide what statistical tests of comparison can be used on the dataset. I would also like to look at whether I can code to check the features of each iris class for normality.
 - Analysis 3: I would then like to do some comparisons. I would like to know if there are statistical differences between *the variability" of each measure for the classes of Iris e.g. petal width setosa versus petal width other two (if varying normally, I could do one check at a time doing t-tests or altogehter using ANOVA). 
 - Analysis 4: I would like to plot relationships between the measures as a whole, and then boken down per class and determine the R^2 value for each relationship. 
 - Analysis 5: Looking at additional analyses others have done and following review, I will carry out similar analysis 
@@ -128,6 +128,28 @@ The p-value for sepal_length is 0.0102 (p<0.05). The data deviates from normal d
 The p-value for sepal_width is 0.1012 (p>0.05). The data are likely normally distributed.
 The p-value for petal_length is 0.0000 (p<0.05). The data deviates from normal distribution (reject null hypothesis).
 The p-value for petal_width is 0.0000 (p<0.05). The data deviates from normal distribution (reject null hypothesis).
+
+I then tried to further investigate normality of the features for each of the Iris classes (species). This was very difficult so I asked ChatGPT for help (https://chatgpt.com/share/681a62fd-b794-800d-a0a1-ed0e6166f0f4). I understand that here, I define species, and then incorporate species, as well as feature, into the column_shapiro function I wrote in normality.py. The results are converted to a pandas dataframe. The output is:
+
+Shapiro-Wilk test for normality by species:
+The p-value for Iris-setosa, sepal_length is 0.4595 (p>0.05). The data are likely normally distributed.
+The p-value for Iris-setosa, sepal_width is 0.2715 (p>0.05). The data are likely normally distributed.
+The p-value for Iris-setosa, petal_length is 0.0548 (p>0.05). The data are likely normally distributed.
+The p-value for Iris-setosa, petal_width is 0.0000 (p<0.05). The data deviates from normal distribution (reject null hypothesis).
+The p-value for Iris-versicolor, sepal_length is 0.4647 (p>0.05). The data are likely normally distributed.
+The p-value for Iris-versicolor, sepal_width is 0.3380 (p>0.05). The data are likely normally distributed.
+The p-value for Iris-versicolor, petal_length is 0.1585 (p>0.05). The data are likely normally distributed.
+The p-value for Iris-versicolor, petal_width is 0.0273 (p<0.05). The data deviates from normal distribution (reject null hypothesis).     
+The p-value for Iris-virginica, sepal_length is 0.2583 (p>0.05). The data are likely normally distributed.
+The p-value for Iris-virginica, sepal_width is 0.1809 (p>0.05). The data are likely normally distributed.
+The p-value for Iris-virginica, petal_length is 0.1098 (p>0.05). The data are likely normally distributed.
+The p-value for Iris-virginica, petal_width is 0.0870 (p>0.05). The data are likely normally distributed.
+
+## *Task 3: Explore relationships between the features* 
+
+
+
+
 
 I went back and added print() througout the analysis.py file to insert blank lines to aid readability (https://www.reddit.com/r/learnpython/comments/uqajbh/how_to_print_space_between_output_lines/).
 
