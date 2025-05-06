@@ -145,7 +145,21 @@ The p-value for Iris-virginica, sepal_width is 0.1809 (p>0.05). The data are lik
 The p-value for Iris-virginica, petal_length is 0.1098 (p>0.05). The data are likely normally distributed.
 The p-value for Iris-virginica, petal_width is 0.0870 (p>0.05). The data are likely normally distributed.
 
-## *Task 3: Explore relationships between the features* 
+## *Task 3: Visualise the data*
+I would like to visualise the data using the matplotlib function .hist(). I don't think I need to create a separate histograms.py file for this function as it is a global function which will allow me to pass features through it, as it stands (official documentation: https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.hist.html), see use of colors (official documentation: https://matplotlib.org/stable/users/explain/colors/colors.html), adding title and axis labels (https://www.w3schools.com/python/matplotlib_labels.asp and https://matplotlib.org/stable/users/explain/text/text_intro.html). 
+Asking ChatGPT to review and help with my code (see conversation: https://chatgpt.com/share/681a8af6-5d40-800d-ad4e-e74462ddf431)
+
+Outputs in matplotlib are the following png files which are save in the repository:
+- sepal_length.png
+- sepal_width.png
+- petal_length.png
+- petal_width.png
+- all_features_iris_one_histogram.png 
+
+Just to see what it I would be like, for my own interest, I would like to see can the code be modified to show a histogram for each iris class, showing the four features of that iris class. I had already defined "unique_species = iris['species'].unique()" to pull the species categories out of the database (see official documentation: https://pandas.pydata.org/docs/reference/api/pandas.unique.html) in the code above so I didnt have to do it again. Species colours are defined, as are the pattern/hatches shown for each feature. 
+The output is a matplotlib.pyplot which is saved as all_features_by_species_iris_one_histogram.png, it is very hard to read as there is too much information so I wouldn't bother doing this again. I have commented out the code in analysis.py as I dont want it to run but I really wanted to see this was possible and what it looked like (heavily relying on ChatGPT but it is more than I wanted to do,just took the opportunity to have a look).
+
+## *Task 4: Explore relationships between the features* 
 
 
 

@@ -4,6 +4,7 @@
 # Author: Orla Woods
 
 # Import the necessary libraries
+import numpy as np
 import pandas as pd
 from mean import column_mean # Import the function from mean.py
 from median import column_median # Import the function from median.py
@@ -11,6 +12,7 @@ from std_dev import column_std_dev # Import the function from std_dev.py
 from min import column_min # Import the function from min.py
 from max import column_max # Import the function from max.py
 from normality import column_shapiro # Import the function from normality.py
+import matplotlib.pyplot as plt
 
 # Task 1: Import the dataset as a pandas dataframe
 # I know from the downloaded zip file "iris.names" from https://archive.ics.uci.edu/dataset/53/iris that the 
@@ -169,5 +171,73 @@ for index, row in shapiro_species_df.iterrows():
         print(f"The p-value for {sp}, {feature} is {p_val:.4f} (p<{alpha}). The data deviates from normal distribution (reject null hypothesis).")
 print() # insert a blank line for readability
 
-# Task 3, Analysis 3: Visualise the data using histograms and boxplots.
+# Task 3: Visualise the data using histograms, prior to conducting omparisons.
 
+# matplotlib.pyplot imported at the top of this file. 
+
+# define the histogram function using .hist()
+colors = ["b", "r", "g", "y"]
+features = ['sepal_length', 'sepal_width', 'petal_length', 'petal_width'] 
+
+'''
+# The following code creates separate histograms (saved as .png files in the repository) but I would like
+# to plot them on one set of axes.
+
+for feature, colour in zip(features, colors): # The zip() function ito pair features to colours
+    plt.hist(iris[feature], color=colour, edgecolor="black", alpha=0.5) # keep bins at default 10 # one histogram per feature
+    plt.title(f"Histogram of {feature.replace('_',' ').title()}") # removes _ and capitalises first letter of words
+    plt.xlabel(f"{feature .replace('_',' ' ).title()} (cm)")
+    plt.ylabel("Frequency") 
+    plt.grid(False)
+    plt.show()
+'''
+
+# For all histograms on one set of axes:
+
+for feature, colour in zip(features, colors): # The zip() function ito pair features to colours
+    plt.hist(iris[feature], color=colour, edgecolor="black", alpha=0.5, label=feature.replace('_', ' ').title()) # keep bins at default 10 # one histogram per feature
+
+# Add title, axis labels and legend
+plt.title("Histogram of Iris Features") 
+plt.xlabel("Feature measurement (cm)")
+plt.ylabel("Frequency") 
+plt.legend() 
+plt.grid(False)
+plt.show()
+
+'''
+The following code produces too many histograms on the one plot so I am commenting it out. 
+
+# Modifying the code to produce a single histogram showing classes (defined by colour) and the features of the
+# class displayed by pattern. 
+
+# Unique_species defined in code above
+
+# Define the different styles and colours
+species_colours = {"Iris-setosa": "blue", "Iris-versicolor": "green", "Iris-virginica": "red"}
+feature_hatches = {'sepal_length': '/', 'sepal_width': '\\', 'petal_length': '-', 'petal_width': 'x'}
+
+# For all histograms on one set of axes:
+
+for species in unique_species:
+    for feature in features:
+        data = iris[iris['species'] == species][feature]
+        plt.hist(
+                 data, 
+                 bins = 10,
+                 alpha=0.4,
+                 label=f"{species} - {feature.replace('_', ' ').title()}",
+                 color=species_colours[species], 
+                 hatch=feature_hatches[feature],
+                 edgecolor="black", 
+        )
+
+# Add title, axis labels and legend
+plt.title("Histogram of Iris Features by Species") 
+plt.xlabel("Feature measurement (cm)")
+plt.ylabel("Frequency") 
+plt.legend(fontsize='small', bbox_to_anchor=(1.05, 1), loc= 'upper left') # adjust legend to prevent overlap
+plt.tight_layout() 
+plt.grid(False)
+plt.show()
+'''
