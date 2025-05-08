@@ -176,12 +176,19 @@ The pairplot subplots show the relationship between each set of features. Along 
 
 ## *Analysis 5: Explore relationships between features using statistical methods*
 
-As I have looked at the relationship between the features using pairplot(), a nice short piece of code which saved me from having to generate and save multiple scatterplots, 
+As I have looked at the relationship between the features using pairplot(), and at one relationship (petal length and petal width) using a scatterplot (seaborn), I now want to investigate relationships statistically. To evalute if variables are linearly related, I first need to fit a best fit line (using linregress, see official documentation) and then I need to determine the R value (Pearson coefficient, see reference:) which will indicate presence or lack of correlation. I can also square the R value to get the R squared value which will also indicate the presence or lack of correlation.  
+Importing the stats module from scipy at the top of analysis.py, I can use the scipy linregress() function (see official documentation: https://docs.scipy.org/doc/scipy-1.15.2/reference/generated/scipy.stats.linregress.html) 
+I can use the linregress() function for two sets of known variables  
+(e.g.  
+result = linregress(x = sepal_length, y = sepal_width)  
+print(result.intercept, result.slope, result.rvalue)) 
+but struggled to make the jump to more efficient code which could iterate through all probable pairs of features, rather than listing each pair manually, using the code as in my previous example so I asked ChatGPT (see conversation: https://chatgpt.com/share/681d1af9-4b80-800d-aaff-f0e445b058ee). I will also try to automate the generation of the $R^2$ values for each features relationship.
+The output from the linear regression shows the following: 
 
 
 
 
-
+I also want to determine the correlation value for each pair using the corr() pandas function (see official documentation: https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.corr.html)
 
 ### Extra:
 

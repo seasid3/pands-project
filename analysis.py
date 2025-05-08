@@ -14,14 +14,14 @@ from max import column_max # Import the function from max.py
 from normality import column_shapiro # Import the function from normality.py
 import matplotlib.pyplot as plt
 import seaborn as sns
+from scipy import stats
+import itertools
 
-# Task 1: Import the dataset as a pandas dataframe
+# Import the dataset as a pandas dataframe
 # I know from the downloaded zip file "iris.names" from https://archive.ics.uci.edu/dataset/53/iris that the 
 # column names are sepal length (cm), sepal width (cm), petal length (cm), and petal width (cm), respectively.
 # Therefore,I can import the dataset from the iris.csv file I saved in the repository using code from
 # https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html, which has been corrected as per the source. 
-
-#Import the dataset as a pandas dataframe
 iris = pd.read_csv('iris.csv', delimiter =',', names = ['sepal_length', 'sepal_width', 'petal_length', 'petal_width', 'species'])	
 
 # Before any analysis, run sanity checks and look at the database:
@@ -36,10 +36,16 @@ iris = pd.read_csv('iris.csv', delimiter =',', names = ['sepal_length', 'sepal_w
 features = ['sepal_length', 'sepal_width', 'petal_length', 'petal_width']
 # print(features) # sanity check
 
-# Running data.info() shows that the data types are correct, and that there are no missing values.
+# Title the output
+print("\n\nLook at the dataset:")
+
 print() # insert a blank line for readability
+# Running iris.info() shows that the data types are correct, and that there are no missing values.
 iris.info() # summary information about the dataset
 
+# Analysis 1: Summary Statistics
+
+# Title the output
 print("\n\nSummary statistics of the dataset:")
 
 # I first created the following code, which was great to get my head around the coding for simple analysis of 
@@ -114,7 +120,7 @@ stats_df = pd.DataFrame({
 print(stats_df)
 print() # insert a blank line for readability
 
-# Task 2, Analysis 2: Test for normality of the data using the Shapiro-Wilk test.
+# Analysis 2: Test for normality of the data using the Shapiro-Wilk test.
 
 # Using the above loop and the function I wrote in normality.py, I will test each feature for normality using the
 # Shapiro-Wilk test. The p-value will be stored in a pandas dataframe for viewing.
@@ -172,7 +178,7 @@ for index, row in shapiro_species_df.iterrows():
         print(f"The p-value for {sp}, {feature} is {p_val:.4f} (p<{alpha}). The data deviates from normal distribution (reject null hypothesis).")
 print() # insert a blank line for readability
 
-# Task 3: Visualise the data using histograms, prior to conducting omparisons.
+# Analysis 3: Visualise the data using histograms, prior to conducting omparisons.
 
 # matplotlib.pyplot imported at the top of this file. 
 
@@ -242,7 +248,7 @@ plt.tight_layout()
 plt.grid(False)
 plt.show()
 '''
-# Task 4: Explore relationships between the features
+# Analysis 4: Explore relationships between the features
 # seaborn imported as sns at the top of this file.
 
 # Create scatterplot for each relationship (each feature versus another feature) using pairplot()
@@ -262,3 +268,43 @@ petal_scatter.set(xlabel = "Petal length (cm)", ylabel = "Petal width (cm)", tit
 
 # Show
 plt.show()
+
+
+
+# Analysis 5: Explore relationships using linear regression
+
+# Determine the best fit line for each pair of features
+# Analysis 5: Explore relationships using linear regression (using pairwise linear regression) and determine
+# the R and R**2 values
+for x_feat, y_feat in itertools.permutations(features, 2):
+    x = iris[x_feat]
+    y = iris[y_feat]
+
+    slope, intercept, r, p, std_err = stats.linregress(x, y) # intercept = c, slope = m
+
+    # Define linear model
+    def best_fit(x): return slope * x + intercept # y = mx + c
+
+    y_pred = best_fit(x)
+    
+    # Print correlation coefficient r-value and R**2 as output for further use
+    print(f"Linear regressions: {y_feat} vs {x_feat}")
+    print(f"r-value: {r:.6f}")
+    r_squared=r**2
+    print(f"$R^2$ value: {r_squared:6f}\n")
+
+    #Plot
+    plt.figure(figsize=(6,4))
+    plt.scatter(x, y, label="Iris Dataset")
+    plt.plot(x, y_pred, color = "red", label=f"Fit: y = {slope:.2f}x + {intercept:.2f}, $R^2$ value = {r_squared:.6f}")
+    # including r**2 with code from the offical documentation
+    plt.title(f"Linear regression: {y_feat} vs {x_feat}")
+    plt.xlabel(x_feat)
+    plt.ylabel(y_feat)
+    plt.legend()
+    plt.tight_layout()
+    plt.show()
+
+
+
+
