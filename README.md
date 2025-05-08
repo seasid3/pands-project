@@ -43,7 +43,7 @@ Specifically, the dataset contains the measurements (cm) of four variables (sepa
 
 The Iris dataset provides an opportunity to utilise a simple database to learn the capabilities of python for data analysis, and thus, this project aims to analyse and present findings relating to the Iris database using python programing.
 
-# *Task 1: Downloading and importing the Iris dataset*
+# *Downloading and importing the Iris dataset*
 The Iris dataset must first be downloaded for use from the source (see https://archive.ics.uci.edu/dataset/53/iris), using the "download button" which reveals a comma separated values (CSV) plain text output (which I opened in a notebook file). Creating an iris.csv file in the respository (in VS Code), I pasted the Iris CSV database there. The source (https://archive.ics.uci.edu/dataset/53/iris) indicates that the the 35th and 38th samples are incorrect so I corrected these in the iris.csv file (I discovered this when trying to do the first "mean" analysis and went back to fix it and ran import csv again).  
 
 Researching which code to use to import a CSV in VS studio (and knowing we did it in lectures), I found this source (see: https://stackoverflow.com/questions/65511586/vs-code-is-there-a-way-to-read-a-csv-file-without-needing-specification-of-the) which showed I need to use the pandas function "pd.read_csv()". Therefore, I went back to the start of the analysis.py file and imported pandas as pd. Researching this function (see official documentation: https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html), I can see that when I import the CSV database using the "pd.read_csv()" function, I need to name the column names as they aren't present in the source iris.data file from https://archive.ics.uci.edu/dataset/53/iris, but they are listed in the associated iris.names file (so I know what the column names should be).  
@@ -57,7 +57,7 @@ I know (from the iris.names file) there should be 150 instances/rows (50 for eac
 
 The documentation at the soure says there are no blank cells but if this wasn't the case, I would look at this (using the "isnull()" pandas function, see official documentation https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.isnull.html#pandas.DataFrame.isnull). I do decide to run the .info() to check the dataset for consistency (see reference: https://www.kaggle.com/code/aniketg11/iris-dataset-with-statistical-tests and official documentation: https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.info.html).
 
-# *Task 2: Analysis of the Iris database: Overview*
+# *Analysis of the Iris database: Overview*
 
 Happy with the csv import, creating .py files (modules) for each statistical calculation and incorporating these into the analysis.py project file, I will carry out the following analysis on the Iris database. 
 
@@ -72,7 +72,7 @@ As I do in most of my work, for the first step into analysis of the database, I 
 
 The coding of each of the above statistical methods, along with any associated references, is discussed in detail in the specific sections below.    
 
-## *Task 2, Analysis 1: Summary Statistics*  
+## *Analysis 1: Summary Statistics*  
 
 ### *Mean*
  The first aim of this analysis is to write code to create a function (mean.py) that can be used to calculate the mean for each of the columns/features/attributes (from now on only referred to features) regardless of their iris class. Attempting code using "features" (from Ian's lectures) and investigating the errors, I got an error message 'DataFrame' object has no attribute 'feature_names', I realised that I was working with a numpy array with Ian's work and not a pandas dataframe (df). Researching the error message ((https://stackoverflow.com/questions/49966639/attributeerror-dataframe-object-has-no-attribute-target-names-scikit/49971214)), I know that I need to use the columns of the dataframe to get the mean of the features. I try to use "header" to get into the columns, I realise (again, due to the errors I am receiveing) that using header to get into the columns in a pandas dataframe isn't the right approach, I will try to use the ".columns" approach (https://www.geeksforgeeks.org/python-basics-of-pandas-using-iris-dataset/). 
@@ -82,7 +82,7 @@ I try to use the code I wrote in mean.py to calculate the feature means in the a
 
 Going to the analysis.py document and trying to run the mean function, I get the error "No module named 'mean.py'; 'mean' is not a package", asking ChatGPT (see conversation: https://chatgpt.com/share/6818b114-6f04-800d-96ca-977ab4f4f269) I see I need to delete .py in the import. It really is the small things! Fixing this returns the means of each of the columns (phew!).
 
-### *1.2 Median*  
+### *Median*  
 Copying the working code from mean.py into a new file called median.py and changing the function to "median_data = data["SepalLengthCm"].median()" (reference: https://www.geeksforgeeks.org/python-basics-of-pandas-using-iris-dataset/, see official documentation: https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.median.html) 
 
 ### *Standard Deviation*  
@@ -91,7 +91,7 @@ Copy the working code from mean.py into a new file called std_dev.py and changin
 ### *Minium and Maximum Values*  
 Copy the working code from mean.py into new files called min.py and max.py changing the function to "min = data["SepalLengthCm"].min()" and "min = data["SepalLengthCm"].max()", respectively (see official documentation: https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.min.html#pandas.DataFrame.min and https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.max.html#pandas.DataFrame.max). I tried to write the min and max functions in the one min_and_max.py file but it didnt like having the two functions together (red error marks) so I split them out.
 
-#### *Review of summary statistics code:*  
+#### *Review of summary statistics code*  
 Although I wrote code that adequately finds the mean, median, standard deviation, minimum and maximum value of each coummn/iris database feature (which was great to get my head around the coding for simple analysis of 
 a pandas df), I knew from lectures this is long and unnecessary so I asked ChatGPT can I generalise the use of these functions (see conversation: https://chatgpt.com/share/6818c100-8c88-800d-a0ca-4b69f0cda31c) for improved efficiency. Taking the advice, I used a loop to imporove the code and commented out the first itteration of the code I wrote. This code/output was highly prefereable and much easier to read than doing it separately and manually, as I had been. 
 
@@ -105,7 +105,7 @@ The final output is an easily readable DataFrame:
 
 I was going to next calculate the mean etc. for each of the features for each class of iris but statistics experience to date has led me to believe that this calculation will possibly be done as part of the comparison statistics I will carry out late so I will leave this for now. If the descriptive statistics for each feature of of each iris class is not a by product of subsequent analysis, I will return to do this later. 
 
-## *Task 2, Analysis 2: Test for Normality*  
+## *Analysis 2: Test for Normality*  
 Researching a statistical test for normality (the Shapiro-Wilk Test), I see that I can do this useing SciPy. Therefore, the first thing I will do is create a normality.py file in th erepository and from SciPy, I will import stats (https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.shapiro.html). Attempting to write the code myself, using the mean.py file as a basis, I encounter the following error "AttributeError: 'DataFrame' object has no attribute 'column_shapiro'". Therefore, I asked ChatGPT why this is (see conversation: https://chatgpt.com/share/6818cd9a-efc0-800d-a587-0c778458271d). I follow the suggestions and run a sanity check. The Shapiro-Wilk test tests the null hypotheses that the data varies normally. A low value (converted from decimal to percentage) implies that threre is that for that percentage, there is that chance if observing the data under examination if it was truely normally distributed, leading to a rejection of the null hypothesis that the data is distributed normally (see: https://en.wikipedia.org/wiki/Shapiro%E2%80%93Wilk_test). Importing the function into the analysis.py file, I can check each feature for normal distribution. The output, as before, is a DataFrame which is great for readability/use:
 
         Feature  Normality p-value
@@ -146,7 +146,7 @@ The p-value for Iris-virginica, sepal_width is 0.1809 (p>0.05). The data are lik
 The p-value for Iris-virginica, petal_length is 0.1098 (p>0.05). The data are likely normally distributed.
 The p-value for Iris-virginica, petal_width is 0.0870 (p>0.05). The data are likely normally distributed.
 
-## *Task 3: Visualise the data*
+## *Analysis 3: Visualise the data*
 I would like to visualise the data using the matplotlib function .hist(). I don't think I need to create a separate histograms.py file for this function as it is a global function which will allow me to pass features through it, as it stands (official documentation: https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.hist.html), see use of colors (official documentation: https://matplotlib.org/stable/users/explain/colors/colors.html), adding title and axis labels (https://www.w3schools.com/python/matplotlib_labels.asp and https://matplotlib.org/stable/users/explain/text/text_intro.html). 
 Asking ChatGPT to review and help with my code (see conversation: https://chatgpt.com/share/681a8af6-5d40-800d-ad4e-e74462ddf431)
 
@@ -160,7 +160,7 @@ Outputs in matplotlib are the following png files which are save in the reposito
 Just to see what it I would be like, for my own interest, I would like to see can the code be modified to show a histogram for each iris class, showing the four features of that iris class. I had already defined "unique_species = iris['species'].unique()" to pull the species categories out of the database (see official documentation: https://pandas.pydata.org/docs/reference/api/pandas.unique.html) in the code above so I didnt have to do it again. Species colours are defined, as are the pattern/hatches shown for each feature. ChatGPT was a huge help here (see conversation: https://chatgpt.com/share/681a8af6-5d40-800d-ad4e-e74462ddf431)
 The output is a matplotlib.pyplot which is saved as all_features_by_species_iris_one_histogram.png, it is very hard to read as there is too much information so I wouldn't bother doing this again. I have commented out the code in analysis.py as I dont want it to run but I really wanted to see this was possible and what it looked like (heavily relying on ChatGPT but it is more than I wanted to do,just took the opportunity to have a look).
 
-## *Task 4: Explore relationships between the features* 
+## *Analysis 4: Explore/visualise relationships between the features* 
 
 To explore the relationships between the data, I was going to use a the seaborn scatterplot() function:
 - See review of seaborn, versus matplotlib, versus pandas for scatterplot:   
@@ -170,17 +170,22 @@ To explore the relationships between the data, I was going to use a the seaborn 
  - see official documentation: https://seaborn.pydata.org/generated/seaborn.scatterplot.html#seaborn.scatterplot  
  
  However, researching showing multiple scatterplots on one plot to see if there are many ways to do this, I can use matplotlib and create several plots on one plot (see reference: https://chris35wills.github.io/courses/PythonPackages_matplotlib/matplotlib_multiple_figs/) but this could get messy as I have 4 variables so I want to plot all of these against each other. I also know from the above task where I plotted all of the histograms for each feature and class that too much data on a single set of axes is messy so I dont want to get into this either with so many relationships to investigate/plot (https://stackoverflow.com/questions/4270301/multiple-datasets-on-the-same-scatter-plot). I know from Ian's lectures/assignment that I can use the seaborn pairplot() function (see official documentation: https://seaborn.pydata.org/generated/seaborn.pairplot.html#seaborn-pairplot) to quickly visualise all variables against each other. I cannot see any other useful function that saves me creating all of the scatterplots one at a time. So this function allows me to look at the relationships between all of the features, colour-coded by Iris class. From here, I can look at the functions I can use to statistically explore relationships between the features but I want to do look at them first. 
- I used the seaborn pairplot() function. I following the directions with the official documentation above, and could not get it to work, I asked ChatGPT who told me I am presenting features as a string whereas, I need to remove the quote marks and present it as a list of feature names. I was delighted I nearly had it on my own. I did this and it returned the image saved as all_features_iris_pairplot.png
+ I used the seaborn pairplot() function. I following the directions with the official documentation above, and could not get it to work, I asked ChatGPT (see conversation: https://chatgpt.com/share/681d018c-41d4-800d-8ef1-b64c306fa1c5); it told me I am presenting features as a string whereas, I need to remove the quote marks and present it as a list of feature names. I was delighted I nearly had it on my own. I saved the output as all_features_iris_pairplot.png.  
+ Note: I tried to add a title using the code below but this gave a title for each of the subplots so I reverted to no title.  
+The pairplot subplots show the relationship between each set of features. Along the diagonal (top left to bottom right), the plots show the distribution for that one feature, for each of the Iris classes. If I wanted to look at one of the relationships on their own, I would create a scatterplot. I used matplotlib scatter() in Ian's assessment to do this. I would like to try to code a scatterplot using the seaborn function "scatterplot()" (see official documentation: https://seaborn.pydata.org/generated/seaborn.scatterplot.html), plotting petal length versus petal width, saving the output in the respository as petal_length_width.png. Using this source to help me label the axes and add a title in seaborn (reference: https://www.geeksforgeeks.org/how-to-set-axes-labels-limits-in-a-seaborn-plot/), I didn't need to ask ChatGPT for any help!
 
- 
+## *Analysis 5: Explore relationships between features using statistical methods*
+
+As I have looked at the relationship between the features using pairplot(), a nice short piece of code which saved me from having to generate and save multiple scatterplots, 
 
 
 
 
 
 
+### Extra:
 
-I went back and added print() througout the analysis.py file to insert blank lines to aid readability (https://www.reddit.com/r/learnpython/comments/uqajbh/how_to_print_space_between_output_lines/).
+To helo with readability of the output, I went back and added print() througout the analysis.py file to insert blank lines (https://www.reddit.com/r/learnpython/comments/uqajbh/how_to_print_space_between_output_lines/).
 
 
 

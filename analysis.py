@@ -246,7 +246,19 @@ plt.show()
 # seaborn imported as sns at the top of this file.
 
 # Create scatterplot for each relationship (each feature versus another feature) using pairplot()
-sns.pairplot(data=iris, hue='species', vars = features, kind = 'scatter', diag_kind='hist')
+features_pairplot = sns.pairplot(data=iris, hue='species', vars = features, kind = 'scatter', diag_kind='hist')
+
+# Show
+plt.show()
+
+# To try the code, generate a scatterplot using the scatter() function for petal length versus petal width
+# to visualise one relationship on its own
+
+# Create scatterplot using seaborn
+petal_scatter = sns.scatterplot(data=iris, x ="petal_length", y ="petal_width", hue="species", legend ="full")
+
+# Set axes labels and title
+petal_scatter.set(xlabel = "Petal length (cm)", ylabel = "Petal width (cm)", title = "Petal Length versus Petal Width")
 
 # Show
 plt.show()
