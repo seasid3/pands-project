@@ -65,10 +65,10 @@ Happy with the csv import, creating .py files (modules) for each statistical cal
 As I do in most of my work, for the first step into analysis of the database, I will determine summary statistics for each attribule (measure) within the database. I will also, look at the Iris class types. Summary statistics include the mean, median, standard deviation, minimum and maximum etc. I will check these against the summary statistics in the database source (https://archive.ics.uci.edu/dataset/53/iris) as a further sanity check.
 - Analysis 2: Prior to conducting further analysis, I would like to test whether each measure/attribute is distributed normally so that I can decide what statistical tests of comparison can be used on the dataset. I would also like to look at whether I can code to chec k the features of each iris class for normality.
 - Analysis 3: Visualise the data as histograms
-- Task 4: I would like to plot relationships (scatterplot) between the measures as a whole, and then boken down per class and determine the R^2 value for each relationship. 
-- Analysis 4: I would then like to do some comparisons. I would like to know if there are statistical differences between *the variability" of each measure for the classes of Iris e.g. petal width setosa versus petal width other two (if varying normally, I could do one check at a time doing t-tests or altogehter using ANOVA). 
-- Analysis 5: Looking at additional analyses others have done and following review, I will carry out similar analysis 
-- Analysis 6: Researching if there are any other additional interesting python coding others have carried out using the Iris dataset, I will attempt this
+- Task 4: I would like to plot relationships (scatterplot) between the features and determine the R^2 value for each relationship. 
+- Analysis 5: I would then like to do some comparisons. I would like to know if there are statistical differences between *the variability" of each measure for the classes of Iris e.g. petal width setosa versus petal width other two (if varying normally, I could do one check at a time doing t-tests or altogehter using ANOVA). 
+- Analysis 6: Looking at additional analyses others have done and following review, I will carry out similar analysis 
+- Analysis 7: Researching if there are any other additional interesting python coding others have carried out using the Iris dataset, I will attempt this
 
 The coding of each of the above statistical methods, along with any associated references, is discussed in detail in the specific sections below.    
 
@@ -176,19 +176,48 @@ The pairplot subplots show the relationship between each set of features. Along 
 
 ## *Analysis 5: Explore relationships between features using statistical methods*
 
-As I have looked at the relationship between the features using pairplot(), and at one relationship (petal length and petal width) using a scatterplot (seaborn), I now want to investigate relationships statistically. To evalute if variables are linearly related, I first need to fit a best fit line (using linregress, see official documentation) and then I need to determine the R value (Pearson coefficient, see reference:) which will indicate presence or lack of correlation. I can also square the R value to get the R squared value which will also indicate the presence or lack of correlation.  
+As I have looked at the relationship between the features using pairplot(), and at one relationship (petal length and petal width) using a scatterplot (seaborn), I now want to investigate relationships statistically. To evalute if variables are linearly related, I first need to fit a best fit line (using linregress, see official documentation) and then I need to determine the R value (Pearson coefficient, see reference:) which will indicate presence or lack of correlation. I decided not to use pandas corr() function (which gives the pearson correlation coefficient if you code it that way) as I can get this from the linregress function, as well as the slope etc. The output from corr() function is only the r value which would mean I still need to use linregress for the other calculations. As I can get the r value from the linregress() function I can also square the R value to get the R squared value which will also indicate the presence or lack of correlation.  
 Importing the stats module from scipy at the top of analysis.py, I can use the scipy linregress() function (see official documentation: https://docs.scipy.org/doc/scipy-1.15.2/reference/generated/scipy.stats.linregress.html) 
 I can use the linregress() function for two sets of known variables  
 (e.g.  
 result = linregress(x = sepal_length, y = sepal_width)  
 print(result.intercept, result.slope, result.rvalue)) 
-but struggled to make the jump to more efficient code which could iterate through all probable pairs of features, rather than listing each pair manually, using the code as in my previous example so I asked ChatGPT (see conversation: https://chatgpt.com/share/681d1af9-4b80-800d-aaff-f0e445b058ee). I will also try to automate the generation of the $R^2$ values for each features relationship.
-The output from the linear regression shows the following: 
+but struggled to make the jump to more efficient code which could iterate through all probable pairs of features, rather than listing each pair manually, using the code as in my previous example so I asked ChatGPT (see conversation: https://chatgpt.com/share/681d1af9-4b80-800d-aaff-f0e445b058ee). I will also try to automate the generation of the $R^2$ values for each features relationship.I also asked ChatGPT how to add hue=species and how to convert the output to a pandas DataFrame for further use (same conversation). 
+The output from the linear regression shows the following:  
+
+      x_variable    y_variable     slope  intercept   r_value  r_squared       p_value   std_err
+0   sepal_length   sepal_width -0.061885   3.418947 -0.117570   0.013823  1.518983e-01  0.042967
+1   sepal_length  petal_length  1.858433  -7.101443  0.871754   0.759955  1.038667e-47  0.085856
+2   sepal_length   petal_width  0.752918  -3.200215  0.817941   0.669028  2.325498e-37  0.043530
+3    sepal_width  sepal_length -0.223361   6.526223 -0.117570   0.013823  1.518983e-01  0.155081
+4    sepal_width  petal_length -1.735222   9.063151 -0.428440   0.183561  4.513314e-08  0.300812
+5    sepal_width   petal_width -0.640277   3.156872 -0.366126   0.134048  4.073229e-06  0.133768
+6   petal_length  sepal_length  0.408922   4.306603  0.871754   0.759955  1.038667e-47  0.018891
+7   petal_length   sepal_width -0.105785   3.454874 -0.428440   0.183561  4.513314e-08  0.018339
+8   petal_length   petal_width  0.415755  -0.363076  0.962865   0.927110  4.675004e-86  0.009582
+9    petal_width  sepal_length  0.888580   4.777629  0.817941   0.669028  2.325498e-37  0.051374
+10   petal_width   sepal_width -0.209360   3.308426 -0.366126   0.134048  4.073229e-06  0.043740
+11   petal_width  petal_length  2.229940   1.083558  0.962865   0.927110  4.675004e-86  0.051396
+
+Note: In practicality, although the repeated findings above (e.g. both sepal length versus petal length, with also the reverse of petal length versus sepal length) give different slope (m) and y-intercept values, the same pair of variables (in both orders) give the same r and r-squared values. Therefore, the entire 12 rows of output may not be required. 
+
+Interpretation of the r and r-squared fidings:
+
+Deleting the duplicates, and reducing the DataFrame to only look at R and R-squared values. The r-value indicates the strength of the relationship (it is expressed as a decimal) (see reference: https://statisticsbyjim.com/basics/correlations/) and r-squared is the % of the response variable variation that is explained by the liner model, 100% indicates that the model explains all of the variablity of the response data around the mean (https://blog.minitab.com/en/adventures-in-statistics-2/regression-analysis-how-do-i-interpret-r-squared-and-assess-the-goodness-of-fit), It is clear that the relationship between petal length and petal width ia the strongest (r=0.962865, r-squared=0.927110; i.e. ~93% of the relationship between the variables are explained by the regression line/model and so they are very close to having a linear relationship). Next is sepal length and petal length (r-value = 0.871754, r-squared value = 75.99%). Suprisingly, sepal and length and sepal width have the weakest relationshio (r = -0.117570, r-squared =  1.38%)  
+
+      x_variable    y_variable    r_value  r_squared      
+0   sepal_length   sepal_width  -0.117570   0.013823  
+1   sepal_length  petal_length   0.871754   0.759955  
+2   sepal_length   petal_width   0.817941   0.669028   
+4    sepal_width  petal_length  -0.428440   0.183561  
+5    sepal_width   petal_width  -0.366126   0.134048  
+8   petal_length   petal_width   0.962865   0.927110  
 
 
 
 
-I also want to determine the correlation value for each pair using the corr() pandas function (see official documentation: https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.corr.html)
+
+
 
 ### Extra:
 

@@ -276,35 +276,55 @@ plt.show()
 # Determine the best fit line for each pair of features
 # Analysis 5: Explore relationships using linear regression (using pairwise linear regression) and determine
 # the R and R**2 values
+
+# I want to collect the outputs in a dataframe
+regression_results=[]
+
+# Conduct pairwise linear regression with hue
 for x_feat, y_feat in itertools.permutations(features, 2):
     x = iris[x_feat]
     y = iris[y_feat]
 
     slope, intercept, r, p, std_err = stats.linregress(x, y) # intercept = c, slope = m
-
-    # Define linear model
-    def best_fit(x): return slope * x + intercept # y = mx + c
-
-    y_pred = best_fit(x)
-    
-    # Print correlation coefficient r-value and R**2 as output for further use
-    print(f"Linear regressions: {y_feat} vs {x_feat}")
-    print(f"r-value: {r:.6f}")
     r_squared=r**2
-    print(f"$R^2$ value: {r_squared:6f}\n")
 
-    #Plot
+    # Store results
+    regression_results.append({
+        "x_variable":x_feat,
+        "y_variable":y_feat,
+        "slope":slope,
+        "intercept": intercept,
+        "r_value": r,
+        "r_squared": r_squared,
+        "p_value":p,
+        "std_err":std_err
+    })
+
+    # Plot using seaborn for hue
     plt.figure(figsize=(6,4))
-    plt.scatter(x, y, label="Iris Dataset")
-    plt.plot(x, y_pred, color = "red", label=f"Fit: y = {slope:.2f}x + {intercept:.2f}, $R^2$ value = {r_squared:.6f}")
+    sns.scatterplot(data=iris, x=x_feat, y=y_feat, hue="species", palette="deep", alpha=0.7, edgecolor="w",s=60)
+
+    # Plot regression line (overall fit, not species-specific) 
+    x_sorted=np.sort(x)
+    y_line=slope*x_sorted + intercept
+    plt.plot(x_sorted, y_line, color = "black", label=f"Fit: y = {slope:.2f}x + {intercept:.2f}, $R^2$ value = {r_squared:.6f}")
     # including r**2 with code from the offical documentation
+   
+    # Add title, axis labels and legend
     plt.title(f"Linear regression: {y_feat} vs {x_feat}")
     plt.xlabel(x_feat)
     plt.ylabel(y_feat)
     plt.legend()
     plt.tight_layout()
+
+    # Show
     plt.show()
 
+# Convert results to datafame
+regression_df = pd.DataFrame(regression_results)
 
+# View
+print(regression_df)
 
+# Analysis 6: 
 
