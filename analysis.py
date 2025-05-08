@@ -13,6 +13,7 @@ from min import column_min # Import the function from min.py
 from max import column_max # Import the function from max.py
 from normality import column_shapiro # Import the function from normality.py
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 # Task 1: Import the dataset as a pandas dataframe
 # I know from the downloaded zip file "iris.names" from https://archive.ics.uci.edu/dataset/53/iris that the 
@@ -241,3 +242,11 @@ plt.tight_layout()
 plt.grid(False)
 plt.show()
 '''
+# Task 4: Explore relationships between the features
+# seaborn imported as sns at the top of this file.
+
+# Create scatterplot for each relationship (each feature versus another feature) using pairplot()
+sns.pairplot(data=iris, hue='species', vars = features, kind = 'scatter', diag_kind='hist')
+
+# Show
+plt.show()

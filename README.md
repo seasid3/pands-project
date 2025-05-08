@@ -63,9 +63,10 @@ Happy with the csv import, creating .py files (modules) for each statistical cal
 
 - Analysis 1: Summary statistics
 As I do in most of my work, for the first step into analysis of the database, I will determine summary statistics for each attribule (measure) within the database. I will also, look at the Iris class types. Summary statistics include the mean, median, standard deviation, minimum and maximum etc. I will check these against the summary statistics in the database source (https://archive.ics.uci.edu/dataset/53/iris) as a further sanity check.
-- Analysis 2: Prior to conducting further analysis, I would like to test whether each measure/attribute is distributed normally so that I can decide what statistical tests of comparison can be used on the dataset. I would also like to look at whether I can code to check the features of each iris class for normality.
-- Analysis 3: I would then like to do some comparisons. I would like to know if there are statistical differences between *the variability" of each measure for the classes of Iris e.g. petal width setosa versus petal width other two (if varying normally, I could do one check at a time doing t-tests or altogehter using ANOVA). 
-- Analysis 4: I would like to plot relationships between the measures as a whole, and then boken down per class and determine the R^2 value for each relationship. 
+- Analysis 2: Prior to conducting further analysis, I would like to test whether each measure/attribute is distributed normally so that I can decide what statistical tests of comparison can be used on the dataset. I would also like to look at whether I can code to chec k the features of each iris class for normality.
+- Analysis 3: Visualise the data as histograms
+- Task 4: I would like to plot relationships (scatterplot) between the measures as a whole, and then boken down per class and determine the R^2 value for each relationship. 
+- Analysis 4: I would then like to do some comparisons. I would like to know if there are statistical differences between *the variability" of each measure for the classes of Iris e.g. petal width setosa versus petal width other two (if varying normally, I could do one check at a time doing t-tests or altogehter using ANOVA). 
 - Analysis 5: Looking at additional analyses others have done and following review, I will carry out similar analysis 
 - Analysis 6: Researching if there are any other additional interesting python coding others have carried out using the Iris dataset, I will attempt this
 
@@ -160,6 +161,20 @@ Just to see what it I would be like, for my own interest, I would like to see ca
 The output is a matplotlib.pyplot which is saved as all_features_by_species_iris_one_histogram.png, it is very hard to read as there is too much information so I wouldn't bother doing this again. I have commented out the code in analysis.py as I dont want it to run but I really wanted to see this was possible and what it looked like (heavily relying on ChatGPT but it is more than I wanted to do,just took the opportunity to have a look).
 
 ## *Task 4: Explore relationships between the features* 
+
+To explore the relationships between the data, I was going to use a the seaborn scatterplot() function:
+- See review of seaborn, versus matplotlib, versus pandas for scatterplot:   
+- https://www.reddit.com/r/learnpython/comments/rg8kwe/when_should_i_use_each_plotting_method_seaborn_or/?rdt=39972
+- see discussion of plot types: https://www.datacamp.com/blog/data-demystified-data-visualizations-that-capture-relationships
+- https://seaborn.pydata.org/tutorial/relational.html
+ - see official documentation: https://seaborn.pydata.org/generated/seaborn.scatterplot.html#seaborn.scatterplot  
+ 
+ However, researching showing multiple scatterplots on one plot to see if there are many ways to do this, I can use matplotlib and create several plots on one plot (see reference: https://chris35wills.github.io/courses/PythonPackages_matplotlib/matplotlib_multiple_figs/) but this could get messy as I have 4 variables so I want to plot all of these against each other. I also know from the above task where I plotted all of the histograms for each feature and class that too much data on a single set of axes is messy so I dont want to get into this either with so many relationships to investigate/plot (https://stackoverflow.com/questions/4270301/multiple-datasets-on-the-same-scatter-plot). I know from Ian's lectures/assignment that I can use the seaborn pairplot() function (see official documentation: https://seaborn.pydata.org/generated/seaborn.pairplot.html#seaborn-pairplot) to quickly visualise all variables against each other. I cannot see any other useful function that saves me creating all of the scatterplots one at a time. So this function allows me to look at the relationships between all of the features, colour-coded by Iris class. From here, I can look at the functions I can use to statistically explore relationships between the features but I want to do look at them first. 
+ I used the seaborn pairplot() function. I following the directions with the official documentation above, and could not get it to work, I asked ChatGPT who told me I am presenting features as a string whereas, I need to remove the quote marks and present it as a list of feature names. I was delighted I nearly had it on my own. I did this and it returned the image saved as all_features_iris_pairplot.png
+
+ 
+
+
 
 
 
