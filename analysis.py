@@ -17,6 +17,8 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from scipy import stats
 import itertools
+from itertools import combinations
+import scikit_posthocs as sp
 
 # Import the dataset as a pandas dataframe
 # I know from the downloaded zip file "iris.names" from https://archive.ics.uci.edu/dataset/53/iris that the 
@@ -121,7 +123,7 @@ stats_df = pd.DataFrame({
 
 with open("summary_stats.txt", "w") as summary_stats:
     summary_stats.write(stats_df.to_string(index=False))
-print("Summary stats have been saved to summary_stats.txt") 
+print("Summary statistics have been saved to summary_stats.txt") 
 
 # Analysis 2: Test for normality of the data using the Shapiro-Wilk test.
 
@@ -158,7 +160,7 @@ with open("normality_features.txt", "w") as file:
     for line in interpretations:
         file.write(line + "\n")
 
-print("Normality test for features has been saved to normality_features.txt")
+print("'Normality test for features' results have been saved to normality_features.txt")
 
 # Analyse the features of each of the iris species for normality using the Shapiro-Wilk test.
 # The species are setosa, versicolor and virginica. I will use the same loop as above to iterate through the
@@ -170,14 +172,14 @@ features = iris.select_dtypes(include='number').columns.drop('target', errors = 
 
 # Store results
 results = [] 
-for sp in unique_species:
-    subset = iris[iris['species'] == sp]
+for spec in unique_species:
+    subset = iris[iris['species'] == spec]
     for feature in features:
         try:
             p = column_shapiro(subset, feature)
-            results.append({'Species': sp, 'Feature': feature, 'Normality p-value': p})
+            results.append({'Species': spec, 'Feature': feature, 'Normality p-value': p})
         except (KeyError, TypeError) as e:
-            print(f"Skipping ({sp}, {feature}): {e}")
+            print(f"Skipping ({spec}, {feature}): {e}")
 
 shapiro_species_df = pd.DataFrame(results)
 
@@ -186,14 +188,14 @@ interpretations_class = []
 
 # As above, interpret the results of the Shapiro-Wilk test for each species and feature
 for index, row in shapiro_species_df.iterrows():
-     sp = row['Species']
+     spec = row['Species']
      feature = row['Feature']
      p_val = row['Normality p-value']
 
      if p_val > alpha:
-        interpretation_class = f"The p-value for {sp}, {feature} is {p_val:.4f} (p>{alpha}). The data are likely normally distributed."
+        interpretation_class = f"The p-value for {spec}, {feature} is {p_val:.4f} (p>{alpha}). The data are likely normally distributed."
      else:
-        interpretation_class = f"The p-value for {sp}, {feature} is {p_val:.4f} (p<{alpha}). The data deviates from normal distribution (reject null hypothesis)."
+        interpretation_class = f"The p-value for {spec}, {feature} is {p_val:.4f} (p<{alpha}). The data deviates from normal distribution (reject null hypothesis)."
 
      interpretations_class.append(interpretation_class)
 
@@ -205,7 +207,7 @@ with open("normality_class_features.txt", "w") as file:
     for line in interpretations:
         file.write(line + "\n")
 
-print("Normality test by species has been saved to normality_class_features.txt")
+print("'Normality test by species' results have been saved to normality_class_features.txt")
 
 # Analysis 3: Visualise the data using histograms, prior to conducting omparisons.
 
@@ -355,7 +357,7 @@ with open("linear_regression.txt", "w") as file:
     file.write("Pairwise Linear Regression Results\n\n")
     file.write(regression_df.to_string(index=False))
 
-print("Linear regression results have been saved to linear_regression.txt")
+print("Linear regression outputs have been saved to linear_regression.txt")
 
 # Analysis 6: Kruskal-Wallis test to see if the any medians of the feature variables vary
 print("\n\nKruskal-Wallis H-test for independent samples:") 
@@ -399,4 +401,53 @@ with open("kruskal_wallis.txt", "w") as file:
     for line in interpretations_kruskal:
         file.write(line + "\n")
 
-print("Kruskal-Wallis H-Test has been saved to kruskal_wallis.txt")
+print("Kruskal-Wallis H-Test results have been saved to kruskal_wallis.txt")
+
+# Post-hoc Dunn's test to determine which of the iris classes differ within each feature.
+
+print("\n\nDunn's post-hoc test:") 
+
+# Define species mapping
+species_mapping = {
+    1: "setosa",
+    2: "versicolor",
+    3: "virginica"
+}
+
+dunn_results = {} # results are stored in a dictionary and not a list
+
+for feature in features:
+    # Group data by species for the current feature
+    group_values = [iris[iris["species"] == species][feature].values for species in unique_species]
+    stat, p_value_kruskal = stats.kruskal(*group_values)
+    
+    if p_value_kruskal < alpha:
+        # Perform Dunn's test with Bonferroni correction
+        dunn_result = sp.posthoc_dunn(group_values, p_adjust='bonferroni')
+
+        # Replace numeric species lables with actual species names in the result
+        dunn_result = dunn_result.rename(index=species_mapping, columns=species_mapping)
+
+        # Add interpretation of Dunn's test to the output 
+        interpretation_dunn = f"Dunn’s post-hoc test for {feature}:\n"
+        for index in dunn_result.index:
+            for col in dunn_result.columns:
+                p_value = dunn_result.loc[index, col]
+                if p_value < alpha:
+                    interpretation_dunn += f"  {index} vs {col}: p = {p_value:.4f} (p<{alpha}): Reject H0; groups are significantly different.\n"
+                else:
+                    interpretation_dunn += f"  {index} vs {col}: p = {p_value:.4f} (p>{alpha}): Fail to reject H0; groups are not significantly different.\n"
+
+        # Save Dunn's test results for the feature for the dictionary
+        dunn_results[feature] = dunn_result
+
+        # Save to file
+        with open(f"dunn_test_{feature}.txt", "w") as f:
+            f.write(f"Dunn's post hoc test for {feature} (Bonferroni adjusted):\n")
+            f.write(dunn_result.to_string())
+            f.write("\n\nInterpretation:\n")
+            f.write(interpretation_dunn)
+        
+        print(f"Dunn’s test for {feature} is saved to dunn_test_{feature}.txt")
+    else:
+        print(f"Kruskal-Wallis for {feature} not significant (p = {p_value_kruskal:.4f}); skipping Dunn’s test.")
