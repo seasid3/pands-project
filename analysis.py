@@ -4,6 +4,7 @@
 # Author: Orla Woods
 
 # Import the necessary libraries
+import sys
 import numpy as np
 import pandas as pd
 from mean import column_mean # Import the function from mean.py
@@ -117,8 +118,10 @@ stats_df = pd.DataFrame({
     'Minimum (cm)': [column_min(iris, feature) for feature in features],
     'Maximum (cm)': [column_max(iris, feature) for feature in features]
 })
-print(stats_df)
-print() # insert a blank line for readability
+
+with open("summary_stats.txt", "w") as summary_stats:
+    summary_stats.write(stats_df.to_string(index=False))
+print("Summary stats have been saved to summary_stats.txt") 
 
 # Analysis 2: Test for normality of the data using the Shapiro-Wilk test.
 
@@ -134,16 +137,28 @@ shapiro_df = pd.DataFrame({
     'Normality p-value': [column_shapiro(iris, feature) for feature in features]
 })
 
-# Interpret the results of the Shapiro-Wilk test for each feature
+# Collect interpretive statements 
+interpretations = []
 for index, row in shapiro_df.iterrows():
     feature = row['Feature']
     normality_p_value = row['Normality p-value']
     
     if normality_p_value > alpha:
-        print(f"The p-value for {feature} is {normality_p_value:.4f} (p>{alpha}). The data are likely normally distributed.")
+        interpretation = f"The p-value for {feature} is {normality_p_value:.4f} (p>{alpha}). The data are likely normally distributed."
     else:
-        print(f"The p-value for {feature} is {normality_p_value:.4f} (p<{alpha}). The data deviates from normal distribution (reject null hypothesis).")
-print() # insert a blank line for readability
+        interpretation = f"The p-value for {feature} is {normality_p_value:.4f} (p<{alpha}). The data deviates from normal distribution (reject null hypothesis)."
+
+    interpretations.append(interpretation)
+
+# Write both table and interpretations to file
+with open("normality_features.txt", "w") as file:
+    file.write("Shapiro-Wilk Test Results:\n")
+    file.write(shapiro_df.to_string(index=False))
+    file.write("\n\nInterpretation:\n")
+    for line in interpretations:
+        file.write(line + "\n")
+
+print("Normality test for features has been saved to normality_features.txt")
 
 # Analyse the features of each of the iris species for normality using the Shapiro-Wilk test.
 # The species are setosa, versicolor and virginica. I will use the same loop as above to iterate through the
@@ -166,6 +181,9 @@ for sp in unique_species:
 
 shapiro_species_df = pd.DataFrame(results)
 
+# Collect interpretations
+interpretations_class = []
+
 # As above, interpret the results of the Shapiro-Wilk test for each species and feature
 for index, row in shapiro_species_df.iterrows():
      sp = row['Species']
@@ -173,10 +191,21 @@ for index, row in shapiro_species_df.iterrows():
      p_val = row['Normality p-value']
 
      if p_val > alpha:
-        print(f"The p-value for {sp}, {feature} is {p_val:.4f} (p>{alpha}). The data are likely normally distributed.")
+        interpretation_class = f"The p-value for {sp}, {feature} is {p_val:.4f} (p>{alpha}). The data are likely normally distributed."
      else:
-        print(f"The p-value for {sp}, {feature} is {p_val:.4f} (p<{alpha}). The data deviates from normal distribution (reject null hypothesis).")
-print() # insert a blank line for readability
+        interpretation_class = f"The p-value for {sp}, {feature} is {p_val:.4f} (p<{alpha}). The data deviates from normal distribution (reject null hypothesis)."
+
+     interpretations_class.append(interpretation_class)
+
+# Save both the results table and interpretations to file
+with open("normality_class_features.txt", "w") as file:
+    file.write("Shapiro-Wilk Test for Normality by Species\n")
+    file.write(shapiro_species_df.to_string(index=False))
+    file.write("\n\nInterpretation:\n")
+    for line in interpretations:
+        file.write(line + "\n")
+
+print("Normality test by species has been saved to normality_class_features.txt")
 
 # Analysis 3: Visualise the data using histograms, prior to conducting omparisons.
 
@@ -198,7 +227,6 @@ for feature, colour in zip(features, colors): # The zip() function ito pair feat
     plt.grid(False)
     plt.show()
 '''
-
 # For all histograms on one set of axes:
 
 for feature, colour in zip(features, colors): # The zip() function ito pair features to colours
@@ -269,14 +297,13 @@ petal_scatter.set(xlabel = "Petal length (cm)", ylabel = "Petal width (cm)", tit
 # Show
 plt.show()
 
-
-
 # Analysis 5: Explore relationships using linear regression
 
 # Determine the best fit line for each pair of features
 # Analysis 5: Explore relationships using linear regression (using pairwise linear regression) and determine
 # the R and R**2 values
 
+print("\n\nLinear regression:")
 # I want to collect the outputs in a dataframe
 regression_results=[]
 
@@ -323,8 +350,12 @@ for x_feat, y_feat in itertools.permutations(features, 2):
 # Convert results to datafame
 regression_df = pd.DataFrame(regression_results)
 
-# View
-print(regression_df)
+# Save the regression summary to text file
+with open("linear_regression.txt", "w") as file:
+    file.write("Pairwise Linear Regression Results\n\n")
+    file.write(regression_df.to_string(index=False))
+
+print("Linear regression results have been saved to linear_regression.txt")
 
 # Analysis 6: 
 

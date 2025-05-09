@@ -1,0 +1,12 @@
+Shapiro-Wilk Test Results:
+     Feature  Normality p-value
+sepal_length       1.018116e-02
+ sepal_width       1.011543e-01
+petal_length       7.412263e-10
+ petal_width       1.680465e-08
+
+Interpretation:
+The p-value for sepal_length is 0.0102 (p<0.05). The data deviates from normal distribution (reject null hypothesis).
+The p-value for sepal_width is 0.1012 (p>0.05). The data are likely normally distributed.
+The p-value for petal_length is 0.0000 (p<0.05). The data deviates from normal distribution (reject null hypothesis).
+The p-value for petal_width is 0.0000 (p<0.05). The data deviates from normal distribution (reject null hypothesis).

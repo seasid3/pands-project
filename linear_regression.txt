@@ -1,0 +1,15 @@
+Pairwise Linear Regression Results
+
+  x_variable   y_variable     slope  intercept   r_value  r_squared      p_value  std_err
+sepal_length  sepal_width -0.061885   3.418947 -0.117570   0.013823 1.518983e-01 0.042967
+sepal_length petal_length  1.858433  -7.101443  0.871754   0.759955 1.038667e-47 0.085856
+sepal_length  petal_width  0.752918  -3.200215  0.817941   0.669028 2.325498e-37 0.043530
+ sepal_width sepal_length -0.223361   6.526223 -0.117570   0.013823 1.518983e-01 0.155081
+ sepal_width petal_length -1.735222   9.063151 -0.428440   0.183561 4.513314e-08 0.300812
+ sepal_width  petal_width -0.640277   3.156872 -0.366126   0.134048 4.073229e-06 0.133768
+petal_length sepal_length  0.408922   4.306603  0.871754   0.759955 1.038667e-47 0.018891
+petal_length  sepal_width -0.105785   3.454874 -0.428440   0.183561 4.513314e-08 0.018339
+petal_length  petal_width  0.415755  -0.363076  0.962865   0.927110 4.675004e-86 0.009582
+ petal_width sepal_length  0.888580   4.777629  0.817941   0.669028 2.325498e-37 0.051374
+ petal_width  sepal_width -0.209360   3.308426 -0.366126   0.134048 4.073229e-06 0.043740
+ petal_width petal_length  2.229940   1.083558  0.962865   0.927110 4.675004e-86 0.051396

@@ -1,0 +1,5 @@
+     Feature  Mean (cm)  Median (cm)  Standard Deviation (cm)  Minimum (cm)  Maximum (cm)
+sepal_length   5.843333         5.80                 0.828066           4.3           7.9
+ sepal_width   3.057333         3.00                 0.435866           2.0           4.4
+petal_length   3.758000         4.35                 1.765298           1.0           6.9
+ petal_width   1.199333         1.30                 0.762238           0.1           2.5
