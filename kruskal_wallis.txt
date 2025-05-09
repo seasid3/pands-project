@@ -1,0 +1,12 @@
+Kruskal-Wallis H-Test Results:
+     Feature  Kruskal-Wallis p-value
+sepal_length            8.918734e-22
+ sepal_width            1.569282e-14
+petal_length            4.803974e-29
+ petal_width            3.261796e-29
+
+Interpretation:
+For 'sepal_length', p = 0.0000 (p<0.05): Reject H0; at least one group median is significantly different.
+For 'sepal_width', p = 0.0000 (p<0.05): Reject H0; at least one group median is significantly different.
+For 'petal_length', p = 0.0000 (p<0.05): Reject H0; at least one group median is significantly different.
+For 'petal_width', p = 0.0000 (p<0.05): Reject H0; at least one group median is significantly different.

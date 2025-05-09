@@ -29,29 +29,35 @@ The documentation at the soure says there are no blank cells but if this wasn't 
 Happy with the csv import, creating .py files (modules) for each statistical calculation and incorporating these into the analysis.py project file, as appropriate for each task, I plan to explore the use of python to carry out the following analysis on the Iris database:
 
 - Analysis 1: Summary statistics  
-As I do in most of my work, I will first determine summary statistics for each attribute (feature) within the database. I will also, look at the Iris class types. Summary statistics include the mean, median, standard deviation, minimum and maximum etc. I will check these against the summary statistics in the database source (https://archive.ics.uci.edu/dataset/53/iris) as a further sanity check. 
+As I do in most of my work, I will first determine summary statistics for each attribute (feature) within the database. I will also, look at the Iris class types. Summary statistics include the mean, median, standard deviation, minimum and maximum etc. I will check these against the summary statistics in the database source (https://archive.ics.uci.edu/dataset/53/iris) as a further sanity check.  
+
 - Analysis 2: Test for Normality  
-Prior to conducting further analysis, I would like to test whether each measure/attribute is distributed normally so that I can decide what statistical tests of comparison can be used on the dataset. I would also like to look at whether I can code to check the features of each iris class for normality.
+Prior to conducting further analysis, I would like to test whether each measure/attribute is distributed normally so that I can decide what statistical tests of comparison can be used on the dataset. I would also like to look at whether I can code to check the features of each iris class for normality.  
+
 - Analysis 3: Visualise the data  
-I will then use histograms to visualise the data.
+I will then use histograms to visualise the data.  
+
 - Analysis 4: Investiagate relationships in the dataset  
-I will then look at whether relationships exist within the dataset. I will look at this first using plots, specifically scatterplots.  
+I will then look at whether relationships exist within the dataset. I will look at this first using plots, specifically scatterplots.   
+
 - Analysis 5: Linear regression and scatterplots  
-I will then statistically investiage the existance of any relationships, using linear regression and r and $R^2$ values. I will plot the linear regression on new scatterplots and will denote the $R^2$ value on each plot. 
+I will then statistically investiage the existance of any relationships, using linear regression and r and $R^2$ values. I will plot the linear regression on new scatterplots and will denote the $R^2$ value on each plot.  
+
 - Analysis 6: Statistical differences.  
-I will then investigate if there are any statistical differences between *the variability" of each measure. These statistical analysis will be chosen depending on whether or not the data varies normally. 
+I will then investigate if there are any statistical differences between *the variability" of each measure. These statistical analysis will be chosen depending on whether or not the data varies normally.  
+
 - Analysis 7: Other analyses  
 Looking at additional analyses others have done and identifying interesting approaches, I will carry out similar analyses.
 
 The coding (which is saved in analysis.py) for each of the above analytical approaches, along with associated referencing, is discussed in detail in the specific sections below.    
 
-I asked ChatGPT how to save each of the outputs to .txt file (see conversation: https://chatgpt.com/share/681e2a86-9e3c-800d-853b-50794b23798d), and although the outputs are savevd to the file, they are also copied below. 
+I asked ChatGPT how to save each of the outputs to .txt file (see conversation: https://chatgpt.com/share/681e2a86-9e3c-800d-853b-50794b23798d), and although the outputs are savevd to the file, they are also copied below to allow discussion.
 
 ## *Analysis 1: Summary Statistics*  
 
 ### *Mean*
- The first aim of this analysis is to write code to create a function (saved as the file mean.py) that can be used to calculate the mean for each of the columns/features/attributes (from now on only referred to as features) regardless of their iris class. Attempting code using "features" (from Ian's lectures) and investigating the errors, I encountered the error message 'DataFrame' object has no attribute 'feature_names', I realised that I was working with a numpy array with Ian's work and not a pandas dataframe (df). Researching the error message ((https://stackoverflow.com/questions/49966639/attributeerror-dataframe-object-has-no-attribute-target-names-scikit/49971214)), I know that I need to use the columns of the dataframe to get the mean of the features. I try to use "header" to get into the columns, I realise (again, due to the errors I am receiveing) that using header() to get into the columns in a pandas dataframe isn't the right approach, I will use the ".columns" approach (https://www.geeksforgeeks.org/python-basics-of-pandas-using-iris-dataset/). 
- I then used the mean_iris = data[].mean() code (https://www.geeksforgeeks.org/python-basics-of-pandas-using-iris-dataset/, see official documentation: https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.mean.html) to find the mean of the sepal length as an example but I acutally want to get a function that is not tied to a viariable, that can be imported into analysis.py and used for any variable I want. So I keep looking. Google returned answers that were not specifically addressing the question so I asked ChatGPT (see conversation: https://chatgpt.com/share/6818a76b-8cb0-800d-b88c-9883f38ffd8e). I dont copy the suggested code directly but use the response to write my own code for the iris dataframe I imported.  
+The first aim of this analysis is to write code to create a function (saved as the file mean.py) that can be used to calculate the mean for each of the columns/features/attributes (from now on only referred to as features) regardless of their iris class. Attempting code using "features" (from Ian's lectures) and investigating the errors, I encountered the error message 'DataFrame' object has no attribute 'feature_names', I realised that I was working with a numpy array with Ian's work and not a pandas dataframe (df). Researching the error message ((https://stackoverflow.com/questions/49966639/attributeerror-dataframe-object-has-no-attribute-target-names-scikit/49971214)), I know that I need to use the columns of the dataframe to get the mean of the features. I try to use "header" to get into the columns, I realise (again, due to the errors I am receiveing) that using header() to get into the columns in a pandas dataframe isn't the right approach, I will use the ".columns" approach (https://www.geeksforgeeks.org/python-basics-of-pandas-using-iris-dataset/). 
+I then used the mean_iris = data[].mean() code (https://www.geeksforgeeks.org/python-basics-of-pandas-using-iris-dataset/, see official documentation: https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.mean.html) to find the mean of the sepal length as an example but I acutally want to get a function that is not tied to a viariable, that can be imported into analysis.py and used for any variable I want. So I keep looking. Google returned answers that were not specifically addressing the question so I asked ChatGPT (see conversation: https://chatgpt.com/share/6818a76b-8cb0-800d-b88c-9883f38ffd8e). I dont copy the suggested code directly but use the response to write my own code for the iris dataframe I imported.  
 
 I try to use the code I wrote in mean.py to calculate the feature means in the analysis.py file but get the error "No module named 'mean.py'; 'mean' is not a package".  I have a feeling it is because I have inadequately scripted the mean.py code for the csv file import in analysis.py. First, I run a sanity check in mean.py for sepal length and it's not working at all; there is no output in the terminal when I run the code. I ask ChatGPT are the import code and the def of column_mean code linked correctly (https://chatgpt.com/share/6818acbd-7ebc-800d-92f4-cdef153e9efe) and use the response to edit my code in mean.py. There was no output coming in the terminal so I kept the conversation going. Ran print(iris) as a sanity check in the mean.py file and this worked so I ran the function in mean.py and it worked! 
 
@@ -176,7 +182,6 @@ The output from the linear regression is:
 Note: In practicality, although the repeated findings above (e.g. both "sepal length versus petal length", and the reverse of "petal length versus sepal length") give different slope (m) and y-intercept values, each pair of variables in either orders give the same r and r-squared values. Therefore, the entire 12 rows of output may not be required. 
 
 Interpretation of the r and r-squared fidings:
-
 The r-value indicates the strength of the relationship (it is expressed as a decimal) (see reference: https://statisticsbyjim.com/basics/correlations/) and r-squared is the % of the response variable variation that is explained by the liner model, 100% indicates that the model explains all of the variablity of the response data around the mean (https://blog.minitab.com/en/adventures-in-statistics-2/regression-analysis-how-do-i-interpret-r-squared-and-assess-the-goodness-of-fit). Deleting the duplicates, and reducing the DataFrame to only look at R and R-squared values, iIt is clear that the relationship between petal length and petal width ia the strongest (r=0.962865, r-squared=0.927110; i.e. ~93% of the relationship between the variables are explained by the regression line/model and so they are very close to having a linear relationship). Next is sepal length and petal length (r-value = 0.871754, r-squared value = 75.99%). Suprisingly, sepal and length and sepal width have the weakest relationshio (r = -0.117570, r-squared =  1.38%)  
 
       x_variable    y_variable    r_value  r_squared      
@@ -187,15 +192,27 @@ The r-value indicates the strength of the relationship (it is expressed as a dec
 5    sepal_width   petal_width  -0.366126   0.134048  
 8   petal_length   petal_width   0.962865   0.927110  
 
+## *Analysis 6: Exploring variances*
 
+Researching which statistical test should be used, which does what an ANOVA does but is used where the dataset doesnt very normally, I have decided to carryout a Kruskal-Wallis test to analyse if there is a statistial difference (in the medians) between each features for each of the species/iris class (see references: https://stats.oarc.ucla.edu/spss/whatstat/what-statistical-analysis-should-i-usestatistical-analyses-using-spss/#:~:text=The%20Kruskal%20Wallis%20test%20is,permits%20two%20or%20more%20groups. and https://en.wikipedia.org/wiki/Kruskal%E2%80%93Wallis_test), which will indicate if significant differences exist. SciPy has a function kruskal() (see official documentation: https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.kruskal.html) which "tests the null hypothesis that the population median of all of the groups are equal. It is a non-parametric version of ANOVA. The test works on 2 or more independent samples, which may have different sizes..rejecting the null hypothesis does not indicate which of the groups differs". Therefore, a post-hoc Wilcoxon test (see SciPy function official documentation: https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.wilcoxon.html) for each pair of features with a Bonferroni correction for multiple hypothesis testing will then be carried out to deterine in which pair of features the statistically significant difference occurs.  
+Doing my best to write the script, I asked ChatGPT for hel (see conversation: https://chatgpt.com/share/681e43ba-f39c-800d-96d8-74b732aee3e7). In the end, I copied all of my code in for review as I wanted to be sure the code I had written earlier as part of other funcions (defining features etc.) was correctly used in the Kruskal-Wallis H-test code. The output was saved as kruskal_wallis.txt.
 
+From the output (kruskal_wallis.txt):
+For 'sepal_length', p = 0.0000 (p<0.05): Reject H0; at least one group median is significantly different.
+For 'sepal_width', p = 0.0000 (p<0.05): Reject H0; at least one group median is significantly different.
+For 'petal_length', p = 0.0000 (p<0.05): Reject H0; at least one group median is significantly different.
+For 'petal_width', p = 0.0000 (p<0.05): Reject H0; at least one group median is significantly different.
 
+Findings indicate that for each feature (sepal lenght, sepal width, petal length and petal width) there is at least one pair of iris class within that feature that differs from the measurements of that feature in another class. As discussed before, a post-hoc test will need to be carried out to see where the differences lie.
+
+Post-Hoc test:
+I am going to try to copy the code for the Kruskal-Wallis test and adjust for the wilcoxon() SciPy function. 
 
 
 
 ### Extra:
 
-To helo with readability of the output, I went back and added print() througout the analysis.py file to insert blank lines (https://www.reddit.com/r/learnpython/comments/uqajbh/how_to_print_space_between_output_lines/).
+To help with readability of the output, I went back and added print() througout the analysis.py file to insert blank lines (https://www.reddit.com/r/learnpython/comments/uqajbh/how_to_print_space_between_output_lines/).
 
 
 

@@ -357,5 +357,46 @@ with open("linear_regression.txt", "w") as file:
 
 print("Linear regression results have been saved to linear_regression.txt")
 
-# Analysis 6: 
+# Analysis 6: Kruskal-Wallis test to see if the any medians of the feature variables vary
+print("\n\nKruskal-Wallis H-test for independent samples:") 
 
+kruskal_results = []
+
+# Loop through each feature
+for feature in features:
+    # Extract data for each species group
+    group_values = [iris[iris["species"] == species][feature].values for species in unique_species]
+
+    # Ensure at least two groups for test 
+    if len(group_values) < 2:
+        raise ValueError("At least two groups are required for Kruskal-Wallis test.")
+    
+    # Perform the Kruskal-Wallis test
+    stat, p_value_kruskal = stats.kruskal(*group_values)
+    kruskal_results.append({"Feature": feature, "Kruskal-Wallis p-value": p_value_kruskal})
+
+# Convert to DataFrame
+kruskal_df = pd.DataFrame(kruskal_results)
+
+# Interpret the results
+interpretations_kruskal = []
+for _, row in kruskal_df.iterrows():
+    feature = row['Feature']
+    kruskal_p_value = row['Kruskal-Wallis p-value']
+    
+    if kruskal_p_value > alpha:
+        interpretation_kruskal = f"For '{feature}', p = {kruskal_p_value:.4f} (p>{alpha}): Fail to reject H0; medians are not significantly different." 
+    else: 
+        interpretation_kruskal = f"For '{feature}', p = {kruskal_p_value:.4f} (p<{alpha}): Reject H0; at least one group median is significantly different."
+    
+    interpretations_kruskal.append(interpretation_kruskal)
+    
+# Save to file
+with open("kruskal_wallis.txt", "w") as file:
+    file.write("Kruskal-Wallis H-Test Results:\n")
+    file.write(kruskal_df.to_string(index=False))
+    file.write("\n\nInterpretation:\n")
+    for line in interpretations_kruskal:
+        file.write(line + "\n")
+
+print("Kruskal-Wallis H-Test has been saved to kruskal_wallis.txt")
