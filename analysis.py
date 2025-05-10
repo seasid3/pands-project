@@ -429,7 +429,7 @@ for feature in features:
         dunn_result = dunn_result.rename(index=species_mapping, columns=species_mapping)
 
         # Add interpretation of Dunn's test to the output 
-        interpretation_dunn = f"Dunn’s post-hoc test for {feature}:\n"
+        interpretation_dunn = f"Dunns post-hoc test for {feature}:\n"
         for index in dunn_result.index:
             for col in dunn_result.columns:
                 p_value = dunn_result.loc[index, col]

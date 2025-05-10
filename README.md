@@ -51,7 +51,7 @@ Looking at additional analyses others have done and identifying interesting appr
 
 The coding (which is saved in analysis.py) for each of the above analytical approaches, along with associated referencing, is discussed in detail in the specific sections below.    
 
-I asked ChatGPT how to save each of the outputs to .txt file (see conversation: https://chatgpt.com/share/681e2a86-9e3c-800d-853b-50794b23798d), and although the outputs are savevd to the file, they are also copied below to allow discussion.
+Having completed some of the analyses, I then asked ChatGPT how to save each of the outputs to .txt file (see conversation: https://chatgpt.com/share/681e2a86-9e3c-800d-853b-50794b23798d), and although the outputs are savevd to the file, they are also copied below to allow discussion and conclusion and to justify the iterative analysis I carried out in the subsequent steps.
 
 ## *Analysis 1: Summary Statistics*  
 
@@ -143,6 +143,8 @@ Outputs in matplotlib are the following png files which are saved in the reposit
 Just to see what it I would be like, for my own interest, I wanted to modify the code to show a histogram for each iris class, showing the four features of that iris class. I had already defined "unique_species = iris['species'].unique()" to pull the species categories out of the database (see official documentation: https://pandas.pydata.org/docs/reference/api/pandas.unique.html) in the code above so I didnt have to do it again. Species colours are defined, as are the pattern/hatches shown for each feature. ChatGPT was a huge help here (see conversation: https://chatgpt.com/share/681a8af6-5d40-800d-ad4e-e74462ddf431).
 The output is a matplotlib.pyplot which is saved as all_features_by_species_iris_one_histogram.png, it is very hard to read as there is too much information so I wouldn't bother doing this again. I have commented out the code in analysis.py as I dont want it to run but I really wanted to see this was possible and what it looked like (heavily relying on ChatGPT but it is more than I wanted to do, I just took the opportunity to have a look).
 
+I am also aware that I can use seaborn and matplotlib to output 4 separate histograms on the one output "page" (https://www.geeksforgeeks.org/exploratory-data-analysis-on-iris-dataset/) but as the axes differ in scale between each histogram, I don't feel that this is exceptionally useful for comparison. It would be useful to look at the shapes of the distribution of all of the features, perhaps a little bit more useful that doing each histogram one at a time. As above, they would need to be statistically evaluated for normality, this cannot be assumed from the shape of the histogram, even when it looks bell-shaped/Gaussian. 
+
 ## *Analysis 4: Explore/visualise relationships between the features* 
 
 Researching how to explore the relationships between the data, I was going to use a the seaborn scatterplot() function:
@@ -192,7 +194,7 @@ The r-value indicates the strength of the relationship (it is expressed as a dec
 5    sepal_width   petal_width  -0.366126   0.134048  
 8   petal_length   petal_width   0.962865   0.927110  
 
-## *Analysis 6: Exploring variances*
+## *Analysis 6: Exploring differences*
 
 Researching which statistical test should be used for comparison where the dataset doesn't very normally, I have decided to carryout a Kruskal-Wallis test to analyse if there is a statistial difference (in the medians) between each features for each of the species/iris class (see references: https://stats.oarc.ucla.edu/spss/whatstat/what-statistical-analysis-should-i-usestatistical-analyses-using-spss/#:~:text=The%20Kruskal%20Wallis%20test%20is,permits%20two%20or%20more%20groups. and https://en.wikipedia.org/wiki/Kruskal%E2%80%93Wallis_test). This test will indicate if significant differences exist. SciPy has a function kruskal() (see official documentation: https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.kruskal.html) which "tests the null hypothesis that the population median of all of the groups are equal. It is a non-parametric version of ANOVA. The test works on 2 or more independent samples, which may have different sizes..rejecting the null hypothesis does not indicate which of the groups differs". Doing my best to write the script, I asked ChatGPT for help (see conversation: https://chatgpt.com/share/681e43ba-f39c-800d-96d8-74b732aee3e7). In the end, I copied all of my code in for review as I wanted to be sure the code I had written earlier as part of other funcions (defining features etc.) was correctly carried through into the Kruskal-Wallis H-test code. The output was saved as kruskal_wallis.txt.
 
@@ -207,10 +209,36 @@ Findings indicate that for each feature (sepal lenght, sepal width, petal length
 Post-Hoc test:
 I am going to try to copy the code for the Kruskal-Wallis test and adapt this for the Dunn test as this allows for pairwise comparisons between groups, and was specifically designed for use after the Kruskal-Willis test (see reference: https://www.geeksforgeeks.org/how-to-perform-dunns-test-in-python/). The Dunn test will compare the species for each feature to see which pairs differ significantly. To carry out the Dunn post-hoc test, I need to import the scikit-posthocs module. The posthoc_dunn() function (see official documentation: https://scikit-posthocs.readthedocs.io/en/latest/generated/scikit_posthocs.posthoc_dunn.html). From the documentation, the Dunn test is a post-hoc test "for multiple comparisons of mean rank sums.. May be used after Kruskal-Wallis one-way analysis of variance by ranks to do pairwise comparisons" As some of the data (petal width for all species) is not distributed normally and becauase the measures aren't paired, this is the correct post hoc test. To use this, I had to install the skikit-posthocs module in the command module (pip install scikit-posthocs).
 
-Asking ChatGPT for help with the code (https://chatgpt.com/share/681e9548-99fc-800d-bd12-33610c02f427), the outputs are saved for each feature and show results for the comparison between the three iris species/classes for that feature. the output as a text file (dunns_test_{feature}.txt).
+Asking ChatGPT for help with the code (https://chatgpt.com/share/681e9548-99fc-800d-bd12-33610c02f427), the outputs are saved for each feature and show results for the comparison between the three iris species/classes for that feature. I saved the output as a text file (dunns_test_{feature}.txt).
+
+## *Analysis 7: *
+At this stage of this project, I have researched the dataset and analyses availble for use, using python, and applied them according to what I would do if this was a live work project. Following this, I now wish to carry out analyses similar to those others have done, that I did not consider myself. 
+I reviewed the following analyses of the Iris dataset before deciding which analyses I would like to do here:  
+- https://www.geeksforgeeks.org/exploratory-data-analysis-on-iris-dataset/  
+- https://www.geeksforgeeks.org/python-basics-of-pandas-using-iris-dataset/
+- https://medium.com/@prayushshrestha89/exploring-the-iris-dataset-with-python-a-fun-dive-into-data-analysis-fun-with-numpy-417c0dd5bb23
+- https://www.kaggle.com/code/lalitharajesh/iris-dataset-exploratory-data-analysis
+- https://scikit-learn.org/stable/auto_examples/decomposition/plot_pca_iris.html
+- https://www.kaggle.com/code/narnaoot/iris-statistical-analysis-predictions
+- https://www.tutorialspoint.com/exploratory-data-analysis-on-iris-dataset
+- https://labex.io/tutorials/ml-revealing-iris-dataset-structure-via-factor-analysis-49327
+- https://discuss.datasciencedojo.com/t/common-mistakes-which-occur-when-working-with-the-iris-dataset-in-python/1414
+- https://www.quarkml.com/2022/05/iris-dataset-classification-with-python.html
+- https://scikit-learn.org/stable/datasets/toy_dataset.html
+- https://levelup.gitconnected.com/a-beginners-guide-to-data-visualization-with-the-iris-dataset-691f115049c5
+- https://en.wikipedia.org/wiki/Iris_flower_data_set
+- https://colab.research.google.com/github/wgova/kmeans-clustering/blob/master/notebooks/iris_analysis.ipynb
+- https://www.linkedin.com/pulse/iris-dataset-analysis-using-machine-learning-techniques-pramod-sahu-g3kgf/
 
 
 
+A very useful method would be to check the dataset for duplicates, and then drop the duplicates. I need to make sure this only drops the duplicate rows and not individual datapoints as they may not be true duplicates, just the same value recorded twice so I will do this. 
+
+data = df.drop_duplicates(subset ="Species",)
+data
+
+
+I will then use df.value_counts("Species") to see if the data is distributed equally between the classes/species. ALthough, I can do sns.countplot() to visualise the count of rows for each species, I dont think this adds value so I wont carry it out.
 
 ### Extra:
 
