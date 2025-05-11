@@ -1,109 +1,99 @@
-# pands-project
+# pands-project   
+  
+This project aims to analyse the Iris dataset, using python. It is submitted (on 12 may 2025) for assessment for the Higher Diploma in Science in Computing in Data Analytics, Programming and Scripting module, delivered by Andrew Beatty. 
 
-This project aims to evaluate the Iris dataset, using python. It will be submitted (on or before 12 may 2025) for assessment as part of the tasks required in the Higher Diploma in Science in Computing in Data Analytics, Programming and Scripting module, delivered by Andrew Beatty. 
+# *Introduction to the Iris dataset:*  
+  
+The Iris dataset (see: https://archive.ics.uci.edu/dataset/53/iris) comes from findings collected by Anderson in 1935 and first published by Fisher in 1936 (https://www.semanticscholar.org/paper/Will-the-real-iris-data-please-stand-up-Bezdek-Keller/1c27e59992d483892274fd27ba1d8e19bbfb5d46) (reference to original Fisher publication: https://onlinelibrary.wiley.com/doi/10.1111/j.1469-1809.1936.tb02137.x). The dataset is one of the earliest published papers on classification methods within the literature. The clean and simple structure means it is widely used in statistics and machine learning.  
+Specifically, the dataset contains the measurements (cm) of four variables (sepal length, sepal width, petal length, and petal width) for each of 150 Iris flowers, which are also classififed by Iris class (Setosa, Versicolour, or Virginica). The Iris dataset provides an opportunity to utilise a simple dataset to learn the capabilities of python for data analysis.  
+  
+# *Downloading and importing the Iris dataset*   
+  
+a) Download the Iris dataset from the source:  
+The Iris dataset must first be downloaded from the source (see https://archive.ics.uci.edu/dataset/53/iris). Clicking the "download button" reveals a comma separated values (CSV) plain text output, which is opened in a notebook file. Creating the "iris.csv" file in the respository (using VS Code), the Iris CSV dataset is pasted into it. The source (https://archive.ics.uci.edu/dataset/53/iris) indicates that the Iris dataset available for download differs from the data presented in Fiser's article (specifically, the 35th and 38th samples are incorrect) so these are corrected in the "iris.csv" file, according to the instructions in the source, prior to carrying out any other work.    
+  
+b) Import the iris.csv file as a pandas DataFrame:    
+Researching which code to use to import a CSV file uding VS studio (knowing this from lectures), this source (see: https://stackoverflow.com/questions/65511586/vs-code-is-there-a-way-to-read-a-csv-file-without-needing-specification-of-the) shows that the pandas function "pd.read_csv()" (see official documentation: https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html) is required. Pandas is imported as pd at the top of the analysis.py file. As the column names aren't present in the source "iris.data" file from https://archive.ics.uci.edu/dataset/53/iris, but are listed in the associated "iris.names" file, the columns are names during the import of the CSV database.
+  
+Although the original source (https://archive.ics.uci.edu/dataset/53/iris) states what the Iris database should look like, it is important to review the imported database before conducting any analysis to ensure that, 1) The database imported correctly and looks as it should, and 2) There is an opportunity to think about which analyses to do.    
+  
+c) Checking the CSV import  
+  
+Sanity check:    
+From the downloaded "iris.names" file in the source download, there should be 150 instances/rows (50 for each of three Iris classes) and 4 attributes (i.e.columns; sepal length, sepal width, petal length and petal width) in the database. The output in the terminal running a sanity check using the "print()" function shows the first 5 and last 5 rows. The sanity check is commented out after review. Additionally, the sanity check "print(iris[34:38])" allows comparison of the corrected rows to the source (https://archive.ics.uci.edu/dataset/53/iris).  
 
-# *Introduction to the Iris dataset:* 
-
-The Iris dataset (see: https://archive.ics.uci.edu/dataset/53/iris) comes from findings collected by Anderson in 1935 and first published by Fisher in 1936 (https://www.semanticscholar.org/paper/Will-the-real-iris-data-please-stand-up-Bezdek-Keller/1c27e59992d483892274fd27ba1d8e19bbfb5d46) (reference to original Fisher publication: https://onlinelibrary.wiley.com/doi/10.1111/j.1469-1809.1936.tb02137.x). The dataset is one of the earliest paper on classification methods within the literature. The simple structure means it is widely used in statistics and machine learning.  
-Specifically, the dataset contains the measurements (cm) of four variables (sepal length, sepal width, petal length, and petal width) for each of 150 Iris flowers, which are also classififed by Iris class (Setosa, Versicolour, or Virginica). The Iris dataset provides an opportunity to utilise a simple database to learn the capabilities of python for data analysis, and thus, this project aims to analyse and present findings relating to the Iris database using python programing.
-
-# *Downloading and importing the Iris dataset*  
-
-a) Download the Iris dataset from the source:
-The Iris dataset must first be downloaded for use from the source (see https://archive.ics.uci.edu/dataset/53/iris), using the "download button" which reveals a comma separated values (CSV) plain text output, which I opened in a notebook file. Creating an iris.csv file in the respository (using VS Code), I pasted the Iris CSV database into it. The source (https://archive.ics.uci.edu/dataset/53/iris) indicates that the Iris dataset available for download here differs from the data presented in Fiser's article (specifically, the 35th and 38th samples are incorrect) so I corrected these in the iris.csv file, according to the instructions in the source, before doing any other work.  
-
-b) Import the iris.csv file as a pandas DataFrame:  
-Researching which code to use to import a CSV file uding VS studio (and knowing we did it in lectures), I found this source (see: https://stackoverflow.com/questions/65511586/vs-code-is-there-a-way-to-read-a-csv-file-without-needing-specification-of-the) which showed I need to use the pandas function "pd.read_csv()" (see official documentation: https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html). Therefore, I went back to the start of the analysis.py file and imported pandas as pd. While reading more about this function, I can see that when I import the CSV database using the "pd.read_csv()" function, I need to name the column names as they aren't present in the source iris.data file from https://archive.ics.uci.edu/dataset/53/iris, but they are listed in the associated iris.names file (so I know what the column names should be).  
-
-I know from the original source (https://archive.ics.uci.edu/dataset/53/iris) what the Iris database should look like, so I need to look at the imported database before conducting any analysis to ensure that:  
-1) The database imported correctly and looks as it should,  
-2) I can get to grips with what the dataset is before applying any analysis, and  
-3) I have the opportunity to think about what analysis I would like to do.  
-
-I know (from the downloaded iris.names file) there should be 150 instances/rows (50 for each of three Iris classes) and 4 attributes (i.e.columns; sepal length, sepal width, petal length and petal width) in the database. The output in my terminal when I do the sanity check using the "print()" function shows the first 5 and last 5 rows. I commented out the sanity check when I was happy with the import (thankfully, it worked first time). Additionally, I ran the sanity check "print(iris[34:38]) " to check the rows that I corrected apprear as they should.  
-
-I ran the .info() to check the dataset for consistency (see reference: https://www.kaggle.com/code/aniketg11/iris-dataset-with-statistical-tests and official documentation: https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.info.html). Asking ChatGPT how to avoid an output in the terminal and save to file (see conversation: https://chatgpt.com/share/6820a7cb-7ac0-800d-8c89-06a267d1e906). The output is saved as info.txt.
-
-I use the .columns() function to get the list of the names of the columns (https://www.geeksforgeeks.org/python-basics-of-pandas-using-iris-dataset/).
-
-I will use the "value_counts()" function to see if the data is distributed equally between the classes/species (see official documentation: https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.value_counts.html). ALthough, I can do sns.countplot (https://www.geeksforgeeks.org/exploratory-data-analysis-on-iris-dataset/) to visualise the count of rows for each species, I dont think this adds value so I wont carry it out. The count for species is: 
+Info:    
+The ".info()" function allows the dataset to be checked for consistency (see reference: https://www.kaggle.com/code/aniketg11/iris-dataset-with-statistical-tests and official documentation: https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.info.html). Asking ChatGPT how to avoid an output in the terminal and save to file (see conversation: https://chatgpt.com/share/6820a7cb-7ac0-800d-8c89-06a267d1e906), the output is saved as "info.txt".  
+  
+Column names:   
+The ".columns()" function gives the list of the names of the columns (https://www.geeksforgeeks.org/python-basics-of-pandas-using-iris-dataset/) and is saved as column_names.txt. Again, ChatGPT helped wtih saving to file (see conversation: https://chatgpt.com/share/6820a7cb-7ac0-800d-8c89-06a267d1e906). The output is saved as "column_names.txt"
+  
+Counts:    
+The "value_counts()" function allows the use to see if the data is distributed equally between the classes/species (see official documentation: https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.value_counts.html). ALthough, there is the option to run "sns.countplot" (https://www.geeksforgeeks.org/exploratory-data-analysis-on-iris-dataset/) to visualise the count of rows for each species, this doesn't add much value so this is not done. The count for species is (saved as "species_sample_counts.txt"): 
 Iris-setosa        50
 Iris-versicolor    50
 Iris-virginica     50
+  
+Blank cells:    
+The documentation at the soure says there are no blank cells but even so, this is checked using the "isnull()" pandas function, (https://www.geeksforgeeks.org/exploratory-data-analysis-on-iris-dataset/ and see official documentation https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.isnull.html#pandas.DataFrame.isnull). 
+The output is saved as "missing_values.txt".  
 
-The documentation at the soure says there are no blank cells but even so, I checked this using the "isnull()" pandas function, (https://www.geeksforgeeks.org/exploratory-data-analysis-on-iris-dataset/ and see official documentation https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.isnull.html#pandas.DataFrame.isnull). 
-There are no missing values: 
-sepal_length    0
-sepal_width     0
-petal_length    0
-petal_width     0
-species         0
-dtype: int64
+Data types:  
+The "iris.dtypes()" function (see official documentation: (https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.dtypes.html)) is used to see what types of data are in each column, thus confirming the data is of the correct type. The output is saved as "data_types.txt".  
+  
+# *Analysis of the Iris database: Overview*  
+  
+Following a successful csv import, the following analysis plan, utilising python capabilities, is formulated:
+  
+- Analysis 1: Summary statistics   
+Summary statistics (the mean, median, standard deviation, minimum and maximum etc) for each attribute (feature) within the database.   
+  
+- Analysis 2: Test for Normality   
+Prior to conducting further analysis, determine whether each feature is distributed normally so that a decision can be made on which statistical tests of comparison can be used on the dataset. Features broken down by Iris calss are also be tested for normality.    
+  
+- Analysis 3: Visualise the data   
+Use histograms to visualise the data.   
+  
+- Analysis 4: Investiagate relationships in the dataset    
+Examine the presence (or not) of relationships exist within the dataset, using scatterplots.    
 
-I ran the iris.dtypes() function (see official documentation: (https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.dtypes.html)) to see what types of data are in each column, thus confirming the data is of the correct type. The output indicates that the types are correct: 
-Data types:
-sepal_length     float64
-sepal_width      float64
-petal_length     float64
-petal_width      float64
-species         category
-dtype: object
+- Analysis 5: Linear regression and scatterplots   
+Statistically investiage the existance of any relationships within the dataset, using linear regression and *r* (Pearson's correlation coefficient) and $R^2$ (coefficient of determination) values. Plot the linear regression on new scatterplots and denote the $R^2$ value on each plot.   
+  
+- Analysis 6: Statistical differences    
+Carry out statistical analysis (using the Kruskal-Wallis test) to see if the medians of the features vary from each other. Then conduct a post-hoc test to see where the differences lie.  
+  
+- Analysis 7: Other analyses    
+Using other sources to identify other interesting analyses, these are then carried out.  
+  
+The coding (which is saved in "analysis.py") for each of the above analytical approaches is discussed in detail in the specific sections below, along with associated referencing.     
+  
+Outputs are saved to .txt files (see conversation with ChatGPT: https://chatgpt.com/share/681e2a86-9e3c-800d-853b-50794b23798d), and images are saved to .png files. Although the outputs are saved to file, they are also copied below to allow discussion and conclusion and to justify the analysis carried out in the subsequent steps.  
 
-# *Analysis of the Iris database: Overview*
-
-Happy with the csv import, creating .py files (modules) for each statistical calculation and incorporating these into the analysis.py project file, as appropriate for each task, I plan to explore the use of python to carry out the following analysis on the Iris database:
-
-- Analysis 1: Summary statistics  
-As I do in most of my work, I will first determine summary statistics for each attribute (feature) within the database. I will also, look at the Iris class types. Summary statistics include the mean, median, standard deviation, minimum and maximum etc. I will check these against the summary statistics in the database source (https://archive.ics.uci.edu/dataset/53/iris) as a further sanity check.  
-
-- Analysis 2: Test for Normality  
-Prior to conducting further analysis, I would like to test whether each measure/attribute is distributed normally so that I can decide what statistical tests of comparison can be used on the dataset. I would also like to look at whether I can code to check the features of each iris class for normality.  
-
-- Analysis 3: Visualise the data  
-I will then use histograms to visualise the data.  
-
-- Analysis 4: Investiagate relationships in the dataset  
-I will then look at whether relationships exist within the dataset. I will look at this first using plots, specifically scatterplots.   
-
-- Analysis 5: Linear regression and scatterplots  
-I will then statistically investiage the existance of any relationships, using linear regression and r and $R^2$ values. I will plot the linear regression on new scatterplots and will denote the $R^2$ value on each plot.  
-
-- Analysis 6: Statistical differences.  
-I will then investigate if there are any statistical differences between *the variability" of each measure. These statistical analysis will be chosen depending on whether or not the data varies normally.  
-
-- Analysis 7: Other analyses  
-Looking at additional analyses others have done and identifying interesting approaches, I will carry out similar analyses.
-
-The coding (which is saved in analysis.py) for each of the above analytical approaches, along with associated referencing, is discussed in detail in the specific sections below.    
-
-Having completed some of the analyses, I then asked ChatGPT how to save each of the outputs to .txt file (see conversation: https://chatgpt.com/share/681e2a86-9e3c-800d-853b-50794b23798d), and although the outputs are savevd to the file, they are also copied below to allow discussion and conclusion and to justify the iterative analysis I carried out in the subsequent steps.
-
-## *Analysis 1: Summary Statistics*  
-
-Although I can use the pandas function "iris.describe()" (see reference: https://www.geeksforgeeks.org/exploratory-data-analysis-on-iris-dataset/ and official documentation: https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.describe.html), I am going to try to do this myself to practice coding:
-
-### *Mean*
-The first aim of this analysis is to write code to create a function (saved as the file mean.py) that can be used to calculate the mean for each of the columns/features/attributes (from now on only referred to as features) regardless of their iris class. Attempting code using "features" (from Ian's lectures) and investigating the errors, I encountered the error message 'DataFrame' object has no attribute 'feature_names', I realised that I was working with a numpy array with Ian's work and not a pandas dataframe (df). Researching the error message ((https://stackoverflow.com/questions/49966639/attributeerror-dataframe-object-has-no-attribute-target-names-scikit/49971214)), I know that I need to use the columns of the dataframe to get the mean of the features. I try to use "header" to get into the columns, I realise (again, due to the errors I am receiveing) that using header() to get into the columns in a pandas dataframe isn't the right approach, I will use the ".columns" approach (https://www.geeksforgeeks.org/python-basics-of-pandas-using-iris-dataset/). 
-I then used the mean_iris = data[].mean() code (https://www.geeksforgeeks.org/python-basics-of-pandas-using-iris-dataset/, see official documentation: https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.mean.html) to find the mean of the sepal length as an example but I acutally want to get a function that is not tied to a viariable, that can be imported into analysis.py and used for any variable I want. So I keep looking. Google returned answers that were not specifically addressing the question so I asked ChatGPT (see conversation: https://chatgpt.com/share/6818a76b-8cb0-800d-b88c-9883f38ffd8e). I dont copy the suggested code directly but use the response to write my own code for the iris dataframe I imported.  
-
-I try to use the code I wrote in mean.py to calculate the feature means in the analysis.py file but get the error "No module named 'mean.py'; 'mean' is not a package".  I have a feeling it is because I have inadequately scripted the mean.py code for the csv file import in analysis.py. First, I run a sanity check in mean.py for sepal length and it's not working at all; there is no output in the terminal when I run the code. I ask ChatGPT are the import code and the def of column_mean code linked correctly (https://chatgpt.com/share/6818acbd-7ebc-800d-92f4-cdef153e9efe) and use the response to edit my code in mean.py. There was no output coming in the terminal so I kept the conversation going. Ran print(iris) as a sanity check in the mean.py file and this worked so I ran the function in mean.py and it worked! 
-
-Going to the analysis.py document and trying to run the mean function, I get the error "No module named 'mean.py'; 'mean' is not a package", asking ChatGPT (see conversation: https://chatgpt.com/share/6818b114-6f04-800d-96ca-977ab4f4f269) I see I need to delete .py in the import (it really is the small things!).  Fixing this returns the means of each of the columns as an output.
-
-### *Median*  
-Copying the working code from mean.py into a new file called median.py and changing the function to "median_data = data["SepalLengthCm"].median()" (reference: https://www.geeksforgeeks.org/python-basics-of-pandas-using-iris-dataset/, see official documentation: https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.median.html), I create code that can be used to calculate the median value of a defined column. 
-
-### *Standard Deviation*  
-Copy the working code from mean.py into a new file called std_dev.py and changing the function to "std_dev = data["SepalLengthCm"].std()" (see official documentation: https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.std.html), I create code that can be use to calculate the standard deviation of a defined column.
-
-### *Minium and Maximum Values*  
-I copied the working code from mean.py into new files called min.py and max.py changing the function to "min = data["SepalLengthCm"].min()" and "min = data["SepalLengthCm"].max()", respectively (see official documentation: https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.min.html#pandas.DataFrame.min and https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.max.html#pandas.DataFrame.max) to write code that can caluclate the min and max values of a column, as defined in each function. I tried to write the min and max functions in the one min_and_max.py file but it didnt like having the two functions together (red error marks) so I split them out.
-
-#### *Review of summary statistics code*  
-Although I wrote code that adequately finds the mean, median, standard deviation, minimum and maximum value of each coummn/iris database feature (which was great to get my head around the coding for simple analysis of 
-a pandas df), it required me to do this for each column, one at a time. I knew from lectures this is long and unnecessary so I asked ChatGPT can I generalise the use of these functions (see conversation: https://chatgpt.com/share/6818c100-8c88-800d-a0ca-4b69f0cda31c) for improved efficiency, and save the output in a pandas DataFrame. Taking that advice, I used a loop to imporove the code and commented out the first column-specific code I had written (which i described in the previous sections here). This code/output was highly prefereable as the output was much easier to read than doing each column separately and manually, as I had been. 
-
-The final output is an easily readable DataFrame: 
+## *Analysis 1: Summary Statistics*   
+  
+Although the pandas function "iris.describe()" (see reference: https://www.geeksforgeeks.org/exploratory-data-analysis-on-iris-dataset/ and official documentation: https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.describe.html) can be used to generate summary statistics, is coded manually, as follows, to allow coding practice:  
+  
+### *Mean*  
+The first aim of this analysis is to write code to create a function (saved as the file "mean.py") that can be used to calculate the mean for each of the columns/features/attributes (from now on only referred to as features) regardless of their Iris class. Attempting code using "features" (from Ian's lectures) and investigating the errors, the error message 'DataFrame' object has no attribute 'feature_names' appears in the terminal. It is clear that this is because it's a function for use with numpy arrays (as in with Ian's assignment) and not pandas DataFrames. Researching the error message (https://stackoverflow.com/questions/49966639/attributeerror-dataframe-object-has-no-attribute-target-names-scikit/49971214), the dataframe columns must be used to get the mean of the features. Attempting to use "header()" to get into the columns, the error messages make it clear that using the "header()" function to get into the columns in a pandas dataframe isn't the right approach. Following further research, the ".columns" approach (https://www.geeksforgeeks.org/python-basics-of-pandas-using-iris-dataset/) is used.   
+  
+The "mean_iris = data[].mean()" function (https://www.geeksforgeeks.org/python-basics-of-pandas-using-iris-dataset/, see official documentation: https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.mean.html) is used to find the mean of the sepal length, as an example. However, as this approach is tied to a specific viariable, it is more desirable to use a general function that can be imported into "analysis.py" and used for any and all variable(s). Using ChatGPT (see conversation: https://chatgpt.com/share/6818a76b-8cb0-800d-b88c-9883f38ffd8e) suggestions, code is written for the Iris DataFrame.   
+  
+Trying to use the code from "mean.py" to calculate the feature means in the "analysis.py" file, the error "No module named 'mean.py'; 'mean' is not a package" appears in the teminal. A sanity check is run in "mean.py" for sepal length and this does not work at all; there is no output in the terminal when the code is run. ChatGPT reviews whether the import code and the definition of "column_mean" code linked correctly (https://chatgpt.com/share/6818acbd-7ebc-800d-92f4-cdef153e9efe). The response is used to edit the code in "mean.py". The conversation with ChatGPT continues as there is no output coming in the terminal. "print(iris)" is run as a sanity check in the "mean.py" file and this works. Then the function in "mean.py" works!   
+  
+Going to the "analysis.py" document and trying to run the mean function, the error "No module named 'mean.py'; 'mean' is not a package" is encountered. Asking ChatGPT (see conversation: https://chatgpt.com/share/6818b114-6f04-800d-96ca-977ab4f4f269), the .py needs to be deleted in the import (it really is the small things!).  Fixing this returns the means of each of the columns as an output.  
+  
+### *Median*   
+Copying the working code from "mean.py" into a new file called "median.py" and changing the function to "median_data = data["SepalLengthCm"].median()" (reference: https://www.geeksforgeeks.org/python-basics-of-pandas-using-iris-dataset/, see official documentation: https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.median.html), code is written that can be used to calculate the median value of a defined column.   
+  
+### *Standard Deviation*    
+Copy the working code from "mean.py" into a new file called std_dev.py and changing the function to "std_dev = data["SepalLengthCm"].std()" (see official documentation: https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.std.html), code is written that can be use to calculate the standard deviation of a defined column.
+  
+### *Minium and Maximum Values*    
+Copying the working code from "mean.py" into new files called "min.py" and "max.py" changing the function to "min = data["SepalLengthCm"].min()" and "min = data["SepalLengthCm"].max()", respectively (see official documentation: https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.min.html#pandas.DataFrame.min and https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.max.html#pandas.DataFrame.max) to write code that can calculate the min and max values of a column, as defined in each function. It is not possible to write the min and max functions in the one "min_and_max.py" file so they are split into separate functions (this was attempted).
+  
+#### *Review of summary statistics code*    
+Although code is written that adequately finds the mean, median, standard deviation, minimum and maximum value of each coummn/iris database feature, the code has to be run as standalone code for each column, run one column at a time. This is long and unnecessary so asking ChatGPT, generalised code (see conversation: https://chatgpt.com/share/6818c100-8c88-800d-a0ca-4b69f0cda31c) for improved efficiency is scripted, and the output is saved in a pandas DataFrame. Taking the advice from ChatGPT, a loop is used to imporove the code and the first column-specific code is commented out. This code/output is highly prefereable as the final output is an easily readable DataFrame (saved to "summary_stats.txt"):   
 
         Feature  Mean (cm)  Median (cm)  Standard Deviation (cm)  Minimum (cm)  Maximum (cm)
 0  sepal_length   5.843333         5.80                 0.828066           4.3           7.9
@@ -111,89 +101,78 @@ The final output is an easily readable DataFrame:
 2  petal_length   3.758000         4.35                 1.765298           1.0           6.9
 3   petal_width   1.199333         1.30                 0.762238           0.1           2.5
 
-I was going to next calculate the mean etc. for each of the features for each class of iris but statistics experience to date has led me to believe that this calculation will possibly be done as part of the comparison statistics I will carry out late so I will leave this for now. If the descriptive statistics for each feature of of each iris class is not a by product of subsequent analysis, I will return to do this later. 
+## *Analysis 2: Test for Normality*   
+Researching a statistical test for normality. the Shapiro-Wilk Test is chosen. The Shapiro-Wilk test tests the null hypotheses that the data varies normally. The resulting value (converted from decimal to percentage) implies that there is that percentage chance of observing that data if it was truely normally distributed. A low results leads to a rejection of the null hypothesis that the data is distributed normally (see: https://en.wikipedia.org/wiki/Shapiro%E2%80%93Wilk_test), while a high value supports the null hypothesis.   
 
-## *Analysis 2: Test for Normality*  
-Researching a statistical test for normality (the Shapiro-Wilk Test), I see that I can do this useing SciPy. Therefore, the first thing I will do is create a normality.py file in the repository and from SciPy, I will import stats (https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.shapiro.html). Attempting to write the code myself, using the mean.py file as a basis, I encounter the following error "AttributeError: 'DataFrame' object has no attribute 'column_shapiro'". Therefore, I asked ChatGPT why this is (see conversation: https://chatgpt.com/share/6818cd9a-efc0-800d-a587-0c778458271d). I follow the suggestions and run a sanity check. The Shapiro-Wilk test tests the null hypotheses that the data varies normally. The resultsing value (converted from decimal to percentage) implies that there is that percentage chance of observing that data if it was truely normally distributed. A low results leads to a rejection of the null hypothesis that the data is distributed normally (see: https://en.wikipedia.org/wiki/Shapiro%E2%80%93Wilk_test), while a high value supports the null hypothesis. Importing the function into the analysis.py file, I can check each feature for normal distribution. The output, as before, is a DataFrame which is great for readability/use:
-
-        Feature  Normality p-value
+a) Testing features for normality   
+The Shapiro-Wilk test can be performed using SciPy. Therefore, the stats module from SciPY is imported into the analysis.py file (https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.shapiro.html). Attempting to write the code, using the "mean.py" file as a starting point, the following error appears "AttributeError: 'DataFrame' object has no attribute 'column_shapiro'". ChatGPT explains why this occurs (see conversation: https://chatgpt.com/share/6818cd9a-efc0-800d-a587-0c778458271d). Following the suggestion, the code is amended and a sanity check is run. The output is a DataFrame which is great for readability/use (saved as "normaility_features.txt"):  
+  
+        Feature  Normality p-value  
 0  sepal_length       1.018116e-02
 1   sepal_width       1.011543e-01
 2  petal_length       7.412263e-10
 3   petal_width       1.680465e-08
-
-Interperetation these, I can see (using significance level 0.05, i.e. 5%) the following:
-Sepal length: the p-value is 0.018116 (i.e. <2%)
-Sepal width: the p-value is 0.1011543 (i.e. ~10%)
-Petal length: the p-value is 0.0000000007412263 (i.e. <0.001%)
-Petal width: the p-value is 0.00000001680465 (i.e. < 0.001%)
-Three of these values (sepal length, petal length and petal width) are below the significance level of 0.05, i.e. p < 0.05, meaning that that there is a very low chance the observed data came from a normal distribution and the null hypotheses of normal distribution is rejected. The p-value of sepal width (p = 0.1011543) is p>0.05, meaning that there is a significant amount of confidence that the null hypothesis (the data varies normally) cannot be rejected and so the data varys normally. These results will impact the decsions on what analysis should be done on these data. 
-
-When I compare my results to others' work to check my findings, (https://www.kaggle.com/code/aniketg11/iris-dataset-with-statistical-tests), I realise that I can code to give a statement depending on p-value so I don't have to do this interperetation step myself. I return to the code to do this. Attempting code, I ask ChatGPT for help (see conversation: https://chatgpt.com/share/681a57b5-47cc-800d-b9ec-04dbb71ce441). 
-
+  
+Interperetating these results (with an alpha/significance level 0.05, i.e. 5%):  
+Sepal length: the p-value is 0.018116 (i.e. <2%)  
+Sepal width: the p-value is 0.1011543 (i.e. ~10%)  
+Petal length: the p-value is 0.0000000007412263 (i.e. <0.001%)  
+Petal width: the p-value is 0.00000001680465 (i.e. < 0.001%)  
+Three of these values (sepal length, petal length and petal width) are below the significance level of 0.05, i.e. p < 0.05, meaning that that there is a very low chance the observed data came from a normal distribution and the null hypotheses of normal distribution is rejected. The p-value of sepal width (p = 0.1011543) is p>0.05, meaning that there is a significant amount of confidence that the null hypothesis (the data varies normally) cannot be rejected and so the data varys normally. These results dictate what analysis can next be carried out on these data.   
+  
+Comparing these results to others', (https://www.kaggle.com/code/aniketg11/iris-dataset-with-statistical-tests), it is identified that a statement can appear in the output along with the p-value, thus automating the interpretation step. Attempting code, ChatGPT provides assistance (see conversation: https://chatgpt.com/share/6820fe18-3588-800d-8b7d-10cca88c2ebe).   
+  
 The resulting output of the Shapiro-Wilk test for normality is now:
+The p-value for sepal_length is 0.0102 (p<0.05). The data deviates from normal distribution (reject null hypothesis).  
+The p-value for sepal_width is 0.1012 (p>0.05). The data are likely normally distributed.  
+The p-value for petal_length is 0.0000 (p<0.05). The data deviates from normal distribution (reject null hypothesis).    
+The p-value for petal_width is 0.0000 (p<0.05). The data deviates from normal distribution (reject null hypothesis).  
+  
+b) Testing features per class for normality    
+Trying to further investigate normality of the features for each of the Iris classes (species), difficulties were encountered so ChatGPT provided help (https://chatgpt.com/share/681a62fd-b794-800d-a0a1-ed0e6166f0f4). It is understoon that species must be defined and then incorporated, along with feature, into the column_shapiro function. The results are converted to a pandas dataframe. The output is (saved as "normality_class_features.txt"):  
 
-Shapiro-Wilk test for normality:
-The p-value for sepal_length is 0.0102 (p<0.05). The data deviates from normal distribution (reject null hypothesis).
-The p-value for sepal_width is 0.1012 (p>0.05). The data are likely normally distributed.
-The p-value for petal_length is 0.0000 (p<0.05). The data deviates from normal distribution (reject null hypothesis).
-The p-value for petal_width is 0.0000 (p<0.05). The data deviates from normal distribution (reject null hypothesis).
-
-I then tried to further investigate normality of the features for each of the Iris classes (species). This was very difficult so I asked ChatGPT for help (https://chatgpt.com/share/681a62fd-b794-800d-a0a1-ed0e6166f0f4). I understand that here, I define species, and then incorporate species, as well as feature, into the column_shapiro function I wrote in normality.py. The results are converted to a pandas dataframe. The output is:
-
-Shapiro-Wilk test for normality by species:
-The p-value for Iris-setosa, sepal_length is 0.4595 (p>0.05). The data are likely normally distributed.
-The p-value for Iris-setosa, sepal_width is 0.2715 (p>0.05). The data are likely normally distributed.
-The p-value for Iris-setosa, petal_length is 0.0548 (p>0.05). The data are likely normally distributed.
-The p-value for Iris-setosa, petal_width is 0.0000 (p<0.05). The data deviates from normal distribution (reject null hypothesis).
-The p-value for Iris-versicolor, sepal_length is 0.4647 (p>0.05). The data are likely normally distributed.
-The p-value for Iris-versicolor, sepal_width is 0.3380 (p>0.05). The data are likely normally distributed.
-The p-value for Iris-versicolor, petal_length is 0.1585 (p>0.05). The data are likely normally distributed.
-The p-value for Iris-versicolor, petal_width is 0.0273 (p<0.05). The data deviates from normal distribution (reject null hypothesis).     
-The p-value for Iris-virginica, sepal_length is 0.2583 (p>0.05). The data are likely normally distributed.
-The p-value for Iris-virginica, sepal_width is 0.1809 (p>0.05). The data are likely normally distributed.
-The p-value for Iris-virginica, petal_length is 0.1098 (p>0.05). The data are likely normally distributed.
-The p-value for Iris-virginica, petal_width is 0.0870 (p>0.05). The data are likely normally distributed.
-
-Interestingly, when broken down by Iris class, the only feature which does not follow normal distribution is petal width, and this is across all three classes of iris. 
-
-## *Analysis 3: Visualise the data*
-I then wanted to visualise the data using the matplotlib function .hist(). I didn't think I need to create a separate histograms.py file in the repository to do this as it is a global function which will allow me to pass features through it, within the analysis.py masterfile (official documentation: https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.hist.html, see use of colors, official documentation: https://matplotlib.org/stable/users/explain/colors/colors.html, adding title and axis labels https://www.w3schools.com/python/matplotlib_labels.asp and https://matplotlib.org/stable/users/explain/text/text_intro.html. I asked ChatGPT to review and help with my code (see conversation: https://chatgpt.com/share/681a8af6-5d40-800d-ad4e-e74462ddf431).
-
-Outputs in matplotlib are the following png files which are saved in the repository:
-- sepal_length.png
-- sepal_width.png
-- petal_length.png
-- petal_width.png
-- all_features_iris_one_histogram.png 
-
-Just to see what it I would be like, for my own interest, I wanted to modify the code to show a histogram for each iris class, showing the four features of that iris class. I had already defined "unique_species = iris['species'].unique()" to pull the species categories out of the database (see official documentation: https://pandas.pydata.org/docs/reference/api/pandas.unique.html) in the code above so I didnt have to do it again. Species colours are defined, as are the pattern/hatches shown for each feature. ChatGPT was a huge help here (see conversation: https://chatgpt.com/share/681a8af6-5d40-800d-ad4e-e74462ddf431).
-The output is a matplotlib.pyplot which is saved as all_features_by_species_iris_one_histogram.png, it is very hard to read as there is too much information so I wouldn't bother doing this again. I have commented out the code in analysis.py as I dont want it to run but I really wanted to see this was possible and what it looked like (heavily relying on ChatGPT but it is more than I wanted to do, I just took the opportunity to have a look).
-
-I am also aware that I can use seaborn and matplotlib to output 4 separate histograms on the one output "page" (https://www.geeksforgeeks.org/exploratory-data-analysis-on-iris-dataset/) but as the axes differ in scale between each histogram, I don't feel that this is exceptionally useful for comparison. It would be useful to look at the shapes of the distribution of all of the features, perhaps a little bit more useful that doing each histogram one at a time. As above, they would need to be statistically evaluated for normality, this cannot be assumed from the shape of the histogram, even when it looks bell-shaped/Gaussian. 
-
-## *Analysis 4: Explore/visualise relationships between the features* 
-
-Researching how to explore the relationships between the data, I was going to use a the seaborn scatterplot() function:
-- See review of seaborn, versus matplotlib, versus pandas for scatterplot: https://www.reddit.com/r/learnpython/comments/rg8kwe/when_should_i_use_each_plotting_method_seaborn_or/?rdt=39972
+Shapiro-Wilk test for normality by species:  
+The p-value for Iris-setosa, sepal_length is 0.4595 (p>0.05). The data are likely normally distributed.  
+The p-value for Iris-setosa, sepal_width is 0.2715 (p>0.05). The data are likely normally distributed.  
+The p-value for Iris-setosa, petal_length is 0.0548 (p>0.05). The data are likely normally distributed.  
+The p-value for Iris-setosa, petal_width is 0.0000 (p<0.05). The data deviates from normal distribution (reject null hypothesis).  
+The p-value for Iris-versicolor, sepal_length is 0.4647 (p>0.05). The data are likely normally distributed.  
+The p-value for Iris-versicolor, sepal_width is 0.3380 (p>0.05). The data are likely normally distributed.  
+The p-value for Iris-versicolor, petal_length is 0.1585 (p>0.05). The data are likely normally distributed.  
+The p-value for Iris-versicolor, petal_width is 0.0273 (p<0.05). The data deviates from normal distribution   (reject null hypothesis).       
+The p-value for Iris-virginica, sepal_length is 0.2583 (p>0.05). The data are likely normally distributed.  
+The p-value for Iris-virginica, sepal_width is 0.1809 (p>0.05). The data are likely normally distributed.  
+The p-value for Iris-virginica, petal_length is 0.1098 (p>0.05). The data are likely normally distributed.  
+The p-value for Iris-virginica, petal_width is 0.0870 (p>0.05). The data are likely normally distributed.  
+  
+Interestingly, when broken down by Iris class, the only feature which does not follow normal distribution is petal width, and this is true across all three classes of Iris.   
+  
+## *Analysis 3: Visualise the data*  
+Wanting to visualise the data using the matplotlib function ".hist()" (official documentation: https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.hist.html, see use of colors, official documentation: https://matplotlib.org/stable/users/explain/colors/colors.html, adding title and axis labels https://www.w3schools.com/python/matplotlib_labels.asp and https://matplotlib.org/stable/users/explain/text/text_intro.html), ChatGPT assists with the code (see conversation: https://chatgpt.com/share/681a8af6-5d40-800d-ad4e-e74462ddf431). The outputs ("sepal_length.png", "sepal_width.png", "petal_length.png", "petal_width.png", "all_features_iris_one_histogram.png") are saved in the repository.   
+  
+To explore what it would look like, the code is modified to show a histogram for each Iris class, showing the four features of that Iris class. Having defined "unique_species = iris['species'].unique()" to pull the species categories out of the database (see official documentation: https://pandas.pydata.org/docs/reference/api/pandas.unique.html) in the code above this didnt need to be done again. Species colours are defined, as are the pattern/hatches shown for each feature. ChatGPT helps again (see conversation: https://chatgpt.com/share/681a8af6-5d40-800d-ad4e-e74462ddf431). The output is a matplotlib.pyplot which is saved as "all_features_by_species_iris_one_histogram.png", it is very hard to read as there is too much information so this approach may not be repeated in future projects. The code is commented out in "analysis.py" to ensure it won't run.   
+  
+Although alternative approaches exist, where seaborn and matplotlib can output 4 separate histograms on the one output "page" or "sheet" (https://www.geeksforgeeks.org/exploratory-data-analysis-on-iris-dataset/), the axes differ in scale between each histogram, so this is not very useful for comparison and is not carried out here.   
+  
+## *Analysis 4: Explore and visualise relationships between the features*   
+  
+Researching how to explore the relationships between the data, the seaborn "scatterplot()" function is identified.
+- See review of seaborn, versus matplotlib, versus pandas for scatterplot: https://www.reddit.com/r/learnpython/comments/rg8kwe/when_should_i_use_each_plotting_method_seaborn_or/?rdt=39972  
 - see discussion of plot types: https://www.datacamp.com/blog/data-demystified-data-visualizations-that-capture-relationships
-- https://seaborn.pydata.org/tutorial/relational.html
- - see official documentation: https://seaborn.pydata.org/generated/seaborn.scatterplot.html#seaborn.scatterplot  
- 
- However, researching "showing multiple scatterplots on one plot" to see if there are many ways to do this, I found I can use matplotlib to create several plots on one plot (see reference: https://chris35wills.github.io/courses/PythonPackages_matplotlib/matplotlib_multiple_figs/) but this could get messy as I have 4 variables and I want to plot all of these against each other. I also know from the above task where I plotted all of the histograms for each feature and class that too much data on a single set of axes is messy so I dont want to get into this either with so many relationships to investigate/plot (https://stackoverflow.com/questions/4270301/multiple-datasets-on-the-same-scatter-plot). I know from Ian's lectures/assignment that I can use the seaborn pairplot() function (see official documentation: https://seaborn.pydata.org/generated/seaborn.pairplot.html#seaborn-pairplot) to quickly visualise all variables against each other. I cannot see any other useful function that saves me creating all of the scatterplots one at a time. So I decided to use that function as it allows me to look at the relationships between all of the features, colour-coded by Iris class. From here, I can look at the functions I can use to statistically explore relationships between the features but I want to do look at them visually first. 
- I used the seaborn pairplot() function. I following the directions with the official documentation above, and could not get it to work, I asked ChatGPT (see conversation: https://chatgpt.com/share/681d018c-41d4-800d-8ef1-b64c306fa1c5); it told me I am presenting features as a string whereas, I need to remove the quote marks and present it as a list of feature names. I was delighted I nearly had it on my own. I saved the output as all_features_iris_pairplot.png. (Note: I tried to add a title using the code below but this gave a title for each of the subplots so I reverted to no title).  
-The pairplot subplots show the relationship between each set of features. Along the diagonal (top left to bottom right), the plots show the distribution for that one feature, for each of the Iris classes. If I wanted to look at one of the relationships on their own, I would create a single scatterplot. I used matplotlib scatter() in Ian's assessment to create a single scatterplot so I decided I wanted to try new code and therefore decided to create a scatterplot using the seaborn function "scatterplot()" (see official documentation: https://seaborn.pydata.org/generated/seaborn.scatterplot.html), plotting petal length versus petal width (as an example). I used this source to help me label the axes and add a title in seaborn (reference: https://www.geeksforgeeks.org/how-to-set-axes-labels-limits-in-a-seaborn-plot/), I didn't need to ask ChatGPT for any help! The output is saved in the respository as petal_length_width.png. 
-
+- https://seaborn.pydata.org/tutorial/relational.html  
+- see official documentation: https://seaborn.pydata.org/generated/seaborn.scatterplot.html#seaborn.scatterplot    
+   
+However, researching "showing multiple scatterplots on one plot" to see if there are many ways to do this, matplotlib can be usedto create several plots on one plot (see reference: https://chris35wills.github.io/courses/PythonPackages_matplotlib/matplotlib_multiple_figs/) but this could get messy due to the number or variables (4) in the dataset. Additionally, looking at the above histogram task, where all histograms are plotted for each feature and class, too much data on a single set of axes can be messy (https://stackoverflow.com/questions/4270301/multiple-datasets-on-the-same-scatter-plot). Previous work (Ian's lectures/assignment) showed that the seaborn "pairplot()" function (see official documentation: https://seaborn.pydata.org/generated/seaborn.pairplot.html#seaborn-pairplot) can be used to quickly visualise all variables against each other. Despite looking for one, there doesnt appear to be any other useful function that creates all scatterplots at one time. Therefore, the "pairplot()" function is used to look at the relationships between all of the features, colour-coded by Iris class. This allows visualisation of the data before deciding which statistical analyses to carry out.  
+Using the seaborn "pairplot()" function, following the official documentation above, the code would not work so ChatGPT helps (see conversation: https://chatgpt.com/share/681d018c-41d4-800d-8ef1-b64c306fa1c5); the issue came from the presentation of the features as a string while actually, the quote marks needed to be removed and the features presented as a list. It was great to get there with minimal help. The output is saved as "all_features_iris_pairplot.png". (Note: A title is added but this gives the title for each of the subplots so this is revered to no title).    
+  
+The output pairplot subplots show the relationship between each set of features. Along the diagonal (top left to bottom right), the plots show the distribution for that one feature, for each of the Iris classes. To then examine one of the relationships on its own, it is reasonable to create a single scatterplot. As the matplotlib "scatter()" function was used in Ian's assessment, a decision was made to try new code by creating a scatterplot using the seaborn function "scatterplot()" (see official documentation: https://seaborn.pydata.org/generated/seaborn.scatterplot.html), plotting petal length versus petal width (as an example). Axes are labelled and a title is added (reference: https://www.geeksforgeeks.org/how-to-set-axes-labels-limits-in-a-seaborn-plot/). This is carried out without help from ChatGPT! The output is saved in the respository as "petal_length_width.png".  
+  
 ## *Analysis 5: Explore relationships between features using statistical methods*
-
-As I have looked at the relationship between the features using seaborn pairplot(), and at one relationship (petal length and petal width) using seaborn scatterplot(), I then wanted to investigate relationships statistically. To evalute if variables are linearly related, I first needed to fit a best fit line (using SciPy linregress, see official documentation: https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.linregress.html) and then I need to determine the R value (Pearson correlation coefficient, see reference: https://en.wikipedia.org/wiki/Pearson_correlation_coefficient) which will indicate presence or lack of correlation between variables in the dataset. I decided not to use pandas corr() function (which gives the pearson correlation coefficient if you code it that way) as it is not required as the linregress() function would return this, as well as slope etc. As I can get the r value from the linregress() function I can also square the R value to get the $R^2$ value which will also indicate the presence or lack of correlation.  
-Importing the stats module from scipy at the top of analysis.py, I used the scipy linregress() function for two sets of known variables  
-(e.g.  
-result = linregress(x = sepal_length, y = sepal_width)  
-print(result.intercept, result.slope, result.rvalue)) 
-but struggled to make the jump to more efficient code which could iterate through all probable pairs of features, rather than listing each pair manually, using the code as in my previous example so I asked ChatGPT (see conversation: https://chatgpt.com/share/681d1af9-4b80-800d-aaff-f0e445b058ee). I will also try to automate the generation of the $R^2$ values for each features relationship. I also asked ChatGPT how to add hue=species and how to convert the output to a pandas DataFrame for further use (same conversation). 
-The output from the linear regression is:  
-
+  
+Having looked at the relationship between the features using seaborn "pairplot()", and at one relationship (petal length and petal width) using seaborn "scatterplot()", it is reasonable to next investigate relationships using statistical methods. To evalute if variables are linearly related, a best-fit line is generated (using SciPy linregress, see official documentation: https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.linregress.html) and the *r* value determined (Pearson correlation coefficient, see reference: https://en.wikipedia.org/wiki/Pearson_correlation_coefficient) to indicate presence or lack of correlation between variables in the dataset. A decision was made not to use the pandas "corr()" function (which gives the Pearson correlation coefficient if coded to do so) as it is not required as the "linregress()" function returns this value, as well as slope etc. Getting the *r* value from the "linregress()" function, it is squared to get the $R^2$ value which also indicates the presence or lack of correlation.   
+  
+Importing the stats module from scipy at the top of "analysis.py", the SciPy "linregress()" function is used for two varibales but jumping to more efficient code which can iterate through all probable pairs of features, rather than listing each pair manually, is difficult. Therefore, ChatGPT is consulted (see conversation: https://chatgpt.com/share/681d1af9-4b80-800d-aaff-f0e445b058ee). The generation of the $R^2$ values for each pair of features is automated. ChatGPT also indicates how to add hue=species and how to convert the output to a pandas DataFrame for further use (same conversation). The output from the linear regression (saved as "linear_regression.txt") is:    
+  
       x_variable    y_variable     slope  intercept   r_value  r_squared       p_value   std_err
 0   sepal_length   sepal_width -0.061885   3.418947 -0.117570   0.013823  1.518983e-01  0.042967
 1   sepal_length  petal_length  1.858433  -7.101443  0.871754   0.759955  1.038667e-47  0.085856
@@ -207,55 +186,53 @@ The output from the linear regression is:
 9    petal_width  sepal_length  0.888580   4.777629  0.817941   0.669028  2.325498e-37  0.051374
 10   petal_width   sepal_width -0.209360   3.308426 -0.366126   0.134048  4.073229e-06  0.043740
 11   petal_width  petal_length  2.229940   1.083558  0.962865   0.927110  4.675004e-86  0.051396
-
-Note: In practicality, although the repeated findings above (e.g. both "sepal length versus petal length", and the reverse of "petal length versus sepal length") give different slope (m) and y-intercept values, each pair of variables in either orders give the same r and r-squared values. Therefore, the entire 12 rows of output may not be required. 
-
-Interpretation of the r and r-squared fidings:
-The r-value indicates the strength of the relationship (it is expressed as a decimal) (see reference: https://statisticsbyjim.com/basics/correlations/) and r-squared is the % of the response variable variation that is explained by the liner model, 100% indicates that the model explains all of the variablity of the response data around the mean (https://blog.minitab.com/en/adventures-in-statistics-2/regression-analysis-how-do-i-interpret-r-squared-and-assess-the-goodness-of-fit). Deleting the duplicates, and reducing the DataFrame to only look at R and R-squared values, iIt is clear that the relationship between petal length and petal width ia the strongest (r=0.962865, r-squared=0.927110; i.e. ~93% of the relationship between the variables are explained by the regression line/model and so they are very close to having a linear relationship). Next is sepal length and petal length (r-value = 0.871754, r-squared value = 75.99%). Suprisingly, sepal and length and sepal width have the weakest relationshio (r = -0.117570, r-squared =  1.38%)  
-
-      x_variable    y_variable    r_value  r_squared      
-0   sepal_length   sepal_width  -0.117570   0.013823  
-1   sepal_length  petal_length   0.871754   0.759955  
-2   sepal_length   petal_width   0.817941   0.669028   
-4    sepal_width  petal_length  -0.428440   0.183561  
-5    sepal_width   petal_width  -0.366126   0.134048  
-8   petal_length   petal_width   0.962865   0.927110  
-
-## *Analysis 6: Exploring differences*
-
-Researching which statistical test should be used for comparison where the dataset doesn't very normally, I have decided to carryout a Kruskal-Wallis test to analyse if there is a statistial difference (in the medians) between each features for each of the species/iris class (see references: https://stats.oarc.ucla.edu/spss/whatstat/what-statistical-analysis-should-i-usestatistical-analyses-using-spss/#:~:text=The%20Kruskal%20Wallis%20test%20is,permits%20two%20or%20more%20groups. and https://en.wikipedia.org/wiki/Kruskal%E2%80%93Wallis_test). This test will indicate if significant differences exist. SciPy has a function kruskal() (see official documentation: https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.kruskal.html) which "tests the null hypothesis that the population median of all of the groups are equal. It is a non-parametric version of ANOVA. The test works on 2 or more independent samples, which may have different sizes..rejecting the null hypothesis does not indicate which of the groups differs". Doing my best to write the script, I asked ChatGPT for help (see conversation: https://chatgpt.com/share/681e43ba-f39c-800d-96d8-74b732aee3e7). In the end, I copied all of my code in for review as I wanted to be sure the code I had written earlier as part of other funcions (defining features etc.) was correctly carried through into the Kruskal-Wallis H-test code. The output was saved as kruskal_wallis.txt.
-
-From the output (kruskal_wallis.txt):
-For 'sepal_length', p = 0.0000 (p<0.05): Reject H0; at least one group median is significantly different.
-For 'sepal_width', p = 0.0000 (p<0.05): Reject H0; at least one group median is significantly different.
-For 'petal_length', p = 0.0000 (p<0.05): Reject H0; at least one group median is significantly different.
-For 'petal_width', p = 0.0000 (p<0.05): Reject H0; at least one group median is significantly different.
-
-Findings indicate that for each feature (sepal lenght, sepal width, petal length and petal width) there is at least one pair of iris class within that feature that differs from the measurements of that feature in another class. As discussed before, a post-hoc test will need to be carried out to see where the differences lie.
-
-Post-Hoc test:
-I am going to try to copy the code for the Kruskal-Wallis test and adapt this for the Dunn test as this allows for pairwise comparisons between groups, and was specifically designed for use after the Kruskal-Willis test (see reference: https://www.geeksforgeeks.org/how-to-perform-dunns-test-in-python/). The Dunn test will compare the species for each feature to see which pairs differ significantly. To carry out the Dunn post-hoc test, I need to import the scikit-posthocs module. The posthoc_dunn() function (see official documentation: https://scikit-posthocs.readthedocs.io/en/latest/generated/scikit_posthocs.posthoc_dunn.html). From the documentation, the Dunn test is a post-hoc test "for multiple comparisons of mean rank sums.. May be used after Kruskal-Wallis one-way analysis of variance by ranks to do pairwise comparisons" As some of the data (petal width for all species) is not distributed normally and becauase the measures aren't paired, this is the correct post hoc test. To use this, I had to install the skikit-posthocs module in the command module (pip install scikit-posthocs).
-
-Asking ChatGPT for help with the code (https://chatgpt.com/share/681e9548-99fc-800d-bd12-33610c02f427), the outputs are saved for each feature and show results for the comparison between the three iris species/classes for that feature. I saved the output as a text file (dunns_test_{feature}.txt).
-
-## *Analysis 7: Visualising correlations in a heatmap*
-
-At this stage of this project, I have researched the dataset and analyses availble for use, using python, and applied them according to what I would do if this was a live work project. Following this, I now wish to carry out analyses similar to those others have done, that I did not consider myself.  
-
-I will visualise the correlations between the features using the seaborn heatmap() function (see official documentation: https://seaborn.pydata.org/generated/seaborn.heatmap.html). The plot is saved as "heatmap_features.png"
-
-Additionally, I will carry out principal component analysis (https://scikit-learn.org/stable/auto_examples/decomposition/plot_pca_iris.html) as the output plot looks very interesting and can indicate whether a species can be predicted by one, or more, feature. I had to get a lot of help from ChatGPT on this (see conversation: https://chatgpt.com/share/68208ed4-9920-800d-9002-749b64faee66). The output is saved as pca_iris_dataset.png and pcd_explained_variance.txt
-
-Finally, a useful technique I came across was to look at skewness and check for outlier detection (see reference: https://www.linkedincom/pulse/iris-dataset-analysis-using-machine-learning-techniques-pramod-sahu-g3kgf/). 
-Asking ChatGPT for help (see conversation: https://chatgpt.com/share/68209f9c-a678-800d-8dc8-ecd0a2ee96f7), I saved the outputs to skewness_kurtosis.txt and the plots to distributions_sepal_width.txt, distributions_sepal_length.txt, distributions_petal_width.txt and distributions_petal_length.txt
-
-Although I didn't need it here, a very useful method for datasets I am exploring without knowing much about them would be to check the dataset for duplicates (https://www.geeksforgeeks.org/exploratory-data-analysis-on-iris-dataset/) and return the dataset with the duplicaes removed, using the .drop_duplicates() (see official documentation: https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.drop_duplicates.html)
-
-### Comment:
-
-Reviewing the outputs, to help with readability, I went back and added print() througout the analysis.py file to insert blank lines where needed (https://www.reddit.com/r/learnpython/comments/uqajbh/how_to_print_space_between_output_lines/).
-
-I really enjoyed this project. It was brilliant to get to grips with importing a csv file and then working on it using vistualisations and analysis. I really feel like I could take my own database at work and analyse it like I did here, which I definitely couldnt have done before doing this project. Thank you for a very useful assignment!
+  
+Note: In practicality, although the repeated findings above (e.g. both "sepal length versus petal length", and the reverse of "petal length versus sepal length") give different slope (m) and y-intercept values (c), each pair of variables in either order give the same *r* and $R^2$ values. Therefore, the entire 12 rows of output may not be required.   
+  
+Interpretation of the *r* and $R^2$ fidings:  
+The *r*-value indicates the strength of the relationship (expressed as a decimal) (see reference: https://statisticsbyjim.com/basics/correlations/) and $R^2$ is the % of the response variable variation that is explained by the liner model; 100% indicates that the model explains all of the variablity of the response data around the mean (https://blog.minitab.com/en/adventures-in-statistics-2/regression-analysis-how-do-i-interpret-r-squared-and-assess-the-goodness-of-fit). Reducing the DataFrame to only look at *r* and $R^2$ values, it is clear that the relationship between petal length and petal width ia the strongest (*r*=0.962865, $R^2$=0.927110; i.e. ~93% of the relationship between the variables are explained by the regression line/model and so they are very close to having a linear relationship). Next is sepal length and petal length (*r*-value = 0.871754, $R^2$ value = 75.99%). Suprisingly, sepal and length and sepal width have the weakest relationship (*r* = -0.117570, $R^2$ =  1.38%).  
+   
+## *Analysis 6: Exploring differences*  
+  
+Researching which statistical test should be used for comparison where the dataset doesn't very normally, a Kruskal-Wallis test is used to analyse if there is a statistially significant difference in the medians between each features for each of the species/iris class (see references: .https://stats.oarc.ucla.edu/spss/whatstat/what-statistical-analysis-should-i-usestatistical-analyses-using-spss/#:~:text=The%20Kruskal%20Wallis%20test%20is,permits%20two%20or%20more%20groups and https://en.wikipedia.org/wiki/Kruskal%E2%80%93Wallis_test). (see official documentation: https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.kruskal.html) . This function *"tests the null hypothesis that the population median of all of the groups are equal. It is a non-parametric version of ANOVA. The test works on 2 or more independent samples, which may have different sizes..rejecting the null hypothesis does not indicate which of the groups differs"*. After a best attempt to write the script, ChatGPT is consulted for help (see conversation: https://chatgpt.com/share/681e43ba-f39c-800d-96d8-74b732aee3e7). All of the code is copied in for review as to ensure the code written earlier as part of other funcions (defining features etc.) is correctly carried through into the Kruskal-Wallis H-test code. The output is saved as "kruskal_wallis.txt":  
+  
+From the output (kruskal_wallis.txt):  
+For 'sepal_length', p = 0.0000 (p<0.05): Reject H0; at least one group median is significantly different.  
+For 'sepal_width', p = 0.0000 (p<0.05): Reject H0; at least one group median is significantly different.  
+For 'petal_length', p = 0.0000 (p<0.05): Reject H0; at least one group median is significantly different.  
+For 'petal_width', p = 0.0000 (p<0.05): Reject H0; at least one group median is significantly different.  
+  
+Findings indicate that for each feature (sepal lenght, sepal width, petal length and petal width) there is at least one pair of iris class within that feature that differs from the measurements of that feature in another class. As discussed before, a post-hoc test must be carried out to see where the differences lie.  
+  
+Post-Hoc test:  
+Copying and adapting the code for the Kruskal-Wallis test, code is written for the Dunn post-hoc test, which allows for pairwise comparisons between groups, and is specifically designed for use after the Kruskal-Willis test (see reference: https://www.geeksforgeeks.org/how-to-perform-dunns-test-in-python/). The "posthoc_dunn()" function (see official documentation: https://scikit-posthocs.readthedocs.io/en/latest/generated/scikit_posthocs.posthoc_dunn.html) is used *"for multiple comparisons of mean rank sums.. May be used after Kruskal-Wallis one-way analysis of variance by ranks to do pairwise comparisons"*. As some of the data (petal width for all species) is not distributed normally and becauase the measures aren't paired, this is the correct post hoc test.  To carry out the Dunn post-hoc test, the skikit-posthocs module is installed in the command module (pip install scikit-posthocs) and the scikit-posthocs module is imported in analysis.py.   
+  
+Asking ChatGPT for help with the code (https://chatgpt.com/share/681e9548-99fc-800d-bd12-33610c02f427), the outputs show results for the comparison between the three iris species/classes for that feature (saved as "dunns_test_{feature}.txt" files). The findings of statistically significant differences are the following: 
+ For all features (petal length, petal width, sepal length and sepal width), the Iris classes are all statisticlly different from each other:  
+  - setosa vs versicolor: p = 0.0000 (p<0.05): Reject H0; groups are significantly different.  
+  - setosa vs virginica: p = 0.0000 (p<0.05): Reject H0; groups are significantly different.  
+  - versicolor vs virginica: p = 0.0000 (p<0.05): Reject H0; groups are significantly different.  
+   
+## *Analysis 7: Visualising correlations in a heatmap*  
+  
+With the above sections complete, the dataset is investigated further, using Python.    
+  
+a) Correlations between the features are visualised using the seaborn "heatmap()" function (see official documentation: https://seaborn.pydata.org/generated/seaborn.heatmap.html). The plot is saved as "heatmap_features.png".  
+  
+b) Principal component analysis (PCA) is carried out (https://scikit-learn.org/stable/auto_examples/decomposition/plot_pca_iris.html) as the output plot looks very interesting and can indicate whether a species can be predicted by one, or more, feature. This code relies heavily on ChatGPT (see conversation: https://chatgpt.com/share/68208ed4-9920-800d-9002-749b64faee66). The output is saved as "pca_iris_dataset.png" and "pcd_explained_variance.txt".  
+  
+c) Skewness is examined and the data is checked for outliers (see reference: https://www.linkedincom/pulse/iris-dataset-analysis-using-machine-learning-techniques-pramod-sahu-g3kgf/). 
+Asking ChatGPT for help (see conversation: https://chatgpt.com/share/68209f9c-a678-800d-8dc8-ecd0a2ee96f7), the outputs are saved to skewness_kurtosis.txt and the plots to "distributions_sepal_width.txt", "distributions_sepal_length.txt", "distributions_petal_width.txt" and "distributions_petal_length.txt".  
+  
+d) Although not needed here, a very useful method for new datasets is to check the dataset for duplicates (https://www.geeksforgeeks.org/exploratory-data-analysis-on-iris-dataset/) and return the dataset with the duplicate rows removed, using the ".drop_duplicates()" (see official documentation: https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.drop_duplicates.html)  
+  
+# Conclusion  
+  
+The Iris dataset has been succesfully imported from a .csv file to analysis.py and converted to a pandas DataFrame, upon which multiple visualisations and analyses are applied. Conducting the methods described above, it was possible to practice working in Python using real-world data and provided a glimpse into the breath and depth of options open to an analyst when examining a dataset using python.   
+  
+### Final comment  
+  
+I really enjoyed this project. It was brilliant to get to grips with working with a dataset from beginning to end, using python, from importing a .csv file and to working on it using vistualisations and analysis. I really feel like I could take my own database at work and analyse it like I did here, which I definitely couldnt have done before doing this project. Thank you for a very useful assignment!  
 
 
 

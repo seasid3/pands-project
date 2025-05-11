@@ -1,6 +1,6 @@
 # analysis.py
 # This script is used to analyse the Iris dataset, importing the code functions I wrote for each analysis, 
-# as required. 
+# as required. Outputs are saved to file. 
 # Author: Orla Woods
 
 # Import the necessary libraries
@@ -26,21 +26,16 @@ from sklearn.preprocessing import StandardScaler
 from scipy.stats import skew, kurtosis
 
 # Import the dataset as a pandas dataframe
-# I know from the downloaded zip file "iris.names" from https://archive.ics.uci.edu/dataset/53/iris that the 
-# column names are sepal length (cm), sepal width (cm), petal length (cm), and petal width (cm), respectively.
-# Therefore,I can import the dataset from the iris.csv file I saved in the repository using code from
-# https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html, which has been corrected as per the source. 
 iris = pd.read_csv('iris.csv', delimiter =',', names = ['sepal_length', 'sepal_width', 'petal_length', 'petal_width', 'species'])	
 
 # Before any analysis, run sanity checks and look at the database:
-# write code below to check the iris dataset is correctly imported and the column names are correct. 
-# Output shows the first # 5 rows of the dataset.
-# print(iris) # sanity check 
+# print(iris) # sanity check. Output shows the first # 5 rows of the dataset.
 
-# sanity check to check the corrected rows (https://archive.ics.uci.edu/dataset/53/iris) have been imported correctly.
+# sanity check to check the corrected rows (https://archive.ics.uci.edu/dataset/53/iris) have been imported 
+# correctly.
 # print(iris[34:38])  
 
-# So I can use the columns in the analysis, I will define the feature names
+# So I can use the columns in the analysis, define the feature names
 features = ['sepal_length', 'sepal_width', 'petal_length', 'petal_width']
 # print(features) # sanity check
 
@@ -84,6 +79,7 @@ print("Number of samples in each species has been saved to species_sample_counts
 
 # Check for missing values
 missing = iris.isnull().sum() # check for missing values
+
 # Open a file in write mode and save the information
 with open("missing_values.txt", "w") as file:
     file.write("\n\nMissing values:\n")
@@ -93,7 +89,7 @@ with open("missing_values.txt", "w") as file:
 print("Missing values information has been saved to missing_values.txt")
 
 # Check the data types of each column
-data_types = iris.dtypes # check the data types of each column
+data_types = iris.dtypes 
 
 # Open a file in write mode and save the information
 with open("data_types.txt", "w") as file:
@@ -104,7 +100,6 @@ with open("data_types.txt", "w") as file:
 print("Data types information has been saved to data_types.txt")
 
 # Analysis 1: Summary Statistics
-
 # I first created the following code, which was great to get my head around the coding for simple analysis of 
 # a pandas df. See README.md Task 1 "Review of summary statistics code" for further dicussion. Using ChatGPT 
 # feedback on improving efficiency (see conversation: 
@@ -161,11 +156,11 @@ print(f"Minimum sepal width: {min_sepal_width}cm, maximum sepal width: {max_sepa
 print(f"Minumum petal length: {min_petal_length}cm, maximum petal length: {max_petal_length}cm") 
 print(f"Minumum petal width: {min_petal_width}cm, maximum petal width: {max_petal_width}cm")
 '''
-# Instead of the code I have commented out, based on the feedback from the above referenced conversation with ChatGPT, use
-# a loop to iterate through the features and calculate each value (mean, median, etc.) for each feature, using 
-# code written in mean.py, median.py, std_dev.py, min.py and max.py. This  will be stored in a pandas dataframe 
-# for viewing. 
+# Based on the feedback from the above referenced conversation with ChatGPT, I use a loop to iterate through 
+# the features and calculate each value (mean, median, etc.) for each feature, using code written in mean.py, 
+# median.py, std_dev.py, min.py and max.py. This  will be stored in a pandas dataframe for viewing (in a text file). 
 
+# Define the summary statistics functions
 stats_df = pd.DataFrame({
     'Feature': features,
     'Mean (cm)': [column_mean(iris, feature) for feature in features],
@@ -180,13 +175,13 @@ with open("summary_stats.txt", "w") as summary_stats:
 print("Summary statistics have been saved to summary_stats.txt") 
 
 # Analysis 2: Test for normality of the data using the Shapiro-Wilk test.
-
 # Using the above loop and the function I wrote in normality.py, I will test each feature for normality using the
 # Shapiro-Wilk test. The p-value will be stored in a pandas dataframe for viewing.
 
-# Set the significance level for the Shapiro-Wilk test
+# Set the significance level for all analysese below
 alpha = 0.05 
 
+# Define the Shapiro-Wilk test function
 shapiro_df = pd.DataFrame({
     'Feature': features,
     'Normality p-value': [column_shapiro(iris, feature) for feature in features]
@@ -197,7 +192,7 @@ interpretations = []
 for index, row in shapiro_df.iterrows():
     feature = row['Feature']
     normality_p_value = row['Normality p-value']
-    
+    # Interpret the results of the Shapiro-Wilk test
     if normality_p_value > alpha:
         interpretation = f"The p-value for {feature} is {normality_p_value:.4f} (p>{alpha}). The data are likely normally distributed."
     else:
@@ -215,7 +210,7 @@ with open("normality_features.txt", "w") as file:
 
 print("'Normality test for features' results have been saved to normality_features.txt")
 
-# Analyse the features of each of the iris species for normality using the Shapiro-Wilk test.
+# I will now analyse the features of each of the iris species for normality using the Shapiro-Wilk test.
 # The species are setosa, versicolor and virginica. I will use the same loop as above to iterate through the
 # features and calculate the p-value for each species.
 
@@ -244,6 +239,7 @@ for index, row in shapiro_species_df.iterrows():
      feature = row['Feature']
      p_val = row['Normality p-value']
 
+# Interpret the results of the Shapiro-Wilk test
      if p_val > alpha:
         interpretation_class = f"The p-value for {spec}, {feature} is {p_val:.4f} (p>{alpha}). The data are likely normally distributed."
      else:
@@ -262,16 +258,12 @@ with open("normality_class_features.txt", "w") as file:
 print("'Normality test by species' results have been saved to normality_class_features.txt")
 
 # Analysis 3: Visualise the data using histograms, prior to conducting omparisons.
-
 # matplotlib.pyplot imported at the top of this file. 
 
 # define the histogram function using .hist()
 colors = ["b", "r", "g", "y"]
 
-'''
-# The following code creates separate histograms (saved as .png files in the repository) but I would like
-# to plot them on one set of axes.
-
+# Create separate histograms (saved as .png files in the repository) 
 for feature, colour in zip(features, colors): # The zip() function ito pair features to colours
     plt.hist(iris[feature], color=colour, edgecolor="black", alpha=0.5) # keep bins at default 10 # one histogram per feature
     plt.title(f"Histogram of {feature.replace('_',' ').title()}") # removes _ and capitalises first letter of words
@@ -279,9 +271,8 @@ for feature, colour in zip(features, colors): # The zip() function ito pair feat
     plt.ylabel("Frequency") 
     plt.grid(False)
     plt.show()
-'''
-# For all histograms on one set of axes:
 
+# For all histograms on one set of axes:
 for feature, colour in zip(features, colors): # The zip() function ito pair features to colours
     plt.hist(iris[feature], color=colour, edgecolor="black", alpha=0.5, label=feature.replace('_', ' ').title()) # keep bins at default 10 # one histogram per feature
 
@@ -350,13 +341,10 @@ petal_scatter.set(xlabel = "Petal length (cm)", ylabel = "Petal width (cm)", tit
 # Show
 plt.show()
 
-# Analysis 5: Explore relationships using linear regression
-
-# Determine the best fit line for each pair of features
 # Analysis 5: Explore relationships using linear regression (using pairwise linear regression) and determine
 # the R and R**2 values
 
-# I want to collect the outputs in a dataframe
+# Collect the outputs in a dataframe
 regression_results=[]
 
 # Conduct pairwise linear regression with hue
@@ -409,7 +397,7 @@ with open("linear_regression.txt", "w") as file:
 
 print("Linear regression outputs have been saved to linear_regression.txt")
 
-# Analysis 6: Kruskal-Wallis test to see if the any medians of the feature variables vary
+# Analysis 6: Kruskal-Wallis test to see if any medians of the feature variables vary
 
 kruskal_results = []
 
@@ -497,10 +485,7 @@ for feature in features:
         
 print("Dunn’s test for each feature is saved to dunn_test_(feature name).txt")
 
-# The results are saved in the format "dunn_test_{feature}.txt" for each feature.
-
 # Analysis 7: Other visualisations
-
 # Analysis 7, Part 1: Create a heatmap to show the correlation between the features
 
 # Create a heatmap to show the correlation between the features
@@ -547,7 +532,7 @@ plt.show()
 
 # Analysis 7, part 3: Check skewness and kurtosis of the features
 
-# Insure only columns with numeric data are selected (not categories/iris classes)
+# Ensure only columns with numeric data are selected (not categories/iris classes)
 numeric_cols = iris.select_dtypes(include='number').columns
 
 # Open the file in write mode
