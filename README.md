@@ -1,3 +1,4 @@
+<div align="justify"> 
 # pands-project   
   
 This project aims to analyse the Iris dataset, using python. It is submitted (on 12 may 2025) for assessment for the Higher Diploma in Science in Computing in Data Analytics, Programming and Scripting module, delivered by Andrew Beatty. 
@@ -17,8 +18,7 @@ Researching which code to use to import a CSV file uding VS studio (knowing this
   
 Although the original source (https://archive.ics.uci.edu/dataset/53/iris) states what the Iris database should look like, it is important to review the imported database before conducting any analysis to ensure that, 1) The database imported correctly and looks as it should, and 2) There is an opportunity to think about which analyses to do.    
   
-c) Checking the CSV import  
-  
+c) Check the CSV import  
 Sanity check:    
 From the downloaded "iris.names" file in the source download, there should be 150 instances/rows (50 for each of three Iris classes) and 4 attributes (i.e.columns; sepal length, sepal width, petal length and petal width) in the database. The output in the terminal running a sanity check using the "print()" function shows the first 5 and last 5 rows. The sanity check is commented out after review. Additionally, the sanity check "print(iris[34:38])" allows comparison of the corrected rows to the source (https://archive.ics.uci.edu/dataset/53/iris).  
 
@@ -43,7 +43,7 @@ The "iris.dtypes()" function (see official documentation: (https://pandas.pydata
   
 # *Analysis of the Iris database: Overview*  
   
-Following a successful csv import, the following analysis plan, utilising python capabilities, is formulated:
+Following a successful csv import, the following analysis plan, utilising python capabilities, is formed:
   
 - Analysis 1: Summary statistics   
 Summary statistics (the mean, median, standard deviation, minimum and maximum etc) for each attribute (feature) within the database.   
@@ -92,7 +92,7 @@ Copy the working code from "mean.py" into a new file called std_dev.py and chang
 ### *Minium and Maximum Values*    
 Copying the working code from "mean.py" into new files called "min.py" and "max.py" changing the function to "min = data["SepalLengthCm"].min()" and "min = data["SepalLengthCm"].max()", respectively (see official documentation: https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.min.html#pandas.DataFrame.min and https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.max.html#pandas.DataFrame.max) to write code that can calculate the min and max values of a column, as defined in each function. It is not possible to write the min and max functions in the one "min_and_max.py" file so they are split into separate functions (this was attempted).
   
-#### *Review of summary statistics code*    
+### *Review of summary statistics code*    
 Although code is written that adequately finds the mean, median, standard deviation, minimum and maximum value of each coummn/iris database feature, the code has to be run as standalone code for each column, run one column at a time. This is long and unnecessary so asking ChatGPT, generalised code (see conversation: https://chatgpt.com/share/6818c100-8c88-800d-a0ca-4b69f0cda31c) for improved efficiency is scripted, and the output is saved in a pandas DataFrame. Taking the advice from ChatGPT, a loop is used to imporove the code and the first column-specific code is commented out. This code/output is highly prefereable as the final output is an easily readable DataFrame (saved to "summary_stats.txt"):   
 
         Feature  Mean (cm)  Median (cm)  Standard Deviation (cm)  Minimum (cm)  Maximum (cm)
@@ -173,19 +173,19 @@ Having looked at the relationship between the features using seaborn "pairplot()
   
 Importing the stats module from scipy at the top of "analysis.py", the SciPy "linregress()" function is used for two varibales but jumping to more efficient code which can iterate through all probable pairs of features, rather than listing each pair manually, is difficult. Therefore, ChatGPT is consulted (see conversation: https://chatgpt.com/share/681d1af9-4b80-800d-aaff-f0e445b058ee). The generation of the $R^2$ values for each pair of features is automated. ChatGPT also indicates how to add hue=species and how to convert the output to a pandas DataFrame for further use (same conversation). The output from the linear regression (saved as "linear_regression.txt") is:    
   
-      x_variable    y_variable     slope  intercept   r_value  r_squared       p_value   std_err
-0   sepal_length   sepal_width -0.061885   3.418947 -0.117570   0.013823  1.518983e-01  0.042967
-1   sepal_length  petal_length  1.858433  -7.101443  0.871754   0.759955  1.038667e-47  0.085856
-2   sepal_length   petal_width  0.752918  -3.200215  0.817941   0.669028  2.325498e-37  0.043530
-3    sepal_width  sepal_length -0.223361   6.526223 -0.117570   0.013823  1.518983e-01  0.155081
-4    sepal_width  petal_length -1.735222   9.063151 -0.428440   0.183561  4.513314e-08  0.300812
-5    sepal_width   petal_width -0.640277   3.156872 -0.366126   0.134048  4.073229e-06  0.133768
-6   petal_length  sepal_length  0.408922   4.306603  0.871754   0.759955  1.038667e-47  0.018891
-7   petal_length   sepal_width -0.105785   3.454874 -0.428440   0.183561  4.513314e-08  0.018339
-8   petal_length   petal_width  0.415755  -0.363076  0.962865   0.927110  4.675004e-86  0.009582
-9    petal_width  sepal_length  0.888580   4.777629  0.817941   0.669028  2.325498e-37  0.051374
-10   petal_width   sepal_width -0.209360   3.308426 -0.366126   0.134048  4.073229e-06  0.043740
-11   petal_width  petal_length  2.229940   1.083558  0.962865   0.927110  4.675004e-86  0.051396
+      x_variable    y_variable     slope  intercept   r_value  r_squared       p_value   std_err  
+0   sepal_length   sepal_width -0.061885   3.418947 -0.117570   0.013823  1.518983e-01  0.042967  
+1   sepal_length  petal_length  1.858433  -7.101443  0.871754   0.759955  1.038667e-47  0.085856  
+2   sepal_length   petal_width  0.752918  -3.200215  0.817941   0.669028  2.325498e-37  0.043530  
+3    sepal_width  sepal_length -0.223361   6.526223 -0.117570   0.013823  1.518983e-01  0.155081  
+4    sepal_width  petal_length -1.735222   9.063151 -0.428440   0.183561  4.513314e-08  0.300812  
+5    sepal_width   petal_width -0.640277   3.156872 -0.366126   0.134048  4.073229e-06  0.133768  
+6   petal_length  sepal_length  0.408922   4.306603  0.871754   0.759955  1.038667e-47  0.018891  
+7   petal_length   sepal_width -0.105785   3.454874 -0.428440   0.183561  4.513314e-08  0.018339  
+8   petal_length   petal_width  0.415755  -0.363076  0.962865   0.927110  4.675004e-86  0.009582  
+9    petal_width  sepal_length  0.888580   4.777629  0.817941   0.669028  2.325498e-37  0.051374  
+10   petal_width   sepal_width -0.209360   3.308426 -0.366126   0.134048  4.073229e-06  0.043740  
+11   petal_width  petal_length  2.229940   1.083558  0.962865   0.927110  4.675004e-86  0.051396  
   
 Note: In practicality, although the repeated findings above (e.g. both "sepal length versus petal length", and the reverse of "petal length versus sepal length") give different slope (m) and y-intercept values (c), each pair of variables in either order give the same *r* and $R^2$ values. Therefore, the entire 12 rows of output may not be required.   
   
@@ -209,9 +209,9 @@ Copying and adapting the code for the Kruskal-Wallis test, code is written for t
   
 Asking ChatGPT for help with the code (https://chatgpt.com/share/681e9548-99fc-800d-bd12-33610c02f427), the outputs show results for the comparison between the three iris species/classes for that feature (saved as "dunns_test_{feature}.txt" files). The findings of statistically significant differences are the following: 
  For all features (petal length, petal width, sepal length and sepal width), the Iris classes are all statisticlly different from each other:  
-  - setosa vs versicolor: p = 0.0000 (p<0.05): Reject H0; groups are significantly different.  
-  - setosa vs virginica: p = 0.0000 (p<0.05): Reject H0; groups are significantly different.  
-  - versicolor vs virginica: p = 0.0000 (p<0.05): Reject H0; groups are significantly different.  
+  setosa vs versicolor: p = 0.0000 (p<0.05): Reject H0; groups are significantly different.  
+  setosa vs virginica: p = 0.0000 (p<0.05): Reject H0; groups are significantly different.  
+  versicolor vs virginica: p = 0.0000 (p<0.05): Reject H0; groups are significantly different.  
    
 ## *Analysis 7: Visualising correlations in a heatmap*  
   
@@ -233,6 +233,6 @@ The Iris dataset has been succesfully imported from a .csv file to analysis.py a
 ### Final comment  
   
 I really enjoyed this project. It was brilliant to get to grips with working with a dataset from beginning to end, using python, from importing a .csv file and to working on it using vistualisations and analysis. I really feel like I could take my own database at work and analyse it like I did here, which I definitely couldnt have done before doing this project. Thank you for a very useful assignment!  
-
+</div>
 
 
