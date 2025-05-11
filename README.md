@@ -1,11 +1,11 @@
-<div align="justify"> 
 # pands-project   
   
 This project aims to analyse the Iris dataset, using python. It is submitted (on 12 may 2025) for assessment for the Higher Diploma in Science in Computing in Data Analytics, Programming and Scripting module, delivered by Andrew Beatty. 
 
 # *Introduction to the Iris dataset:*  
   
-The Iris dataset (see: https://archive.ics.uci.edu/dataset/53/iris) comes from findings collected by Anderson in 1935 and first published by Fisher in 1936 (https://www.semanticscholar.org/paper/Will-the-real-iris-data-please-stand-up-Bezdek-Keller/1c27e59992d483892274fd27ba1d8e19bbfb5d46) (reference to original Fisher publication: https://onlinelibrary.wiley.com/doi/10.1111/j.1469-1809.1936.tb02137.x). The dataset is one of the earliest published papers on classification methods within the literature. The clean and simple structure means it is widely used in statistics and machine learning.  
+The Iris dataset (see: https://archive.ics.uci.edu/dataset/53/iris) comes from findings collected by Anderson in 1935 and first published by Fisher in 1936 (https://www.semanticscholar.org/paper/Will-the-real-iris-data-please-stand-up-Bezdek-Keller/1c27e59992d483892274fd27ba1d8e19bbfb5d46) 
+(reference to original Fisher publication: https://onlinelibrary.wiley.com/doi/10.1111/j.1469-1809.1936.tb02137.x). The dataset is one of the earliest published papers on classification methods within the literature. The clean and simple structure means it is widely used in statistics and machine learning.  
 Specifically, the dataset contains the measurements (cm) of four variables (sepal length, sepal width, petal length, and petal width) for each of 150 Iris flowers, which are also classififed by Iris class (Setosa, Versicolour, or Virginica). The Iris dataset provides an opportunity to utilise a simple dataset to learn the capabilities of python for data analysis.  
   
 # *Downloading and importing the Iris dataset*   
@@ -156,11 +156,7 @@ Although alternative approaches exist, where seaborn and matplotlib can output 4
   
 ## *Analysis 4: Explore and visualise relationships between the features*   
   
-Researching how to explore the relationships between the data, the seaborn "scatterplot()" function is identified.
-- See review of seaborn, versus matplotlib, versus pandas for scatterplot: https://www.reddit.com/r/learnpython/comments/rg8kwe/when_should_i_use_each_plotting_method_seaborn_or/?rdt=39972  
-- see discussion of plot types: https://www.datacamp.com/blog/data-demystified-data-visualizations-that-capture-relationships
-- https://seaborn.pydata.org/tutorial/relational.html  
-- see official documentation: https://seaborn.pydata.org/generated/seaborn.scatterplot.html#seaborn.scatterplot    
+Researching how to explore the relationships between the data, the seaborn "scatterplot()" function is identified (see review of seaborn, versus matplotlib, versus pandas for scatterplot: https://www.reddit.com/r/learnpython/comments/rg8kwe/when_should_i_use_each_plotting_method_seaborn_or/?rdt=39972, see discussion of plot types: https://www.datacamp.com/blog/data-demystified-data-visualizations-that-capture-relationships, see discussion: https://seaborn.pydata.org/tutorial/relational.html, see official documentation: https://seaborn.pydata.org/generated/seaborn.scatterplot.html#seaborn.scatterplot).        
    
 However, researching "showing multiple scatterplots on one plot" to see if there are many ways to do this, matplotlib can be usedto create several plots on one plot (see reference: https://chris35wills.github.io/courses/PythonPackages_matplotlib/matplotlib_multiple_figs/) but this could get messy due to the number or variables (4) in the dataset. Additionally, looking at the above histogram task, where all histograms are plotted for each feature and class, too much data on a single set of axes can be messy (https://stackoverflow.com/questions/4270301/multiple-datasets-on-the-same-scatter-plot). Previous work (Ian's lectures/assignment) showed that the seaborn "pairplot()" function (see official documentation: https://seaborn.pydata.org/generated/seaborn.pairplot.html#seaborn-pairplot) can be used to quickly visualise all variables against each other. Despite looking for one, there doesnt appear to be any other useful function that creates all scatterplots at one time. Therefore, the "pairplot()" function is used to look at the relationships between all of the features, colour-coded by Iris class. This allows visualisation of the data before deciding which statistical analyses to carry out.  
 Using the seaborn "pairplot()" function, following the official documentation above, the code would not work so ChatGPT helps (see conversation: https://chatgpt.com/share/681d018c-41d4-800d-8ef1-b64c306fa1c5); the issue came from the presentation of the features as a string while actually, the quote marks needed to be removed and the features presented as a list. It was great to get there with minimal help. The output is saved as "all_features_iris_pairplot.png". (Note: A title is added but this gives the title for each of the subplots so this is revered to no title).    
@@ -233,6 +229,6 @@ The Iris dataset has been succesfully imported from a .csv file to analysis.py a
 ### Final comment  
   
 I really enjoyed this project. It was brilliant to get to grips with working with a dataset from beginning to end, using python, from importing a .csv file and to working on it using vistualisations and analysis. I really feel like I could take my own database at work and analyse it like I did here, which I definitely couldnt have done before doing this project. Thank you for a very useful assignment!  
-</div>
+
 
 
