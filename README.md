@@ -145,7 +145,7 @@ The p-value for Iris-virginica, sepal_width is 0.1809 (p>0.05). The data are lik
 The p-value for Iris-virginica, petal_length is 0.1098 (p>0.05). The data are likely normally distributed.  
 The p-value for Iris-virginica, petal_width is 0.0870 (p>0.05). The data are likely normally distributed.  
   
-Interestingly, when broken down by Iris class, the only feature which does not follow normal distribution is petal width, and this is true across all three classes of Iris.   
+Interestingly, when broken down by Iris class, the only feature which does not follow normal distribution is petal width, and this is true across the Setosa and Versicolor Iris classes.   
   
 ## *Analysis 3: Visualise the data*  
 Wanting to visualise the data using the matplotlib function ".hist()" (official documentation: https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.hist.html, see use of colors, official documentation: https://matplotlib.org/stable/users/explain/colors/colors.html, adding title and axis labels https://www.w3schools.com/python/matplotlib_labels.asp and https://matplotlib.org/stable/users/explain/text/text_intro.html), ChatGPT assists with the code (see conversation: https://chatgpt.com/share/681a8af6-5d40-800d-ad4e-e74462ddf431). The outputs ("sepal_length.png", "sepal_width.png", "petal_length.png", "petal_width.png", "all_features_iris_one_histogram.png") are saved in the repository.   

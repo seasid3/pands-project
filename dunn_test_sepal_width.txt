@@ -1,17 +1,17 @@
 Dunn's post hoc test for sepal_width (Bonferroni adjusted):
-                  setosa    versicolor     virginica
-setosa      1.000000e+00  2.047087e-14  2.304897e-07
-versicolor  2.047087e-14  1.000000e+00  4.742801e-02
-virginica   2.304897e-07  4.742801e-02  1.000000e+00
+                  Iris-setosa  Iris-versicolor  Iris-virginica
+Iris-setosa      1.000000e+00     2.047087e-14    2.304897e-07
+Iris-versicolor  2.047087e-14     1.000000e+00    4.742801e-02
+Iris-virginica   2.304897e-07     4.742801e-02    1.000000e+00
 
 Interpretation:
 Dunns post-hoc test for sepal_width:
-  setosa vs setosa: p = 1.0000 (p>0.05): Fail to reject H0; groups are not significantly different.
-  setosa vs versicolor: p = 0.0000 (p<0.05): Reject H0; groups are significantly different.
-  setosa vs virginica: p = 0.0000 (p<0.05): Reject H0; groups are significantly different.
-  versicolor vs setosa: p = 0.0000 (p<0.05): Reject H0; groups are significantly different.
-  versicolor vs versicolor: p = 1.0000 (p>0.05): Fail to reject H0; groups are not significantly different.
-  versicolor vs virginica: p = 0.0474 (p<0.05): Reject H0; groups are significantly different.
-  virginica vs setosa: p = 0.0000 (p<0.05): Reject H0; groups are significantly different.
-  virginica vs versicolor: p = 0.0474 (p<0.05): Reject H0; groups are significantly different.
-  virginica vs virginica: p = 1.0000 (p>0.05): Fail to reject H0; groups are not significantly different.
+  Iris-setosa vs Iris-setosa: p = 1.0000 (p>0.05): Fail to reject H0; groups are not significantly different.
+  Iris-setosa vs Iris-versicolor: p = 0.0000 (p<0.05): Reject H0; groups are significantly different.
+  Iris-setosa vs Iris-virginica: p = 0.0000 (p<0.05): Reject H0; groups are significantly different.
+  Iris-versicolor vs Iris-setosa: p = 0.0000 (p<0.05): Reject H0; groups are significantly different.
+  Iris-versicolor vs Iris-versicolor: p = 1.0000 (p>0.05): Fail to reject H0; groups are not significantly different.
+  Iris-versicolor vs Iris-virginica: p = 0.0474 (p<0.05): Reject H0; groups are significantly different.
+  Iris-virginica vs Iris-setosa: p = 0.0000 (p<0.05): Reject H0; groups are significantly different.
+  Iris-virginica vs Iris-versicolor: p = 0.0474 (p<0.05): Reject H0; groups are significantly different.
+  Iris-virginica vs Iris-virginica: p = 1.0000 (p>0.05): Fail to reject H0; groups are not significantly different.

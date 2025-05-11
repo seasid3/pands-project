@@ -14,7 +14,15 @@ Iris-versicolor  petal_width       2.727780e-02
  Iris-virginica  petal_width       8.695419e-02
 
 Interpretation:
-The p-value for sepal_length is 0.0102 (p<0.05). The data deviates from normal distribution (reject null hypothesis).
-The p-value for sepal_width is 0.1012 (p>0.05). The data are likely normally distributed.
-The p-value for petal_length is 0.0000 (p<0.05). The data deviates from normal distribution (reject null hypothesis).
-The p-value for petal_width is 0.0000 (p<0.05). The data deviates from normal distribution (reject null hypothesis).
+The p-value for Iris-setosa, sepal_length is 0.4595 (p>0.05). The data are likely normally distributed.
+The p-value for Iris-setosa, sepal_width is 0.2715 (p>0.05). The data are likely normally distributed.
+The p-value for Iris-setosa, petal_length is 0.0548 (p>0.05). The data are likely normally distributed.
+The p-value for Iris-setosa, petal_width is 0.0000 (p<0.05). The data deviates from normal distribution (reject null hypothesis).
+The p-value for Iris-versicolor, sepal_length is 0.4647 (p>0.05). The data are likely normally distributed.
+The p-value for Iris-versicolor, sepal_width is 0.3380 (p>0.05). The data are likely normally distributed.
+The p-value for Iris-versicolor, petal_length is 0.1585 (p>0.05). The data are likely normally distributed.
+The p-value for Iris-versicolor, petal_width is 0.0273 (p<0.05). The data deviates from normal distribution (reject null hypothesis).
+The p-value for Iris-virginica, sepal_length is 0.2583 (p>0.05). The data are likely normally distributed.
+The p-value for Iris-virginica, sepal_width is 0.1809 (p>0.05). The data are likely normally distributed.
+The p-value for Iris-virginica, petal_length is 0.1098 (p>0.05). The data are likely normally distributed.
+The p-value for Iris-virginica, petal_width is 0.0870 (p>0.05). The data are likely normally distributed.

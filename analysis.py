@@ -13,10 +13,10 @@ from median import column_median # Import the function from median.py
 from std_dev import column_std_dev # Import the function from std_dev.py
 from min import column_min # Import the function from min.py
 from max import column_max # Import the function from max.py
-from normality import column_shapiro # Import the function from normality.py
 import matplotlib.pyplot as plt
 import seaborn as sns
 from scipy import stats
+from scipy.stats import shapiro
 import itertools
 from itertools import combinations
 import scikit_posthocs as sp
@@ -158,7 +158,7 @@ print(f"Minumum petal width: {min_petal_width}cm, maximum petal width: {max_peta
 '''
 # Based on the feedback from the above referenced conversation with ChatGPT, I use a loop to iterate through 
 # the features and calculate each value (mean, median, etc.) for each feature, using code written in mean.py, 
-# median.py, std_dev.py, min.py and max.py. This  will be stored in a pandas dataframe for viewing (in a text file). 
+# median.py, std_dev.py, min.py and max.py. This  will be stored in a pandas df for viewing (in a text file). 
 
 # Define the summary statistics functions
 stats_df = pd.DataFrame({
@@ -176,9 +176,14 @@ print("Summary statistics have been saved to summary_stats.txt")
 
 # Analysis 2: Test for normality of the data using the Shapiro-Wilk test.
 # Using the above loop and the function I wrote in normality.py, I will test each feature for normality using the
-# Shapiro-Wilk test. The p-value will be stored in a pandas dataframe for viewing.
+# Shapiro-Wilk test. The p-value will be stored in a pandas df for viewing.
 
-# Set the significance level for all analysese below
+# Define the Shapiro-Wilk test function
+def column_shapiro(df, column_name):
+    stat, p_value = shapiro(df[column_name])
+    return p_value
+
+# Set the significance level for all analyses below
 alpha = 0.05 
 
 # Define the Shapiro-Wilk test function
@@ -252,19 +257,18 @@ with open("normality_class_features.txt", "w") as file:
     file.write("Shapiro-Wilk Test for Normality by Species\n")
     file.write(shapiro_species_df.to_string(index=False))
     file.write("\n\nInterpretation:\n")
-    for line in interpretations:
+    for line in interpretations_class:
         file.write(line + "\n")
 
 print("'Normality test by species' results have been saved to normality_class_features.txt")
 
-# Analysis 3: Visualise the data using histograms, prior to conducting omparisons.
-# matplotlib.pyplot imported at the top of this file. 
+# Analysis 3: Visualise the data using histograms, prior to conducting comparisons.
 
 # define the histogram function using .hist()
 colors = ["b", "r", "g", "y"]
 
 # Create separate histograms (saved as .png files in the repository) 
-for feature, colour in zip(features, colors): # The zip() function ito pair features to colours
+for feature, colour in zip(features, colors): # The zip() function pairs features to colours
     plt.hist(iris[feature], color=colour, edgecolor="black", alpha=0.5) # keep bins at default 10 # one histogram per feature
     plt.title(f"Histogram of {feature.replace('_',' ').title()}") # removes _ and capitalises first letter of words
     plt.xlabel(f"{feature .replace('_',' ' ).title()} (cm)")
@@ -342,7 +346,7 @@ petal_scatter.set(xlabel = "Petal length (cm)", ylabel = "Petal width (cm)", tit
 plt.show()
 
 # Analysis 5: Explore relationships using linear regression (using pairwise linear regression) and determine
-# the R and R**2 values
+# the r and R**2 values
 
 # Collect the outputs in a dataframe
 regression_results=[]
@@ -442,27 +446,23 @@ print("Kruskal-Wallis H-Test results have been saved to kruskal_wallis.txt")
 
 # Post-hoc Dunn's test to determine which of the iris classes differ within each feature.
 
-# Define species mapping
-species_mapping = {
-    1: "setosa",
-    2: "versicolor",
-    3: "virginica"
-}
-
 dunn_results = {} # results are stored in a dictionary and not a list
 
 for feature in features:
     # Group data by species for the current feature
     group_values = [iris[iris["species"] == species][feature].values for species in unique_species]
+    
+    # Ensure the test received correctly ordered input
     stat, p_value_kruskal = stats.kruskal(*group_values)
     
     if p_value_kruskal < alpha:
         # Perform Dunn's test with Bonferroni correction
         dunn_result = sp.posthoc_dunn(group_values, p_adjust='bonferroni')
 
-        # Replace numeric species lables with actual species names in the result
-        dunn_result = dunn_result.rename(index=species_mapping, columns=species_mapping)
-
+        # Map numeric indices to species using `unique_species` ordering
+        dunn_result.index = unique_species
+        dunn_result.columns = unique_species
+        
         # Add interpretation of Dunn's test to the output 
         interpretation_dunn = f"Dunns post-hoc test for {feature}:\n"
         for index in dunn_result.index:
