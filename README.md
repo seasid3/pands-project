@@ -1,6 +1,6 @@
 # pands-project   
   
-This project aims to analyse the Iris dataset, using python. It is submitted (on 12 may 2025) for assessment for the Higher Diploma in Science in Computing in Data Analytics, Programming and Scripting module, delivered by Andrew Beatty. 
+This project aims to analyse the Iris dataset, using python. It is submitted (on 12 may 2025) for assessment for the Higher Diploma in Science in Computing in Data Analytics, Programming and Scripting module, delivered by Andrew Beatty. Please note that comments about what the code is doing are contained in the analysis.py code file.
 
 # *Introduction to the Iris dataset:*  
   
