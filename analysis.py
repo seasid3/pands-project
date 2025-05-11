@@ -5,6 +5,7 @@
 
 # Import the necessary libraries
 import sys
+import io
 import numpy as np
 import pandas as pd
 from mean import column_mean # Import the function from mean.py
@@ -23,7 +24,6 @@ import mpl_toolkits.mplot3d
 from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 from scipy.stats import skew, kurtosis
-
 
 # Import the dataset as a pandas dataframe
 # I know from the downloaded zip file "iris.names" from https://archive.ics.uci.edu/dataset/53/iris that the 
@@ -47,33 +47,63 @@ features = ['sepal_length', 'sepal_width', 'petal_length', 'petal_width']
 # Similarly, define the species
 iris['species'] = pd.Categorical(iris['species'])
 
-# Title the output
-print("\n\nLook at the dataset:")
-
-print() # insert a blank line for readability
 # Running iris.info() shows that the data types are correct, and that there are no missing values.
-iris.info() # summary information about the dataset
+buffer = io.StringIO()
+iris.info(buf=buffer)
+
+# Get the string from the buffer
+iris_info = buffer.getvalue()
+
+# Write the captured information to a file
+with open("info.txt", "w") as file:
+    file.write("Iris database info:\n")
+    file.write(iris_info)
+
+print("Iris database info has been saved to info.txt")
 
 # Check the column names
-print("\n\nColumn names:")  
-print(iris.columns) # print the column names
+iris_columns = ",".join(iris.columns) # join the column names with a comma
 
-print() # insert a blank line for readability
-print("\n\n Number of samples in each species:")
+# Write the captured information to a file
+with open("column_names.txt", "w") as file:
+    file.write("Column names:\n")
+    file.write(iris_columns)
+
+print("Iris column names have been saved to column_names.txt")
+
+# Check the number of samples in each species
 number_of_samples = iris['species'].value_counts() # check the number of samples in each species
-print(number_of_samples) # print the number of samples in each species
 
-print("\n\nMissing values:")
+# Open a file in write mode and save the information
+with open("species_sample_counts.txt", "w") as file:
+    file.write("\n\nNumber of samples in each species:\n")
+    file.write(str(number_of_samples))  # Convert the output to string to write to the file
+
+# Confirmation message
+print("Number of samples in each species has been saved to species_sample_counts.txt")
+
+# Check for missing values
 missing = iris.isnull().sum() # check for missing values
-print(missing)
+# Open a file in write mode and save the information
+with open("missing_values.txt", "w") as file:
+    file.write("\n\nMissing values:\n")
+    file.write(str(missing))  # Convert the output to string to write to the file
 
-print("\n\nData types:")
-print(iris.dtypes) # check the data types of each column
+# Confirmation message
+print("Missing values information has been saved to missing_values.txt")
+
+# Check the data types of each column
+data_types = iris.dtypes # check the data types of each column
+
+# Open a file in write mode and save the information
+with open("data_types.txt", "w") as file:
+    file.write("\n\nData types:\n")
+    file.write(str(data_types))  # Convert the output to string to write to the file
+
+# Confirmation message
+print("Data types information has been saved to data_types.txt")
 
 # Analysis 1: Summary Statistics
-
-# Title the output
-print("\n\nSummary statistics of the dataset:")
 
 # I first created the following code, which was great to get my head around the coding for simple analysis of 
 # a pandas df. See README.md Task 1 "Review of summary statistics code" for further dicussion. Using ChatGPT 
@@ -157,7 +187,6 @@ print("Summary statistics have been saved to summary_stats.txt")
 # Set the significance level for the Shapiro-Wilk test
 alpha = 0.05 
 
-print("\n\nShapiro-Wilk test for normality:")
 shapiro_df = pd.DataFrame({
     'Feature': features,
     'Normality p-value': [column_shapiro(iris, feature) for feature in features]
@@ -189,7 +218,6 @@ print("'Normality test for features' results have been saved to normality_featur
 # Analyse the features of each of the iris species for normality using the Shapiro-Wilk test.
 # The species are setosa, versicolor and virginica. I will use the same loop as above to iterate through the
 # features and calculate the p-value for each species.
-print("\n\nShapiro-Wilk test for normality by species:")
 
 unique_species = iris['species'].unique() # Get the unique species in the dataset suggested here by co-pilot.
 features = iris.select_dtypes(include='number').columns.drop('target', errors = 'ignore')
@@ -328,7 +356,6 @@ plt.show()
 # Analysis 5: Explore relationships using linear regression (using pairwise linear regression) and determine
 # the R and R**2 values
 
-print("\n\nLinear regression:")
 # I want to collect the outputs in a dataframe
 regression_results=[]
 
@@ -383,7 +410,6 @@ with open("linear_regression.txt", "w") as file:
 print("Linear regression outputs have been saved to linear_regression.txt")
 
 # Analysis 6: Kruskal-Wallis test to see if the any medians of the feature variables vary
-print("\n\nKruskal-Wallis H-test for independent samples:") 
 
 kruskal_results = []
 
@@ -428,8 +454,6 @@ print("Kruskal-Wallis H-Test results have been saved to kruskal_wallis.txt")
 
 # Post-hoc Dunn's test to determine which of the iris classes differ within each feature.
 
-print("\n\nDunn's post-hoc test:") 
-
 # Define species mapping
 species_mapping = {
     1: "setosa",
@@ -471,9 +495,7 @@ for feature in features:
             f.write("\n\nInterpretation:\n")
             f.write(interpretation_dunn)
         
-        print(f"Dunn’s test for {feature} is saved to dunn_test_{feature}.txt")
-    else:
-        print(f"Kruskal-Wallis for {feature} not significant (p = {p_value_kruskal:.4f}); skipping Dunn’s test.")
+print("Dunn’s test for each feature is saved to dunn_test_(feature name).txt")
 
 # The results are saved in the format "dunn_test_{feature}.txt" for each feature.
 
@@ -488,7 +510,6 @@ plt.show()
 
 # Analysis 7, Part 2: Apply a Principal Component Analysis (PCA) to reduce the dimensionality of the dataset
 # and plot the irises across the first three PCA dimensions.
-
 
 # Extract the features and species
 X = iris[['sepal_length', 'sepal_width', 'petal_length', 'petal_width']]  # Use all features for PCA
@@ -556,10 +577,7 @@ for col in numeric_cols:
     plt.tight_layout()
     plt.show()
 
-print() # insert a blank line for readability
 print("Feature distributions are saved to skewness_kurtosis.txt")
-
-print() # insert a blank line for readability
 
 # End of analysis.py
 print("End of analysis.py")

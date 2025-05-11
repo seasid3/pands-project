@@ -1,0 +1,8 @@
+
+
+Number of samples in each species:
+species
+Iris-setosa        50
+Iris-versicolor    50
+Iris-virginica     50
+Name: count, dtype: int64

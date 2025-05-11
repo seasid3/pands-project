@@ -22,7 +22,7 @@ I know from the original source (https://archive.ics.uci.edu/dataset/53/iris) wh
 
 I know (from the downloaded iris.names file) there should be 150 instances/rows (50 for each of three Iris classes) and 4 attributes (i.e.columns; sepal length, sepal width, petal length and petal width) in the database. The output in my terminal when I do the sanity check using the "print()" function shows the first 5 and last 5 rows. I commented out the sanity check when I was happy with the import (thankfully, it worked first time). Additionally, I ran the sanity check "print(iris[34:38]) " to check the rows that I corrected apprear as they should.  
 
-I ran the .info() to check the dataset for consistency (see reference: https://www.kaggle.com/code/aniketg11/iris-dataset-with-statistical-tests and official documentation: https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.info.html).
+I ran the .info() to check the dataset for consistency (see reference: https://www.kaggle.com/code/aniketg11/iris-dataset-with-statistical-tests and official documentation: https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.info.html). Asking ChatGPT how to avoid an output in the terminal and save to file (see conversation: https://chatgpt.com/share/6820a7cb-7ac0-800d-8c89-06a267d1e906). The output is saved as info.txt.
 
 I use the .columns() function to get the list of the names of the columns (https://www.geeksforgeeks.org/python-basics-of-pandas-using-iris-dataset/).
 
