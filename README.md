@@ -4,8 +4,7 @@ This project aims to analyse the Iris dataset, using python. It is submitted (on
 
 # *Introduction to the Iris dataset:*  
   
-The Iris dataset (see: https://archive.ics.uci.edu/dataset/53/iris) comes from findings collected by Anderson in 1935 and first published by Fisher in 1936 (https://www.semanticscholar.org/paper/Will-the-real-iris-data-please-stand-up-Bezdek-Keller/1c27e59992d483892274fd27ba1d8e19bbfb5d46) 
-(reference to original Fisher publication: https://onlinelibrary.wiley.com/doi/10.1111/j.1469-1809.1936.tb02137.x). The dataset is one of the earliest published papers on classification methods within the literature. The clean and simple structure means it is widely used in statistics and machine learning.  
+The Iris dataset (see: https://archive.ics.uci.edu/dataset/53/iris) comes from findings collected by Anderson in 1935 and first published by Fisher in 1936 (https://www.semanticscholar.org/paper/Will-the-real-iris-data-please-stand-up-Bezdek-Keller/1c27e59992d483892274fd27ba1d8e19bbfb5d46, reference to original Fisher publication: https://onlinelibrary.wiley.com/doi/10.1111/j.1469-1809.1936.tb02137.x). The dataset is one of the earliest published papers on classification methods within the literature. The clean and simple structure means it is widely used in statistics and machine learning.  
 Specifically, the dataset contains the measurements (cm) of four variables (sepal length, sepal width, petal length, and petal width) for each of 150 Iris flowers, which are also classififed by Iris class (Setosa, Versicolour, or Virginica). The Iris dataset provides an opportunity to utilise a simple dataset to learn the capabilities of python for data analysis.  
   
 # *Downloading and importing the Iris dataset*   
@@ -228,7 +227,7 @@ The Iris dataset has been succesfully imported from a .csv file to analysis.py a
   
 ### Final comment  
   
-I really enjoyed this project. It was brilliant to get to grips with working with a dataset from beginning to end, using python, from importing a .csv file and to working on it using vistualisations and analysis. I really feel like I could take my own database at work and analyse it like I did here, which I definitely couldnt have done before doing this project. Thank you for a very useful assignment!  
+I really enjoyed this project. It was brilliant to get to grips with working with a dataset from beginning to end, using python, from importing a .csv file to working on it using vistualisations and analyses. I really feel like I could take my own database at work and analyse it like I did here, which I definitely couldn't have done before doing this project. Thank you for a very useful assignment!  
 
 
 
