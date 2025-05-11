@@ -5,7 +5,7 @@ versicolor  3.058513e-09  1.000000e+00  8.324597e-04
 virginica   6.000296e-22  8.324597e-04  1.000000e+00
 
 Interpretation:
-Dunn’s post-hoc test for sepal_length:
+Dunns post-hoc test for sepal_length:
   setosa vs setosa: p = 1.0000 (p>0.05): Fail to reject H0; groups are not significantly different.
   setosa vs versicolor: p = 0.0000 (p<0.05): Reject H0; groups are significantly different.
   setosa vs virginica: p = 0.0000 (p<0.05): Reject H0; groups are significantly different.

@@ -1,0 +1,3 @@
+Explained variance ratio by principal components:
+PC1: 0.7296
+PC2: 0.2285

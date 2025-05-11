@@ -1,0 +1,16 @@
+
+Feature: sepal_length
+Skewness: 0.3118
+Kurtosis: -0.5736
+
+Feature: sepal_width
+Skewness: 0.3158
+Kurtosis: 0.1810
+
+Feature: petal_length
+Skewness: -0.2721
+Kurtosis: -1.3955
+
+Feature: petal_width
+Skewness: -0.1019
+Kurtosis: -1.3361

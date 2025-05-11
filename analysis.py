@@ -19,6 +19,11 @@ from scipy import stats
 import itertools
 from itertools import combinations
 import scikit_posthocs as sp
+import mpl_toolkits.mplot3d
+from sklearn.decomposition import PCA
+from sklearn.preprocessing import StandardScaler
+from scipy.stats import skew, kurtosis
+
 
 # Import the dataset as a pandas dataframe
 # I know from the downloaded zip file "iris.names" from https://archive.ics.uci.edu/dataset/53/iris that the 
@@ -39,12 +44,31 @@ iris = pd.read_csv('iris.csv', delimiter =',', names = ['sepal_length', 'sepal_w
 features = ['sepal_length', 'sepal_width', 'petal_length', 'petal_width']
 # print(features) # sanity check
 
+# Similarly, define the species
+iris['species'] = pd.Categorical(iris['species'])
+
 # Title the output
 print("\n\nLook at the dataset:")
 
 print() # insert a blank line for readability
 # Running iris.info() shows that the data types are correct, and that there are no missing values.
 iris.info() # summary information about the dataset
+
+# Check the column names
+print("\n\nColumn names:")  
+print(iris.columns) # print the column names
+
+print() # insert a blank line for readability
+print("\n\n Number of samples in each species:")
+number_of_samples = iris['species'].value_counts() # check the number of samples in each species
+print(number_of_samples) # print the number of samples in each species
+
+print("\n\nMissing values:")
+missing = iris.isnull().sum() # check for missing values
+print(missing)
+
+print("\n\nData types:")
+print(iris.dtypes) # check the data types of each column
 
 # Analysis 1: Summary Statistics
 
@@ -215,7 +239,6 @@ print("'Normality test by species' results have been saved to normality_class_fe
 
 # define the histogram function using .hist()
 colors = ["b", "r", "g", "y"]
-features = ['sepal_length', 'sepal_width', 'petal_length', 'petal_width'] 
 
 '''
 # The following code creates separate histograms (saved as .png files in the repository) but I would like
@@ -451,3 +474,92 @@ for feature in features:
         print(f"Dunn’s test for {feature} is saved to dunn_test_{feature}.txt")
     else:
         print(f"Kruskal-Wallis for {feature} not significant (p = {p_value_kruskal:.4f}); skipping Dunn’s test.")
+
+# The results are saved in the format "dunn_test_{feature}.txt" for each feature.
+
+# Analysis 7: Other visualisations
+
+# Analysis 7, Part 1: Create a heatmap to show the correlation between the features
+
+# Create a heatmap to show the correlation between the features
+sns.heatmap(iris[features].corr(), annot=True, cmap='coolwarm', fmt='.2f', cbar=True, square=True)
+plt.title("Correlation Heatmap of Iris Features")       
+plt.show()
+
+# Analysis 7, Part 2: Apply a Principal Component Analysis (PCA) to reduce the dimensionality of the dataset
+# and plot the irises across the first three PCA dimensions.
+
+
+# Extract the features and species
+X = iris[['sepal_length', 'sepal_width', 'petal_length', 'petal_width']]  # Use all features for PCA
+y = iris['species']
+
+# Standardize the data (important for PCA)
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+
+# Perform PCA to reduce to 3 components
+pca = PCA(n_components=3)
+X_pca = pca.fit_transform(X_scaled)
+
+# Create a DataFrame for the transformed data
+pca_df = pd.DataFrame(data=X_pca, columns=['PC1', 'PC2', 'PC3'])
+pca_df['species'] = y
+
+# Create a 3D scatter plot
+fig = plt.figure(figsize=(10, 7))
+ax = fig.add_subplot(111, projection='3d')
+
+# Plot the data, colouring by species
+for species in iris['species'].unique():
+    species_data = pca_df[pca_df['species'] == species]
+    ax.scatter(species_data['PC1'], species_data['PC2'], species_data['PC3'], label=species)
+
+# Add labels and a legend
+ax.set_xlabel('Principal Component 1')
+ax.set_ylabel('Principal Component 2')
+ax.set_zlabel('Principal Component 3')
+ax.legend()
+
+# Show the plot
+plt.show()
+
+# Analysis 7, part 3: Check skewness and kurtosis of the features
+
+# Insure only columns with numeric data are selected (not categories/iris classes)
+numeric_cols = iris.select_dtypes(include='number').columns
+
+# Open the file in write mode
+with open('skewness_kurtosis.txt', 'w') as file: 
+    for col in numeric_cols:
+     # Write the feature name, skewness, and kurtosis to the file
+        file.write(f"\nFeature: {col}\n")
+        file.write(f"Skewness: {skew(iris[col]):.4f}\n")
+        file.write(f"Kurtosis: {kurtosis(iris[col]):.4f}\n")
+
+# Visualise the distributions of the features using histograms with KDE and violin plots
+for col in numeric_cols:
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 5))
+
+    # Histogram with KDE and fitted exponential distribution
+    sns.histplot(iris[col], kde=True, stat="density", ax=ax1)
+    x = np.linspace(iris[col].min(), iris[col].max(), 40)
+    y = stats.expon.pdf(x, *stats.expon.fit(iris[col]))
+    ax1.plot(x, y, label='Exponential fit', color='red')
+    ax1.set_title(f'Distribution of {col}')
+    ax1.legend()
+
+    # Violin plot by species
+    sns.violinplot(data=iris, x='species', y=col, inner='box', ax=ax2)
+    ax2.set_title(f'{col} by Species')
+
+    plt.tight_layout()
+    plt.show()
+
+print() # insert a blank line for readability
+print("Feature distributions are saved to skewness_kurtosis.txt")
+
+print() # insert a blank line for readability
+
+# End of analysis.py
+print("End of analysis.py")

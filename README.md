@@ -22,7 +22,32 @@ I know from the original source (https://archive.ics.uci.edu/dataset/53/iris) wh
 
 I know (from the downloaded iris.names file) there should be 150 instances/rows (50 for each of three Iris classes) and 4 attributes (i.e.columns; sepal length, sepal width, petal length and petal width) in the database. The output in my terminal when I do the sanity check using the "print()" function shows the first 5 and last 5 rows. I commented out the sanity check when I was happy with the import (thankfully, it worked first time). Additionally, I ran the sanity check "print(iris[34:38]) " to check the rows that I corrected apprear as they should.  
 
-The documentation at the soure says there are no blank cells but if this wasn't the case, I would look at this (using the "isnull()" pandas function, see official documentation https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.isnull.html#pandas.DataFrame.isnull). I do decide to run the .info() to check the dataset for consistency (see reference: https://www.kaggle.com/code/aniketg11/iris-dataset-with-statistical-tests and official documentation: https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.info.html).
+I ran the .info() to check the dataset for consistency (see reference: https://www.kaggle.com/code/aniketg11/iris-dataset-with-statistical-tests and official documentation: https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.info.html).
+
+I use the .columns() function to get the list of the names of the columns (https://www.geeksforgeeks.org/python-basics-of-pandas-using-iris-dataset/).
+
+I will use the "value_counts()" function to see if the data is distributed equally between the classes/species (see official documentation: https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.value_counts.html). ALthough, I can do sns.countplot (https://www.geeksforgeeks.org/exploratory-data-analysis-on-iris-dataset/) to visualise the count of rows for each species, I dont think this adds value so I wont carry it out. The count for species is: 
+Iris-setosa        50
+Iris-versicolor    50
+Iris-virginica     50
+
+The documentation at the soure says there are no blank cells but even so, I checked this using the "isnull()" pandas function, (https://www.geeksforgeeks.org/exploratory-data-analysis-on-iris-dataset/ and see official documentation https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.isnull.html#pandas.DataFrame.isnull). 
+There are no missing values: 
+sepal_length    0
+sepal_width     0
+petal_length    0
+petal_width     0
+species         0
+dtype: int64
+
+I ran the iris.dtypes() function (see official documentation: (https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.dtypes.html)) to see what types of data are in each column, thus confirming the data is of the correct type. The output indicates that the types are correct: 
+Data types:
+sepal_length     float64
+sepal_width      float64
+petal_length     float64
+petal_width      float64
+species         category
+dtype: object
 
 # *Analysis of the Iris database: Overview*
 
@@ -54,6 +79,8 @@ The coding (which is saved in analysis.py) for each of the above analytical appr
 Having completed some of the analyses, I then asked ChatGPT how to save each of the outputs to .txt file (see conversation: https://chatgpt.com/share/681e2a86-9e3c-800d-853b-50794b23798d), and although the outputs are savevd to the file, they are also copied below to allow discussion and conclusion and to justify the iterative analysis I carried out in the subsequent steps.
 
 ## *Analysis 1: Summary Statistics*  
+
+Although I can use the pandas function "iris.describe()" (see reference: https://www.geeksforgeeks.org/exploratory-data-analysis-on-iris-dataset/ and official documentation: https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.describe.html), I am going to try to do this myself to practice coding:
 
 ### *Mean*
 The first aim of this analysis is to write code to create a function (saved as the file mean.py) that can be used to calculate the mean for each of the columns/features/attributes (from now on only referred to as features) regardless of their iris class. Attempting code using "features" (from Ian's lectures) and investigating the errors, I encountered the error message 'DataFrame' object has no attribute 'feature_names', I realised that I was working with a numpy array with Ian's work and not a pandas dataframe (df). Researching the error message ((https://stackoverflow.com/questions/49966639/attributeerror-dataframe-object-has-no-attribute-target-names-scikit/49971214)), I know that I need to use the columns of the dataframe to get the mean of the features. I try to use "header" to get into the columns, I realise (again, due to the errors I am receiveing) that using header() to get into the columns in a pandas dataframe isn't the right approach, I will use the ".columns" approach (https://www.geeksforgeeks.org/python-basics-of-pandas-using-iris-dataset/). 
@@ -211,38 +238,24 @@ I am going to try to copy the code for the Kruskal-Wallis test and adapt this fo
 
 Asking ChatGPT for help with the code (https://chatgpt.com/share/681e9548-99fc-800d-bd12-33610c02f427), the outputs are saved for each feature and show results for the comparison between the three iris species/classes for that feature. I saved the output as a text file (dunns_test_{feature}.txt).
 
-## *Analysis 7: *
-At this stage of this project, I have researched the dataset and analyses availble for use, using python, and applied them according to what I would do if this was a live work project. Following this, I now wish to carry out analyses similar to those others have done, that I did not consider myself. 
-I reviewed the following analyses of the Iris dataset before deciding which analyses I would like to do here:  
-- https://www.geeksforgeeks.org/exploratory-data-analysis-on-iris-dataset/  
-- https://www.geeksforgeeks.org/python-basics-of-pandas-using-iris-dataset/
-- https://medium.com/@prayushshrestha89/exploring-the-iris-dataset-with-python-a-fun-dive-into-data-analysis-fun-with-numpy-417c0dd5bb23
-- https://www.kaggle.com/code/lalitharajesh/iris-dataset-exploratory-data-analysis
-- https://scikit-learn.org/stable/auto_examples/decomposition/plot_pca_iris.html
-- https://www.kaggle.com/code/narnaoot/iris-statistical-analysis-predictions
-- https://www.tutorialspoint.com/exploratory-data-analysis-on-iris-dataset
-- https://labex.io/tutorials/ml-revealing-iris-dataset-structure-via-factor-analysis-49327
-- https://discuss.datasciencedojo.com/t/common-mistakes-which-occur-when-working-with-the-iris-dataset-in-python/1414
-- https://www.quarkml.com/2022/05/iris-dataset-classification-with-python.html
-- https://scikit-learn.org/stable/datasets/toy_dataset.html
-- https://levelup.gitconnected.com/a-beginners-guide-to-data-visualization-with-the-iris-dataset-691f115049c5
-- https://en.wikipedia.org/wiki/Iris_flower_data_set
-- https://colab.research.google.com/github/wgova/kmeans-clustering/blob/master/notebooks/iris_analysis.ipynb
-- https://www.linkedin.com/pulse/iris-dataset-analysis-using-machine-learning-techniques-pramod-sahu-g3kgf/
+## *Analysis 7: Visualising correlations in a heatmap*
 
+At this stage of this project, I have researched the dataset and analyses availble for use, using python, and applied them according to what I would do if this was a live work project. Following this, I now wish to carry out analyses similar to those others have done, that I did not consider myself.  
 
+I will visualise the correlations between the features using the seaborn heatmap() function (see official documentation: https://seaborn.pydata.org/generated/seaborn.heatmap.html). The plot is saved as "heatmap_features.png"
 
-A very useful method would be to check the dataset for duplicates, and then drop the duplicates. I need to make sure this only drops the duplicate rows and not individual datapoints as they may not be true duplicates, just the same value recorded twice so I will do this. 
+Additionally, I will carry out principal component analysis (https://scikit-learn.org/stable/auto_examples/decomposition/plot_pca_iris.html) as the output plot looks very interesting and can indicate whether a species can be predicted by one, or more, feature. I had to get a lot of help from ChatGPT on this (see conversation: https://chatgpt.com/share/68208ed4-9920-800d-9002-749b64faee66). The output is saved as pca_iris_dataset.png and pcd_explained_variance.txt
 
-data = df.drop_duplicates(subset ="Species",)
-data
+Finally, a useful technique I came across was to look at skewness and check for outlier detection (see reference: https://www.linkedincom/pulse/iris-dataset-analysis-using-machine-learning-techniques-pramod-sahu-g3kgf/). 
+Asking ChatGPT for help (see conversation: https://chatgpt.com/share/68209f9c-a678-800d-8dc8-ecd0a2ee96f7), I saved the outputs to skewness_kurtosis.txt and the plots to distributions_sepal_width.txt, distributions_sepal_length.txt, distributions_petal_width.txt and distributions_petal_length.txt
 
+Although I didn't need it here, a very useful method for datasets I am exploring without knowing much about them would be to check the dataset for duplicates (https://www.geeksforgeeks.org/exploratory-data-analysis-on-iris-dataset/) and return the dataset with the duplicaes removed, using the .drop_duplicates() (see official documentation: https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.drop_duplicates.html)
 
-I will then use df.value_counts("Species") to see if the data is distributed equally between the classes/species. ALthough, I can do sns.countplot() to visualise the count of rows for each species, I dont think this adds value so I wont carry it out.
+### Comment:
 
-### Extra:
+Reviewing the outputs, to help with readability, I went back and added print() througout the analysis.py file to insert blank lines where needed (https://www.reddit.com/r/learnpython/comments/uqajbh/how_to_print_space_between_output_lines/).
 
-To help with readability of the output, I went back and added print() througout the analysis.py file to insert blank lines (https://www.reddit.com/r/learnpython/comments/uqajbh/how_to_print_space_between_output_lines/).
+I really enjoyed this project. It was brilliant to get to grips with importing a csv file and then working on it using vistualisations and analysis. I really feel like I could take my own database at work and analyse it like I did here, which I definitely couldnt have done before doing this project. Thank you for a very useful assignment!
 
 
 
